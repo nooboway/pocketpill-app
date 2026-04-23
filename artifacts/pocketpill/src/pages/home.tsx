@@ -308,7 +308,7 @@ function WhyPharmacistSection() {
 }
 
 function TestimonialsSection() {
-  const testimonials = [
+  const testimonials: { quote: string; name: string; location: string; age?: number; theme: string }[] = [
     {
       quote: "I delayed reaching out for months because I felt embarrassed. The consultation was private, calm, and practical. I left with clearer next steps than I had from weeks of searching online.",
       name: "Tunde A.",
