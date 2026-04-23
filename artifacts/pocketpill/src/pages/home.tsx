@@ -29,6 +29,7 @@ export default function Home() {
         <TrustStrip />
         <NarrativeSection />
         <WhyPharmacistSection />
+        <TestimonialsSection />
         <PricingSection />
         <MonthlySupportSection />
         <ClosingCTASection />
@@ -301,6 +302,157 @@ function WhyPharmacistSection() {
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      quote: "I delayed reaching out for months because I felt embarrassed. The consultation was private, calm, and practical. I left with clearer next steps than I had from weeks of searching online.",
+      name: "Tunde A.",
+      location: "Lagos",
+      age: 34,
+      theme: "Privacy"
+    },
+    {
+      quote: "What stood out was the discretion. No awkwardness, no judgment — just a direct conversation that helped me understand what questions I should be asking.",
+      name: "Michael O.",
+      location: "Abuja",
+      theme: "Privacy"
+    },
+    {
+      quote: "I expected generic advice. What I got was a thoughtful conversation tailored to my situation. The written follow-up was especially useful.",
+      name: "K.",
+      location: "London",
+      age: 41,
+      theme: "Clarity"
+    },
+    {
+      quote: "I was mainly looking for clarity. The session helped me separate myths from facts and gave me a more structured way to think about the issue.",
+      name: "Emeka N.",
+      location: "Port Harcourt",
+      theme: "Clarity"
+    },
+    {
+      quote: "The privacy mattered to me. Being able to speak over WhatsApp made it much easier to start the conversation in the first place.",
+      name: "S.",
+      location: "Ibadan",
+      theme: "WhatsApp"
+    },
+    {
+      quote: "I appreciated that nothing felt rushed. I was able to ask questions I'd been avoiding, and I got straightforward answers.",
+      name: "Daniel A.",
+      location: "Lagos",
+      age: 38,
+      theme: "Trust"
+    },
+    {
+      quote: "What I valued most was having someone explain possible contributing factors clearly, instead of jumping straight to assumptions.",
+      name: "Olumide B.",
+      location: "Lagos",
+      theme: "Clarity"
+    },
+    {
+      quote: "I came in skeptical. The consultation felt professional and grounded, and the action points gave me something concrete to work with.",
+      name: "J.",
+      location: "Manchester",
+      theme: "Trust"
+    },
+    {
+      quote: "I live outside Nigeria and was looking for someone who understood both the privacy concerns and the cultural hesitation around discussing this. That made a difference.",
+      name: "Chuka E.",
+      location: "Toronto, Canada",
+      theme: "Privacy"
+    },
+    {
+      quote: "The biggest change for me was peace of mind. I stopped guessing and had a clearer sense of what to do next.",
+      name: "A.",
+      location: "Abuja",
+      theme: "WhatsApp"
+    }
+  ];
+
+  return (
+    <section className="relative py-28 md:py-40 bg-background overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px]" />
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={STAGGER}
+          className="max-w-3xl mb-20"
+        >
+          <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-[1px] bg-primary" />
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">In Their Words</span>
+          </motion.div>
+
+          <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1] mb-6">
+            Quiet conversations.<br />
+            <em className="text-primary italic">Lasting clarity.</em>
+          </motion.h2>
+
+          <motion.p variants={FADE_UP} className="text-muted-foreground text-lg max-w-xl">
+            Shared with permission. Names and details have been adjusted to protect privacy.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={STAGGER}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/40"
+        >
+          {testimonials.map((t, i) => (
+            <motion.figure
+              key={i}
+              variants={FADE_UP}
+              className="group relative bg-background hover:bg-card/60 transition-colors duration-500 p-8 md:p-10 flex flex-col"
+            >
+              <div className="absolute top-6 right-8 font-serif text-5xl text-primary/20 leading-none select-none">
+                "
+              </div>
+
+              <div className="mb-6">
+                <span className="text-[10px] tracking-[0.2em] uppercase text-primary/70 font-medium">
+                  {t.theme}
+                </span>
+              </div>
+
+              <blockquote className="font-serif text-lg md:text-[1.15rem] leading-relaxed text-foreground/90 italic mb-8 flex-1">
+                {t.quote}
+              </blockquote>
+
+              <figcaption className="flex items-center gap-3 pt-6 border-t border-border/40">
+                <div className="w-6 h-[1px] bg-primary/60" />
+                <div className="text-sm text-muted-foreground">
+                  <span className="text-foreground/80 font-medium">{t.name}</span>
+                  <span className="text-muted-foreground/70">
+                    {" · "}{t.location}
+                    {t.age ? `, Age ${t.age}` : ""}
+                  </span>
+                </div>
+              </figcaption>
+            </motion.figure>
+          ))}
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xs text-muted-foreground/60 mt-10 max-w-2xl leading-relaxed"
+        >
+          Testimonials reflect individual experiences. They are not promises of specific outcomes and do not constitute medical advice.
+        </motion.p>
       </div>
     </section>
   );
