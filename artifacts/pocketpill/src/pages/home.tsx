@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen } from "lucide-react";
-import { useEffect, useState } from "react";
+import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 const WHATSAPP_URL = "https://wa.me/2348000000000";
 
@@ -30,6 +30,7 @@ export default function Home() {
         <NarrativeSection />
         <WhyPharmacistSection />
         <TestimonialsSection />
+        <ScreenerSection />
         <PricingSection />
         <MonthlySupportSection />
         <ReadBeforeBookingSection />
@@ -495,6 +496,352 @@ function TestimonialsSection() {
       </div>
     </section>
   );
+}
+
+type ScreenerAnswer = { value: string; label: string; redFlag?: boolean };
+type ScreenerQuestion = {
+  id: string;
+  question: string;
+  helper?: string;
+  options: ScreenerAnswer[];
+};
+
+const SCREENER_QUESTIONS: ScreenerQuestion[] = [
+  {
+    id: "concern",
+    question: "What brings you in?",
+    options: [
+      { value: "ed", label: "Erectile difficulty" },
+      { value: "pe", label: "Premature ejaculation" },
+      { value: "both", label: "Both" },
+      { value: "other", label: "Something related, not sure how to label it" }
+    ]
+  },
+  {
+    id: "duration",
+    question: "How long has this been on your mind?",
+    options: [
+      { value: "weeks", label: "A few weeks" },
+      { value: "months", label: "Several months" },
+      { value: "year+", label: "A year or longer" }
+    ]
+  },
+  {
+    id: "onset",
+    question: "How did it start?",
+    options: [
+      { value: "gradual", label: "Gradually, over time" },
+      { value: "sudden", label: "Suddenly, in days or weeks", redFlag: true },
+      { value: "always", label: "It's been like this as long as I remember" }
+    ]
+  },
+  {
+    id: "context",
+    question: "When does it show up?",
+    options: [
+      { value: "partner", label: "Mainly with a partner" },
+      { value: "solo", label: "Mainly when alone" },
+      { value: "both", label: "In both situations" }
+    ]
+  },
+  {
+    id: "meds",
+    question: "Are you currently on heart, blood pressure, or mental-health medication?",
+    helper: "Honest answer matters — it changes the conversation.",
+    options: [
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+      { value: "unsure", label: "Not sure" }
+    ]
+  },
+  {
+    id: "goal",
+    question: "What would make this consultation worth it for you?",
+    options: [
+      { value: "clarity", label: "Clarity — I want to understand what's happening" },
+      { value: "options", label: "Options — I want to know what could help" },
+      { value: "second", label: "A second opinion on something I've already tried" },
+      { value: "support", label: "Ongoing support over time" }
+    ]
+  }
+];
+
+function ScreenerSection() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, ScreenerAnswer>>({});
+  const [copied, setCopied] = useState(false);
+
+  const total = SCREENER_QUESTIONS.length;
+  const isResult = step >= total;
+  const current = SCREENER_QUESTIONS[step];
+  const progress = isResult ? 100 : Math.round((step / total) * 100);
+
+  const summary = useMemo(() => buildSummary(answers), [answers]);
+  const recommendation = useMemo(() => recommendTier(answers), [answers]);
+  const hasRedFlag = useMemo(
+    () => Object.values(answers).some((a) => a?.redFlag),
+    [answers]
+  );
+
+  const message = useMemo(() => {
+    const lines = [
+      "Hi — I'd like to book a private consultation.",
+      "",
+      "A quick summary of my situation:",
+      summary,
+      "",
+      `What I'm hoping to get out of it: ${answers.goal?.label ?? "—"}`,
+      "",
+      `Suggested starting point: ${recommendation.tier}.`
+    ];
+    return lines.join("\n");
+  }, [summary, answers, recommendation]);
+
+  const whatsappLink = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
+
+  function pick(option: ScreenerAnswer) {
+    if (!current) return;
+    setAnswers((prev) => ({ ...prev, [current.id]: option }));
+    setStep((s) => s + 1);
+  }
+
+  function reset() {
+    setAnswers({});
+    setStep(0);
+    setCopied(false);
+  }
+
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <section className="relative py-28 md:py-40 bg-card/40 border-y border-border/40 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-60">
+        <div className="absolute top-1/3 -left-32 w-[460px] h-[460px] bg-primary/[0.05] rounded-full blur-[140px]" />
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={STAGGER}
+            className="lg:col-span-5 lg:sticky lg:top-32"
+          >
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-primary" />
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">30-Second Self-Check</span>
+            </motion.div>
+
+            <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05] mb-6">
+              Not sure where to begin?<br />
+              <em className="text-primary italic">Answer six private questions.</em>
+            </motion.h2>
+
+            <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed mb-8 max-w-md">
+              Nothing is sent anywhere. Your answers stay on this device and produce a short summary you can copy into WhatsApp — so you don't have to type the hard parts twice.
+            </motion.p>
+
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 text-sm text-muted-foreground/80">
+              <Lock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />
+              <span>No accounts. No tracking. No storage.</span>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="lg:col-span-7"
+          >
+            <div className="relative">
+              <div className="absolute -inset-3 bg-primary/5 border border-primary/10 rounded-sm transform translate-x-3 translate-y-3" />
+              <div className="relative bg-background border border-border/60 rounded-sm p-8 md:p-12 z-10 min-h-[460px] flex flex-col">
+                {/* Progress */}
+                <div className="flex items-center justify-between mb-8">
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+                    {isResult ? "Your summary" : `Question ${step + 1} of ${total}`}
+                  </span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-primary/70">
+                    {progress}%
+                  </span>
+                </div>
+                <div className="h-[2px] bg-border/60 mb-10 overflow-hidden">
+                  <motion.div
+                    className="h-full bg-primary"
+                    initial={false}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                  />
+                </div>
+
+                {!isResult && current && (
+                  <motion.div
+                    key={current.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex-1 flex flex-col"
+                  >
+                    <h3 className="font-serif text-2xl md:text-[1.7rem] leading-snug text-foreground/95 mb-3">
+                      {current.question}
+                    </h3>
+                    {current.helper && (
+                      <p className="text-sm text-muted-foreground/80 mb-6">{current.helper}</p>
+                    )}
+
+                    <div className="grid gap-3 mt-2">
+                      {current.options.map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => pick(opt)}
+                          className="group w-full text-left flex items-center justify-between gap-4 px-5 py-4 border border-border/50 hover:border-primary/40 hover:bg-primary/[0.04] rounded-sm transition-all duration-300"
+                        >
+                          <span className="text-foreground/90 text-[15px] md:text-base">{opt.label}</span>
+                          <ChevronRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+                        </button>
+                      ))}
+                    </div>
+
+                    {step > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setStep((s) => Math.max(0, s - 1))}
+                        className="mt-8 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors"
+                      >
+                        ← Back
+                      </button>
+                    )}
+                  </motion.div>
+                )}
+
+                {isResult && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex-1 flex flex-col"
+                  >
+                    <h3 className="font-serif text-2xl md:text-[1.7rem] leading-snug text-foreground/95 mb-3">
+                      Here's what to send.
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-6">
+                      Copy this into WhatsApp, or open the chat with it pre-filled.
+                    </p>
+
+                    <div className="bg-card/60 border border-border/50 rounded-sm p-5 md:p-6 mb-5">
+                      <pre className="font-sans text-[14px] leading-relaxed text-foreground/90 whitespace-pre-wrap">
+{message}
+                      </pre>
+                    </div>
+
+                    <div className="bg-primary/[0.06] border border-primary/20 rounded-sm p-5 mb-5">
+                      <div className="flex items-start gap-3">
+                        <Check className="w-4 h-4 text-primary mt-1 shrink-0" strokeWidth={2} />
+                        <div className="text-sm">
+                          <div className="text-foreground/90 font-medium mb-1">Suggested starting point: {recommendation.tier}</div>
+                          <div className="text-muted-foreground leading-relaxed">{recommendation.reason}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {hasRedFlag && (
+                      <div className="bg-destructive/[0.08] border border-destructive/20 rounded-sm p-5 mb-6">
+                        <div className="flex items-start gap-3">
+                          <AlertTriangle className="w-4 h-4 text-destructive mt-1 shrink-0" strokeWidth={2} />
+                          <div className="text-sm">
+                            <div className="text-foreground/90 font-medium mb-1">Worth seeing a doctor in person, soon</div>
+                            <div className="text-muted-foreground leading-relaxed">
+                              Sudden onset can occasionally be an early signal of something cardiovascular. A pharmacist consultation is still useful — but please also book a physician.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+                      <a
+                        href={whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase"
+                      >
+                        <span>Send on WhatsApp</span>
+                        <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
+                      </a>
+                      <button
+                        type="button"
+                        onClick={copyMessage}
+                        className="inline-flex items-center justify-center gap-2 border border-border/60 hover:border-primary/40 hover:bg-primary/[0.04] px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase text-foreground/90"
+                      >
+                        {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
+                        <span>{copied ? "Copied" : "Copy"}</span>
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="mt-6 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors"
+                    >
+                      ← Start over
+                    </button>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function buildSummary(answers: Record<string, ScreenerAnswer>): string {
+  const lines: string[] = [];
+  if (answers.concern) lines.push(`• Concern: ${answers.concern.label}`);
+  if (answers.duration) lines.push(`• Duration: ${answers.duration.label.toLowerCase()}`);
+  if (answers.onset) lines.push(`• Onset: ${answers.onset.label.toLowerCase()}`);
+  if (answers.context) lines.push(`• Context: ${answers.context.label.toLowerCase()}`);
+  if (answers.meds) lines.push(`• On heart / BP / mental-health medication: ${answers.meds.label.toLowerCase()}`);
+  return lines.length ? lines.join("\n") : "—";
+}
+
+function recommendTier(answers: Record<string, ScreenerAnswer>): { tier: string; reason: string } {
+  const goal = answers.goal?.value;
+  const duration = answers.duration?.value;
+  if (goal === "support") {
+    return {
+      tier: "Monthly — Maintenance",
+      reason: "You're looking for ongoing support, so a monthly arrangement gives you check-ins and protocol adjustments over time."
+    };
+  }
+  if (goal === "second" || duration === "year+") {
+    return {
+      tier: "Premium — Deep-dive consultation",
+      reason: "Given how long you've been working with this, a longer session and a written protocol will go further than a quick exchange."
+    };
+  }
+  if (goal === "options") {
+    return {
+      tier: "Standard — 30-minute voice consultation",
+      reason: "A real conversation is the fastest way to walk through options and figure out which one fits your situation."
+    };
+  }
+  return {
+    tier: "Starter — Text consultation",
+    reason: "If clarity is the main goal, a written consultation is enough to get you there — and you can always upgrade later."
+  };
 }
 
 function PricingSection() {
