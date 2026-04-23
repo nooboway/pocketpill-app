@@ -32,6 +32,7 @@ export default function Home() {
         <TestimonialsSection />
         <PricingSection />
         <MonthlySupportSection />
+        <FAQSection />
         <ClosingCTASection />
       </main>
 
@@ -610,6 +611,138 @@ function MonthlySupportSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FAQSection() {
+  const faqs = [
+    {
+      q: "Is this really private?",
+      a: "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially in line with applicable professional obligations."
+    },
+    {
+      q: "Will anything show up on my bank or card statement?",
+      a: "Payments are processed through PayPal under a discreet descriptor. No medical or condition-specific wording appears on your statement — only the platform name."
+    },
+    {
+      q: "Can the pharmacist prescribe medication?",
+      a: "No. Pocketpill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and tell you what a prescriber needs to hear — but a licensed physician must issue any prescription."
+    },
+    {
+      q: "What if my issue turns out to be something more serious?",
+      a: "Part of the consultation is identifying when physician evaluation matters. If anything in your screening points to a red flag, you'll get clear escalation guidance and a recommendation to see a doctor in person."
+    },
+    {
+      q: "I live outside Nigeria. Can I still book?",
+      a: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run on WhatsApp and PayPal, both of which work globally. Time zones are accommodated when scheduling."
+    },
+    {
+      q: "How fast can I be seen?",
+      a: "Same-day scheduling is often available depending on demand. For text consultations the response target is within 24 hours; voice sessions are booked at a time that works for both of us."
+    },
+    {
+      q: "What if I'm not sure which tier I need?",
+      a: "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade."
+    },
+    {
+      q: "Do I have to share my real name?",
+      a: "No. Many clients use a first name or initial. What matters is that the conversation is honest — not that the file says who you are."
+    }
+  ];
+
+  return (
+    <section className="relative py-28 md:py-40 bg-background overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={STAGGER}
+            className="lg:col-span-4"
+          >
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-primary" />
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Frequently Asked</span>
+            </motion.div>
+
+            <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05] mb-8">
+              The questions<br />
+              men <em className="text-primary italic">don't ask out loud.</em>
+            </motion.h2>
+
+            <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed max-w-sm">
+              If something here isn't covered, message on WhatsApp before booking. There's no obligation to continue.
+            </motion.p>
+
+            <motion.a
+              variants={FADE_UP}
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 mt-8 text-sm tracking-widest uppercase text-primary hover:text-primary/80 transition-colors"
+            >
+              <span>Ask Privately</span>
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </motion.a>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={STAGGER}
+            className="lg:col-span-8"
+          >
+            {faqs.map((item, i) => (
+              <motion.div key={i} variants={FADE_UP}>
+                <FAQItem question={item.q} answer={item.a} defaultOpen={i === 0} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQItem({ question, answer, defaultOpen = false }: { question: string; answer: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-b border-border/40">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="group w-full flex items-start justify-between gap-6 py-7 text-left"
+      >
+        <span className="font-serif text-xl md:text-2xl leading-snug text-foreground/90 group-hover:text-primary transition-colors duration-300">
+          {question}
+        </span>
+        <span
+          className={`relative shrink-0 mt-2 w-9 h-9 rounded-full border border-border/60 flex items-center justify-center text-primary transition-all duration-500 ${
+            open ? "rotate-45 border-primary/50 bg-primary/5" : "rotate-0"
+          }`}
+          aria-hidden="true"
+        >
+          <span className="block w-3 h-[1px] bg-current absolute" />
+          <span className="block w-[1px] h-3 bg-current absolute" />
+        </span>
+      </button>
+      <motion.div
+        initial={false}
+        animate={{
+          height: open ? "auto" : 0,
+          opacity: open ? 1 : 0
+        }}
+        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+        className="overflow-hidden"
+      >
+        <p className="text-muted-foreground text-base md:text-[1.05rem] leading-relaxed pb-8 pr-12 max-w-2xl">
+          {answer}
+        </p>
+      </motion.div>
+    </div>
   );
 }
 
