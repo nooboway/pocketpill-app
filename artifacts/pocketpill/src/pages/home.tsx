@@ -1,12 +1,26 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLang, useT, LANGUAGES } from "@/i18n/LanguageProvider";
+import type { Translation } from "@/i18n/translations";
 
 const WHATSAPP_URL = "https://wa.me/2348000000000";
 
+const PAYPAL_LINKS = [
+  "https://www.paypal.com/paypalme/yourusername/10000",
+  "https://www.paypal.com/paypalme/yourusername/15000",
+  "https://www.paypal.com/paypalme/yourusername/27000"
+];
+
+const TRUST_ICONS = [
+  <Clock className="w-5 h-5 text-primary" />,
+  <Shield className="w-5 h-5 text-primary" />,
+  <MessageCircle className="w-5 h-5 text-primary" />
+];
+
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] } }
 };
 
 const STAGGER = {
@@ -23,7 +37,7 @@ export default function Home() {
   return (
     <div className="min-h-[100dvh] flex flex-col selection:bg-primary/30">
       <Navbar />
-      
+
       <main className="flex-1">
         <HeroSection />
         <TrustStrip />
@@ -45,6 +59,7 @@ export default function Home() {
 }
 
 function FloatingWhatsApp() {
+  const t = useT();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -59,7 +74,7 @@ function FloatingWhatsApp() {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Start a private WhatsApp conversation"
+      aria-label={t.floating.aria}
       initial={false}
       animate={{
         opacity: visible ? 1 : 0,
@@ -74,13 +89,70 @@ function FloatingWhatsApp() {
         <MessageCircle className="w-4 h-4 relative" />
       </span>
       <span className="text-xs md:text-sm font-medium tracking-widest uppercase">
-        Start Privately
+        {t.floating.startPrivately}
       </span>
     </motion.a>
   );
 }
 
+function LanguageSwitcher() {
+  const { lang, setLang, t } = useLang();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  const current = LANGUAGES.find((l) => l.code === lang) ?? LANGUAGES[0];
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-label={t.langSwitcher.label}
+        aria-expanded={open}
+        className="flex items-center gap-2 text-[11px] md:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-primary transition-colors px-2.5 py-2 border border-border/40 hover:border-primary/40 rounded-sm"
+      >
+        <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
+        <span>{current.short}</span>
+      </button>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.15 }}
+          className="absolute right-0 top-full mt-2 min-w-[160px] bg-background/95 backdrop-blur-md border border-border/60 rounded-sm shadow-lg z-50 overflow-hidden"
+        >
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              type="button"
+              onClick={() => {
+                setLang(l.code);
+                setOpen(false);
+              }}
+              className={`flex items-center justify-between w-full text-left px-4 py-2.5 text-xs tracking-wider transition-colors ${
+                l.code === lang ? "bg-primary/10 text-primary" : "text-foreground/80 hover:bg-card/60 hover:text-foreground"
+              }`}
+            >
+              <span>{l.label}</span>
+              <span className="text-[10px] text-muted-foreground/70">{l.short}</span>
+            </button>
+          ))}
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
 function Navbar() {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -90,7 +162,7 @@ function Navbar() {
   }, []);
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -102,75 +174,69 @@ function Navbar() {
         <a href="#" className="font-serif text-xl md:text-2xl tracking-wide text-foreground">
           Pocket<span className="text-primary italic">pill</span>
         </a>
-        <a 
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-2 text-xs md:text-sm font-medium tracking-widest uppercase bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-sm transition-all duration-300"
-        >
-          <span>Book Consult</span>
-          <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
-        </a>
+        <div className="flex items-center gap-3 md:gap-4">
+          <LanguageSwitcher />
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 text-[11px] md:text-sm font-medium tracking-widest uppercase bg-primary hover:bg-primary/90 text-primary-foreground px-4 md:px-5 py-2.5 rounded-sm transition-all duration-300"
+          >
+            <span>{t.nav.bookConsult}</span>
+            <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
+          </a>
+        </div>
       </div>
     </motion.nav>
   );
 }
 
 function HeroSection() {
+  const t = useT();
   return (
     <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 overflow-hidden">
-      {/* Background ambient image/texture */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/hero-texture.png" 
-          alt="" 
-          className="w-full h-full object-cover opacity-30 mix-blend-overlay"
-        />
+        <img src="/hero-texture.png" alt="" className="w-full h-full object-cover opacity-30 mix-blend-overlay" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 max-w-7xl">
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER}
-          className="max-w-4xl"
-        >
+        <motion.div initial="hidden" animate="visible" variants={STAGGER} className="max-w-4xl">
           <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-8">
             <div className="w-8 h-[1px] bg-primary" />
             <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">
-              Private Men's Health · West Africa & Diaspora
+              {t.hero.kicker}
             </span>
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             variants={FADE_UP}
             className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] tracking-tight mb-10 text-foreground"
           >
-            You've carried this long<br className="hidden md:block" /> enough. <em className="text-primary not-italic">Start here.</em>
+            {t.hero.headlinePre}<br className="hidden md:block" /> <em className="text-primary not-italic">{t.hero.headlineEm}</em>
           </motion.h1>
 
           <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start md:items-end">
             <motion.p variants={FADE_UP} className="text-muted-foreground text-lg max-w-md leading-relaxed">
-              Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp. Clear guidance. Confidential communication. No waiting rooms.
+              {t.hero.body}
             </motion.p>
 
             <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <a 
+              <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-sm transition-all duration-300 font-medium tracking-wide"
               >
-                <span>Start on WhatsApp</span>
+                <span>{t.hero.ctaPrimary}</span>
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <a 
+              <a
                 href="#pricing"
                 className="flex items-center justify-center px-8 py-4 border border-border/50 hover:border-primary/50 text-foreground hover:text-primary transition-colors duration-300 rounded-sm font-medium tracking-wide"
               >
-                See Pricing
+                {t.hero.ctaSecondary}
               </a>
             </motion.div>
           </div>
@@ -181,18 +247,13 @@ function HeroSection() {
 }
 
 function TrustStrip() {
-  const stats = [
-    { num: "1 in 4", desc: "Many younger men report erectile difficulties at some point.", icon: <Clock className="w-5 h-5 text-primary" /> },
-    { num: "Private", desc: "Consultations are conducted confidentially through secure channels.", icon: <Shield className="w-5 h-5 text-primary" /> },
-    { num: "Fast", desc: "Same-day scheduling may be available depending on demand.", icon: <MessageCircle className="w-5 h-5 text-primary" /> }
-  ];
-
+  const t = useT();
   return (
     <section className="border-y border-border/40 bg-card/30 backdrop-blur-sm relative z-20">
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/40">
-          {stats.map((stat, i) => (
-            <motion.div 
+          {t.trust.items.map((stat, i) => (
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -200,7 +261,7 @@ function TrustStrip() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="p-8 md:p-12 flex flex-col gap-4 group"
             >
-              {stat.icon}
+              {TRUST_ICONS[i]}
               <div>
                 <div className="font-serif text-3xl font-bold mb-2 group-hover:text-primary transition-colors">{stat.num}</div>
                 <div className="text-sm text-muted-foreground leading-relaxed">{stat.desc}</div>
@@ -214,55 +275,43 @@ function TrustStrip() {
 }
 
 function NarrativeSection() {
+  const t = useT();
   return (
     <section className="py-24 md:py-40 relative">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-          
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={STAGGER}
-            className="lg:col-span-7"
-          >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="lg:col-span-7">
             <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-primary" />
-              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Why Pocketpill Exists</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.narrative.kicker}</span>
             </motion.div>
-            
+
             <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1] mb-8">
-              The problem is often not the condition.<br /> It is the <em className="text-primary italic">silence.</em>
+              {t.narrative.headlinePre}<br /> <em className="text-primary italic">{t.narrative.headlineEm}</em>
             </motion.h2>
-            
+
             <motion.div variants={FADE_UP} className="text-muted-foreground text-lg space-y-6 max-w-xl">
-              <p>Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation.</p>
-              <p>Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance over WhatsApp.</p>
+              {t.narrative.paragraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </motion.div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-5"
-          >
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, ease: "easeOut" }} className="lg:col-span-5">
             <div className="relative">
               <div className="absolute -inset-4 bg-primary/5 border border-primary/10 rounded-sm transform translate-x-4 translate-y-4" />
               <div className="bg-card border border-border/50 p-10 md:p-14 relative rounded-sm z-10">
                 <div className="text-primary font-serif text-6xl leading-none absolute -top-6 left-8">"</div>
                 <p className="font-serif text-xl md:text-2xl italic leading-relaxed text-foreground mb-8 pt-4">
-                  I finally asked the questions I had been avoiding, and left with clarity instead of confusion.
+                  {t.narrative.quote}
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-[1px] bg-muted-foreground/30" />
-                  <span className="text-sm text-muted-foreground">Client testimonial</span>
+                  <span className="text-sm text-muted-foreground">{t.narrative.quoteAttr}</span>
                 </div>
               </div>
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>
@@ -270,54 +319,21 @@ function NarrativeSection() {
 }
 
 function WhyPharmacistSection() {
-  const pillars = [
-    {
-      title: "Medication Expertise",
-      items: [
-        "Understand common treatment options and safety considerations",
-        "Spot red flags and interaction concerns",
-        "Help you avoid trial-and-error mistakes"
-      ]
-    },
-    {
-      title: "Root-Cause Guidance",
-      highlight: true,
-      items: [
-        "Discuss lifestyle, stress, medication, and health contributors",
-        "Structured screening questions",
-        "Clear next-step recommendations"
-      ]
-    },
-    {
-      title: "Referral When Needed",
-      items: [
-        "Know when physician evaluation matters",
-        "Escalation guidance for warning signs",
-        "Support, not guesswork"
-      ]
-    }
-  ];
-
+  const t = useT();
   return (
     <section className="py-24 md:py-32 bg-card/20 border-y border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="mb-16 md:mb-24 text-center"
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="mb-16 md:mb-24 text-center">
           <motion.div variants={FADE_UP} className="flex justify-center items-center gap-3 mb-6">
-            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Why Trust A Pharmacist</span>
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.whyPharmacist.kicker}</span>
           </motion.div>
           <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1]">
-            Expertise that goes beyond <br className="hidden sm:block"/><em className="text-primary italic">internet advice.</em>
+            {t.whyPharmacist.headlinePre} <br className="hidden sm:block" /><em className="text-primary italic">{t.whyPharmacist.headlineEm}</em>
           </motion.h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {pillars.map((pillar, idx) => (
+          {t.whyPharmacist.pillars.map((pillar, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
@@ -325,9 +341,7 @@ function WhyPharmacistSection() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               className={`p-8 lg:p-10 rounded-sm border transition-colors duration-500 hover:border-primary/30 ${
-                pillar.highlight 
-                  ? 'bg-card border-primary/20 shadow-[0_0_40px_-15px_rgba(224,92,42,0.1)]' 
-                  : 'bg-background border-border/40'
+                idx === 1 ? "bg-card border-primary/20 shadow-[0_0_40px_-15px_rgba(224,92,42,0.1)]" : "bg-background border-border/40"
               }`}
             >
               <h3 className="text-xl font-medium mb-8 text-foreground">{pillar.title}</h3>
@@ -347,73 +361,21 @@ function WhyPharmacistSection() {
   );
 }
 
-function TestimonialsSection() {
-  const testimonials: { quote: string; name: string; location: string; age?: number; theme: string }[] = [
-    {
-      quote: "I delayed reaching out for months because I felt embarrassed. The consultation was private, calm, and practical. I left with clearer next steps than I had from weeks of searching online.",
-      name: "Tunde A.",
-      location: "Lagos",
-      age: 34,
-      theme: "Privacy"
-    },
-    {
-      quote: "What stood out was the discretion. No awkwardness, no judgment — just a direct conversation that helped me understand what questions I should be asking.",
-      name: "Michael O.",
-      location: "Abuja",
-      theme: "Privacy"
-    },
-    {
-      quote: "I expected generic advice. What I got was a thoughtful conversation tailored to my situation. The written follow-up was especially useful.",
-      name: "K.",
-      location: "London",
-      age: 41,
-      theme: "Clarity"
-    },
-    {
-      quote: "I was mainly looking for clarity. The session helped me separate myths from facts and gave me a more structured way to think about the issue.",
-      name: "Emeka N.",
-      location: "Port Harcourt",
-      theme: "Clarity"
-    },
-    {
-      quote: "The privacy mattered to me. Being able to speak over WhatsApp made it much easier to start the conversation in the first place.",
-      name: "S.",
-      location: "Ibadan",
-      theme: "WhatsApp"
-    },
-    {
-      quote: "I appreciated that nothing felt rushed. I was able to ask questions I'd been avoiding, and I got straightforward answers.",
-      name: "Daniel A.",
-      location: "Lagos",
-      age: 38,
-      theme: "Trust"
-    },
-    {
-      quote: "What I valued most was having someone explain possible contributing factors clearly, instead of jumping straight to assumptions.",
-      name: "Olumide B.",
-      location: "Lagos",
-      theme: "Clarity"
-    },
-    {
-      quote: "I came in skeptical. The consultation felt professional and grounded, and the action points gave me something concrete to work with.",
-      name: "J.",
-      location: "Manchester",
-      theme: "Trust"
-    },
-    {
-      quote: "I live outside Nigeria and was looking for someone who understood both the privacy concerns and the cultural hesitation around discussing this. That made a difference.",
-      name: "Chuka E.",
-      location: "Toronto, Canada",
-      theme: "Privacy"
-    },
-    {
-      quote: "The biggest change for me was peace of mind. I stopped guessing and had a clearer sense of what to do next.",
-      name: "A.",
-      location: "Abuja",
-      theme: "WhatsApp"
-    }
-  ];
+const TESTIMONIAL_META: { name: string; location: string; age?: number }[] = [
+  { name: "Tunde A.", location: "Lagos", age: 34 },
+  { name: "Michael O.", location: "Abuja" },
+  { name: "K.", location: "London", age: 41 },
+  { name: "Emeka N.", location: "Port Harcourt" },
+  { name: "S.", location: "Ibadan" },
+  { name: "Daniel A.", location: "Lagos", age: 38 },
+  { name: "Olumide B.", location: "Lagos" },
+  { name: "J.", location: "Manchester" },
+  { name: "Chuka E.", location: "Toronto, Canada" },
+  { name: "A.", location: "Abuja" }
+];
 
+function TestimonialsSection() {
+  const t = useT();
   return (
     <section className="relative py-28 md:py-40 bg-background overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -421,185 +383,100 @@ function TestimonialsSection() {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="max-w-3xl mb-20"
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="max-w-3xl mb-20">
           <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[1px] bg-primary" />
-            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">In Their Words</span>
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.testimonials.kicker}</span>
           </motion.div>
 
           <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1] mb-6">
-            Quiet conversations.<br />
-            <em className="text-primary italic">Lasting clarity.</em>
+            {t.testimonials.headlinePre}<br />
+            <em className="text-primary italic">{t.testimonials.headlineEm}</em>
           </motion.h2>
 
           <motion.p variants={FADE_UP} className="text-muted-foreground text-lg max-w-xl">
-            Shared with permission. Names and details have been adjusted to protect privacy.
+            {t.testimonials.sub}
           </motion.p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={STAGGER}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/40"
-        >
-          {testimonials.map((t, i) => (
-            <motion.figure
-              key={i}
-              variants={FADE_UP}
-              className="group relative bg-background hover:bg-card/60 transition-colors duration-500 p-8 md:p-10 flex flex-col"
-            >
-              <div className="absolute top-6 right-8 font-serif text-5xl text-primary/20 leading-none select-none">
-                "
-              </div>
-
-              <div className="mb-6">
-                <span className="text-[10px] tracking-[0.2em] uppercase text-primary/70 font-medium">
-                  {t.theme}
-                </span>
-              </div>
-
-              <blockquote className="font-serif text-lg md:text-[1.15rem] leading-relaxed text-foreground/90 italic mb-8 flex-1">
-                {t.quote}
-              </blockquote>
-
-              <figcaption className="flex items-center gap-3 pt-6 border-t border-border/40">
-                <div className="w-6 h-[1px] bg-primary/60" />
-                <div className="text-sm text-muted-foreground">
-                  <span className="text-foreground/80 font-medium">{t.name}</span>
-                  <span className="text-muted-foreground/70">
-                    {" · "}{t.location}
-                    {t.age ? `, Age ${t.age}` : ""}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={STAGGER} className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/40">
+          {t.testimonials.items.map((item, i) => {
+            const meta = TESTIMONIAL_META[i];
+            return (
+              <motion.figure
+                key={i}
+                variants={FADE_UP}
+                className="group relative bg-background hover:bg-card/60 transition-colors duration-500 p-8 md:p-10 flex flex-col"
+              >
+                <div className="absolute top-6 right-8 font-serif text-5xl text-primary/20 leading-none select-none">"</div>
+                <div className="mb-6">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-primary/70 font-medium">
+                    {t.testimonials.themes[item.themeKey as keyof typeof t.testimonials.themes]}
                   </span>
                 </div>
-              </figcaption>
-            </motion.figure>
-          ))}
+                <blockquote className="font-serif text-lg md:text-[1.15rem] leading-relaxed text-foreground/90 italic mb-8 flex-1">
+                  {item.quote}
+                </blockquote>
+                <figcaption className="flex items-center gap-3 pt-6 border-t border-border/40">
+                  <div className="w-6 h-[1px] bg-primary/60" />
+                  <div className="text-sm text-muted-foreground">
+                    <span className="text-foreground/80 font-medium">{meta.name}</span>
+                    <span className="text-muted-foreground/70">
+                      {" · "}{meta.location}
+                      {meta.age ? `, ${t.testimonials.ageLabel} ${meta.age}` : ""}
+                    </span>
+                  </div>
+                </figcaption>
+              </motion.figure>
+            );
+          })}
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xs text-muted-foreground/60 mt-10 max-w-2xl leading-relaxed"
-        >
-          Testimonials reflect individual experiences. They are not promises of specific outcomes and do not constitute medical advice.
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="text-xs text-muted-foreground/60 mt-10 max-w-2xl leading-relaxed">
+          {t.testimonials.disclaimer}
         </motion.p>
       </div>
     </section>
   );
 }
 
-type ScreenerAnswer = { value: string; label: string; redFlag?: boolean };
-type ScreenerQuestion = {
-  id: string;
-  question: string;
-  helper?: string;
-  options: ScreenerAnswer[];
-};
-
-const SCREENER_QUESTIONS: ScreenerQuestion[] = [
-  {
-    id: "concern",
-    question: "What brings you in?",
-    options: [
-      { value: "ed", label: "Erectile difficulty" },
-      { value: "pe", label: "Premature ejaculation" },
-      { value: "both", label: "Both" },
-      { value: "other", label: "Something related, not sure how to label it" }
-    ]
-  },
-  {
-    id: "duration",
-    question: "How long has this been on your mind?",
-    options: [
-      { value: "weeks", label: "A few weeks" },
-      { value: "months", label: "Several months" },
-      { value: "year+", label: "A year or longer" }
-    ]
-  },
-  {
-    id: "onset",
-    question: "How did it start?",
-    options: [
-      { value: "gradual", label: "Gradually, over time" },
-      { value: "sudden", label: "Suddenly, in days or weeks", redFlag: true },
-      { value: "always", label: "It's been like this as long as I remember" }
-    ]
-  },
-  {
-    id: "context",
-    question: "When does it show up?",
-    options: [
-      { value: "partner", label: "Mainly with a partner" },
-      { value: "solo", label: "Mainly when alone" },
-      { value: "both", label: "In both situations" }
-    ]
-  },
-  {
-    id: "meds",
-    question: "Are you currently on heart, blood pressure, or mental-health medication?",
-    helper: "Honest answer matters — it changes the conversation.",
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
-      { value: "unsure", label: "Not sure" }
-    ]
-  },
-  {
-    id: "goal",
-    question: "What would make this consultation worth it for you?",
-    options: [
-      { value: "clarity", label: "Clarity — I want to understand what's happening" },
-      { value: "options", label: "Options — I want to know what could help" },
-      { value: "second", label: "A second opinion on something I've already tried" },
-      { value: "support", label: "Ongoing support over time" }
-    ]
-  }
-];
+type ScreenerOption = { value: string; label: string; redFlag?: boolean };
 
 function ScreenerSection() {
+  const t = useT();
+  const screener = t.screener;
+  const questions = screener.questions;
+
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, ScreenerAnswer>>({});
+  const [answers, setAnswers] = useState<Record<string, ScreenerOption>>({});
   const [copied, setCopied] = useState(false);
 
-  const total = SCREENER_QUESTIONS.length;
+  const total = questions.length;
   const isResult = step >= total;
-  const current = SCREENER_QUESTIONS[step];
+  const current = questions[step];
   const progress = isResult ? 100 : Math.round((step / total) * 100);
 
-  const summary = useMemo(() => buildSummary(answers), [answers]);
-  const recommendation = useMemo(() => recommendTier(answers), [answers]);
-  const hasRedFlag = useMemo(
-    () => Object.values(answers).some((a) => a?.redFlag),
-    [answers]
-  );
+  const summary = useMemo(() => buildSummary(answers, screener.message.labels, screener.message.dash), [answers, screener]);
+  const recommendation = useMemo(() => recommendTier(answers, screener.recommendations), [answers, screener]);
+  const hasRedFlag = useMemo(() => Object.values(answers).some((a) => a?.redFlag), [answers]);
 
   const message = useMemo(() => {
-    const lines = [
-      "Hi — I'd like to book a private consultation.",
+    const m = screener.message;
+    return [
+      m.intro,
       "",
-      "A quick summary of my situation:",
+      m.summaryHeading,
       summary,
       "",
-      `What I'm hoping to get out of it: ${answers.goal?.label ?? "—"}`,
+      `${m.goalPrefix} ${answers.goal?.label ?? m.dash}`,
       "",
-      `Suggested starting point: ${recommendation.tier}.`
-    ];
-    return lines.join("\n");
-  }, [summary, answers, recommendation]);
+      `${m.tierPrefix} ${recommendation.tier}.`
+    ].join("\n");
+  }, [summary, answers, recommendation, screener]);
 
   const whatsappLink = `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
 
-  function pick(option: ScreenerAnswer) {
+  function pick(option: ScreenerOption) {
     if (!current) return;
     setAnswers((prev) => ({ ...prev, [current.id]: option }));
     setStep((s) => s + 1);
@@ -629,75 +506,47 @@ function ScreenerSection() {
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={STAGGER}
-            className="lg:col-span-5 lg:sticky lg:top-32"
-          >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="lg:col-span-5 lg:sticky lg:top-32">
             <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-primary" />
-              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">30-Second Self-Check</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{screener.kicker}</span>
             </motion.div>
 
             <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05] mb-6">
-              Not sure where to begin?<br />
-              <em className="text-primary italic">Answer six private questions.</em>
+              {screener.headlinePre}<br />
+              <em className="text-primary italic">{screener.headlineEm}</em>
             </motion.h2>
 
             <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed mb-8 max-w-md">
-              Nothing is sent anywhere. Your answers stay on this device and produce a short summary you can copy into WhatsApp — so you don't have to type the hard parts twice.
+              {screener.sub}
             </motion.p>
 
             <motion.div variants={FADE_UP} className="flex items-center gap-3 text-sm text-muted-foreground/80">
               <Lock className="w-4 h-4 text-primary/70" strokeWidth={1.5} />
-              <span>No accounts. No tracking. No storage.</span>
+              <span>{screener.privacyNote}</span>
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="lg:col-span-7"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }} className="lg:col-span-7">
             <div className="relative">
               <div className="absolute -inset-3 bg-primary/5 border border-primary/10 rounded-sm transform translate-x-3 translate-y-3" />
               <div className="relative bg-background border border-border/60 rounded-sm p-8 md:p-12 z-10 min-h-[460px] flex flex-col">
-                {/* Progress */}
                 <div className="flex items-center justify-between mb-8">
                   <span className="text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
-                    {isResult ? "Your summary" : `Question ${step + 1} of ${total}`}
+                    {isResult ? screener.yourSummary : `${screener.questionLabel} ${step + 1} ${screener.of} ${total}`}
                   </span>
-                  <span className="text-[11px] tracking-[0.2em] uppercase text-primary/70">
-                    {progress}%
-                  </span>
+                  <span className="text-[11px] tracking-[0.2em] uppercase text-primary/70">{progress}%</span>
                 </div>
                 <div className="h-[2px] bg-border/60 mb-10 overflow-hidden">
-                  <motion.div
-                    className="h-full bg-primary"
-                    initial={false}
-                    animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                  />
+                  <motion.div className="h-full bg-primary" initial={false} animate={{ width: `${progress}%` }} transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }} />
                 </div>
 
                 {!isResult && current && (
-                  <motion.div
-                    key={current.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="flex-1 flex flex-col"
-                  >
+                  <motion.div key={current.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex-1 flex flex-col">
                     <h3 className="font-serif text-2xl md:text-[1.7rem] leading-snug text-foreground/95 mb-3">
                       {current.question}
                     </h3>
-                    {current.helper && (
-                      <p className="text-sm text-muted-foreground/80 mb-6">{current.helper}</p>
-                    )}
+                    {current.helper && <p className="text-sm text-muted-foreground/80 mb-6">{current.helper}</p>}
 
                     <div className="grid gap-3 mt-2">
                       {current.options.map((opt) => (
@@ -714,42 +563,27 @@ function ScreenerSection() {
                     </div>
 
                     {step > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => setStep((s) => Math.max(0, s - 1))}
-                        className="mt-8 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors"
-                      >
-                        ← Back
+                      <button type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} className="mt-8 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors">
+                        {screener.back}
                       </button>
                     )}
                   </motion.div>
                 )}
 
                 {isResult && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="flex-1 flex flex-col"
-                  >
-                    <h3 className="font-serif text-2xl md:text-[1.7rem] leading-snug text-foreground/95 mb-3">
-                      Here's what to send.
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-6">
-                      Copy this into WhatsApp, or open the chat with it pre-filled.
-                    </p>
+                  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex-1 flex flex-col">
+                    <h3 className="font-serif text-2xl md:text-[1.7rem] leading-snug text-foreground/95 mb-3">{screener.resultTitle}</h3>
+                    <p className="text-sm text-muted-foreground mb-6">{screener.resultSub}</p>
 
                     <div className="bg-card/60 border border-border/50 rounded-sm p-5 md:p-6 mb-5">
-                      <pre className="font-sans text-[14px] leading-relaxed text-foreground/90 whitespace-pre-wrap">
-{message}
-                      </pre>
+                      <pre className="font-sans text-[14px] leading-relaxed text-foreground/90 whitespace-pre-wrap">{message}</pre>
                     </div>
 
                     <div className="bg-primary/[0.06] border border-primary/20 rounded-sm p-5 mb-5">
                       <div className="flex items-start gap-3">
                         <Check className="w-4 h-4 text-primary mt-1 shrink-0" strokeWidth={2} />
                         <div className="text-sm">
-                          <div className="text-foreground/90 font-medium mb-1">Suggested starting point: {recommendation.tier}</div>
+                          <div className="text-foreground/90 font-medium mb-1">{screener.suggestedLabel} {recommendation.tier}</div>
                           <div className="text-muted-foreground leading-relaxed">{recommendation.reason}</div>
                         </div>
                       </div>
@@ -760,41 +594,26 @@ function ScreenerSection() {
                         <div className="flex items-start gap-3">
                           <AlertTriangle className="w-4 h-4 text-destructive mt-1 shrink-0" strokeWidth={2} />
                           <div className="text-sm">
-                            <div className="text-foreground/90 font-medium mb-1">Worth seeing a doctor in person, soon</div>
-                            <div className="text-muted-foreground leading-relaxed">
-                              Sudden onset can occasionally be an early signal of something cardiovascular. A pharmacist consultation is still useful — but please also book a physician.
-                            </div>
+                            <div className="text-foreground/90 font-medium mb-1">{screener.redFlagTitle}</div>
+                            <div className="text-muted-foreground leading-relaxed">{screener.redFlagBody}</div>
                           </div>
                         </div>
                       </div>
                     )}
 
                     <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-                      <a
-                        href={whatsappLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase"
-                      >
-                        <span>Send on WhatsApp</span>
+                      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="group flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase">
+                        <span>{screener.sendBtn}</span>
                         <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
                       </a>
-                      <button
-                        type="button"
-                        onClick={copyMessage}
-                        className="inline-flex items-center justify-center gap-2 border border-border/60 hover:border-primary/40 hover:bg-primary/[0.04] px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase text-foreground/90"
-                      >
+                      <button type="button" onClick={copyMessage} className="inline-flex items-center justify-center gap-2 border border-border/60 hover:border-primary/40 hover:bg-primary/[0.04] px-6 py-4 rounded-sm transition-colors text-xs md:text-sm font-medium tracking-widest uppercase text-foreground/90">
                         {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
-                        <span>{copied ? "Copied" : "Copy"}</span>
+                        <span>{copied ? screener.copiedBtn : screener.copyBtn}</span>
                       </button>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="mt-6 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors"
-                    >
-                      ← Start over
+                    <button type="button" onClick={reset} className="mt-6 self-start text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground/80 transition-colors">
+                      {screener.startOver}
                     </button>
                   </motion.div>
                 )}
@@ -807,132 +626,88 @@ function ScreenerSection() {
   );
 }
 
-function buildSummary(answers: Record<string, ScreenerAnswer>): string {
+function buildSummary(
+  answers: Record<string, ScreenerOption>,
+  labels: Translation["screener"]["message"]["labels"],
+  dash: string
+): string {
   const lines: string[] = [];
-  if (answers.concern) lines.push(`• Concern: ${answers.concern.label}`);
-  if (answers.duration) lines.push(`• Duration: ${answers.duration.label.toLowerCase()}`);
-  if (answers.onset) lines.push(`• Onset: ${answers.onset.label.toLowerCase()}`);
-  if (answers.context) lines.push(`• Context: ${answers.context.label.toLowerCase()}`);
-  if (answers.meds) lines.push(`• On heart / BP / mental-health medication: ${answers.meds.label.toLowerCase()}`);
-  return lines.length ? lines.join("\n") : "—";
+  if (answers.concern) lines.push(`• ${labels.concern}: ${answers.concern.label}`);
+  if (answers.duration) lines.push(`• ${labels.duration}: ${answers.duration.label.toLowerCase()}`);
+  if (answers.onset) lines.push(`• ${labels.onset}: ${answers.onset.label.toLowerCase()}`);
+  if (answers.context) lines.push(`• ${labels.context}: ${answers.context.label.toLowerCase()}`);
+  if (answers.meds) lines.push(`• ${labels.meds}: ${answers.meds.label.toLowerCase()}`);
+  return lines.length ? lines.join("\n") : dash;
 }
 
-function recommendTier(answers: Record<string, ScreenerAnswer>): { tier: string; reason: string } {
+function recommendTier(
+  answers: Record<string, ScreenerOption>,
+  rec: Translation["screener"]["recommendations"]
+): { tier: string; reason: string } {
   const goal = answers.goal?.value;
   const duration = answers.duration?.value;
-  if (goal === "support") {
-    return {
-      tier: "Monthly — Maintenance",
-      reason: "You're looking for ongoing support, so a monthly arrangement gives you check-ins and protocol adjustments over time."
-    };
-  }
-  if (goal === "second" || duration === "year+") {
-    return {
-      tier: "Premium — Deep-dive consultation",
-      reason: "Given how long you've been working with this, a longer session and a written protocol will go further than a quick exchange."
-    };
-  }
-  if (goal === "options") {
-    return {
-      tier: "Standard — 30-minute voice consultation",
-      reason: "A real conversation is the fastest way to walk through options and figure out which one fits your situation."
-    };
-  }
-  return {
-    tier: "Starter — Text consultation",
-    reason: "If clarity is the main goal, a written consultation is enough to get you there — and you can always upgrade later."
-  };
+  if (goal === "support") return rec.support;
+  if (goal === "second" || duration === "year+") return rec.premium;
+  if (goal === "options") return rec.standard;
+  return rec.starter;
 }
 
 function PricingSection() {
-  const tiers = [
-    {
-      name: "Starter",
-      price: "₦10,000",
-      desc: "Text consultation",
-      features: ["Written consultation", "Follow-up questions included", "24-hour response target"],
-      link: "https://www.paypal.com/paypalme/yourusername/10000",
-      primary: false
-    },
-    {
-      name: "Standard",
-      price: "₦15,000",
-      desc: "30-min voice consultation",
-      features: ["Private voice session", "Written summary", "Action plan included"],
-      link: "https://www.paypal.com/paypalme/yourusername/15000",
-      primary: true
-    },
-    {
-      name: "Premium",
-      price: "₦27,000",
-      desc: "Deep-dive session + protocol",
-      features: ["Extended consult", "Protocol document", "7-day follow-up access"],
-      link: "https://www.paypal.com/paypalme/yourusername/27000",
-      primary: false
-    }
-  ];
-
+  const t = useT();
   return (
     <section id="pricing" className="py-24 md:py-40">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="mb-16 md:mb-24"
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="mb-16 md:mb-24">
           <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[1px] bg-primary" />
-            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Pricing</span>
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.pricing.kicker}</span>
           </motion.div>
           <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1]">
-            Simple pricing. <br /><em className="text-primary italic">Clear next steps.</em>
+            {t.pricing.headlinePre} <br /><em className="text-primary italic">{t.pricing.headlineEm}</em>
           </motion.h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center">
-          {tiers.map((tier, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className={`p-8 lg:p-10 flex flex-col rounded-sm border ${
-                tier.primary 
-                  ? 'bg-card border-primary/30 shadow-[0_0_50px_-15px_rgba(224,92,42,0.15)] md:-translate-y-4' 
-                  : 'bg-background border-border/40'
-              }`}
-            >
-              <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">{tier.name}</div>
-              <div className="font-serif text-4xl lg:text-5xl font-bold mb-3">{tier.price}</div>
-              <div className="text-sm text-primary mb-8">{tier.desc}</div>
-              
-              <ul className="space-y-4 mb-10 flex-1">
-                {tier.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0 mt-2" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <a 
-                href={tier.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center justify-center gap-2 w-full py-4 px-6 rounded-sm font-medium transition-all duration-300 ${
-                  tier.primary 
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-                    : 'border border-border hover:border-primary text-foreground hover:text-primary'
+          {t.pricing.tiers.map((tier, idx) => {
+            const primary = idx === 1;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                className={`p-8 lg:p-10 flex flex-col rounded-sm border ${
+                  primary ? "bg-card border-primary/30 shadow-[0_0_50px_-15px_rgba(224,92,42,0.15)] md:-translate-y-4" : "bg-background border-border/40"
                 }`}
               >
-                <span>Pay & Book</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </motion.div>
-          ))}
+                <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">{tier.name}</div>
+                <div className="font-serif text-4xl lg:text-5xl font-bold mb-3">{tier.price}</div>
+                <div className="text-sm text-primary mb-8">{tier.desc}</div>
+
+                <ul className="space-y-4 mb-10 flex-1">
+                  {tier.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0 mt-2" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={PAYPAL_LINKS[idx]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center justify-center gap-2 w-full py-4 px-6 rounded-sm font-medium transition-all duration-300 ${
+                    primary ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border hover:border-primary text-foreground hover:text-primary"
+                  }`}
+                >
+                  <span>{t.pricing.payBook}</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -940,35 +715,17 @@ function PricingSection() {
 }
 
 function MonthlySupportSection() {
-  const plans = [
-    {
-      name: "Maintenance",
-      price: "₦30,000",
-      features: ["Weekly check-ins", "Protocol adjustments", "Priority response"]
-    },
-    {
-      name: "Intensive",
-      price: "₦40,000",
-      features: ["Two monthly calls", "Ongoing text access", "Progress reporting"],
-      highlight: true
-    }
-  ];
-
+  const t = useT();
   return (
     <section className="py-16 md:py-24 bg-card/20 border-t border-border/40">
       <div className="container mx-auto px-6 md:px-12 max-w-4xl">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h3 className="font-serif text-2xl md:text-3xl mb-4">Monthly Support</h3>
-          <p className="text-muted-foreground">For ongoing guidance and protocol refinement.</p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <h3 className="font-serif text-2xl md:text-3xl mb-4">{t.monthly.title}</h3>
+          <p className="text-muted-foreground">{t.monthly.sub}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {plans.map((plan, idx) => (
+          {t.monthly.plans.map((plan, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -976,7 +733,7 @@ function MonthlySupportSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className={`p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border rounded-sm ${
-                plan.highlight ? 'border-primary/20 bg-card' : 'border-border/40 bg-background'
+                idx === 1 ? "border-primary/20 bg-card" : "border-border/40 bg-background"
               }`}
             >
               <div>
@@ -1000,54 +757,7 @@ function MonthlySupportSection() {
 }
 
 function ReadBeforeBookingSection() {
-  const articles = [
-    {
-      kicker: "Primer",
-      readTime: "4 min read",
-      title: "What erectile dysfunction actually is",
-      excerpt: "ED is far more common — and far less binary — than the internet suggests. Here is what's actually happening, and what isn't.",
-      body: [
-        "Erectile dysfunction is the consistent difficulty in getting or keeping an erection firm enough for the kind of sex you want to have. The keyword is consistent — an off night is not a diagnosis.",
-        "Mechanically, an erection requires four things working together: nervous system signals, healthy blood flow, hormones in a normal range, and a psychological state that isn't actively shutting the process down. A breakdown in any one of these can show up as ED.",
-        "That's why a thoughtful conversation matters more than a quick prescription. Treating only the symptom — without understanding which lever is stuck — often leads to disappointment and a longer road back."
-      ]
-    },
-    {
-      kicker: "Primer",
-      readTime: "3 min read",
-      title: "Premature ejaculation: what's normal, what isn't",
-      excerpt: "There is no universal stopwatch. The honest answer involves time, control, and how you and your partner feel about it.",
-      body: [
-        "Premature ejaculation is usually defined as ejaculation that happens sooner than you'd like, with little sense of control, and that bothers you or your partner. All three matter — time alone doesn't define it.",
-        "It can be lifelong (since first sexual experiences) or acquired (showed up later). Each pattern points to different contributing factors and different starting points for guidance.",
-        "Behavioral techniques, addressing anxiety, and in some cases medication all have roles. The right combination depends on your pattern, not on a one-size-fits-all script."
-      ]
-    },
-    {
-      kicker: "When to escalate",
-      readTime: "2 min read",
-      title: "When to see a doctor in person",
-      excerpt: "Some signals are worth a face-to-face evaluation. Knowing them is part of taking yourself seriously.",
-      body: [
-        "Sudden onset ED — especially over days or a couple of weeks — can sometimes be an early signal of cardiovascular issues. It deserves a physician visit, not a forum thread.",
-        "Pain during erection, a noticeable change in shape or curvature, blood where there shouldn't be, or symptoms alongside chest pain, fainting or new headaches are all reasons to be seen in person, soon.",
-        "If you take heart, blood pressure, or psychiatric medications and have noticed a change since starting them, that is also worth a structured review with a prescriber rather than self-adjustment."
-      ]
-    },
-    {
-      kicker: "Lifestyle",
-      readTime: "3 min read",
-      title: "The four levers most men underestimate",
-      excerpt: "Sleep, alcohol, weight, and stress are not platitudes — they are the levers that quietly decide how well treatment works.",
-      body: [
-        "Sleep below six hours consistently lowers testosterone and dampens nervous system response. Many men chasing a pill would benefit more from a fixed bedtime first.",
-        "Alcohol is a depressant: a couple of drinks can take the edge off anxiety, but it also takes the edge off everything else. The pattern matters more than any single night.",
-        "Carrying significant excess weight around the midsection is metabolically active in ways that affect hormones and blood vessels. Modest, sustained loss often improves function before any other intervention.",
-        "Chronic stress keeps the body in a state that is the opposite of what arousal requires. Naming it and addressing it isn't soft — it's mechanical."
-      ]
-    }
-  ];
-
+  const t = useT();
   return (
     <section className="relative py-28 md:py-40 bg-card/30 border-y border-border/40 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -1055,40 +765,28 @@ function ReadBeforeBookingSection() {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-20"
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-20">
           <div className="max-w-2xl">
             <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-primary" />
-              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Read Before Booking</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.primers.kicker}</span>
             </motion.div>
 
             <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05]">
-              You don't have to message yet.<br />
-              <em className="text-primary italic">Start by reading.</em>
+              {t.primers.headlinePre}<br />
+              <em className="text-primary italic">{t.primers.headlineEm}</em>
             </motion.h2>
           </div>
 
           <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed max-w-sm md:text-right">
-            Plain-language primers written by the same pharmacist who would take your consultation. No upsells in the body.
+            {t.primers.sub}
           </motion.p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={STAGGER}
-          className="grid md:grid-cols-2 gap-6 md:gap-8"
-        >
-          {articles.map((a, i) => (
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={STAGGER} className="grid md:grid-cols-2 gap-6 md:gap-8">
+          {t.primers.items.map((a, i) => (
             <motion.div key={i} variants={FADE_UP}>
-              <ArticleCard article={a} />
+              <ArticleCard article={a} readBtn={t.primers.readBtn} closeBtn={t.primers.closeBtn} />
             </motion.div>
           ))}
         </motion.div>
@@ -1098,12 +796,15 @@ function ReadBeforeBookingSection() {
 }
 
 function ArticleCard({
-  article
+  article,
+  readBtn,
+  closeBtn
 }: {
   article: { kicker: string; readTime: string; title: string; excerpt: string; body: string[] };
+  readBtn: string;
+  closeBtn: string;
 }) {
   const [open, setOpen] = useState(false);
-
   return (
     <article className="group relative bg-background/60 border border-border/50 hover:border-primary/30 transition-colors duration-500 p-8 md:p-10 rounded-sm flex flex-col h-full">
       <div className="flex items-center justify-between mb-6">
@@ -1117,20 +818,11 @@ function ArticleCard({
         </div>
       </div>
 
-      <h3 className="font-serif text-2xl md:text-[1.65rem] leading-snug text-foreground/95 mb-4">
-        {article.title}
-      </h3>
+      <h3 className="font-serif text-2xl md:text-[1.65rem] leading-snug text-foreground/95 mb-4">{article.title}</h3>
 
-      <p className="text-muted-foreground text-base leading-relaxed mb-6">
-        {article.excerpt}
-      </p>
+      <p className="text-muted-foreground text-base leading-relaxed mb-6">{article.excerpt}</p>
 
-      <motion.div
-        initial={false}
-        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-        className="overflow-hidden"
-      >
+      <motion.div initial={false} animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }} transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }} className="overflow-hidden">
         <div className="space-y-4 text-foreground/75 text-[15px] leading-relaxed border-t border-border/40 pt-6 mb-6">
           {article.body.map((p, i) => (
             <p key={i}>{p}</p>
@@ -1144,96 +836,42 @@ function ArticleCard({
         aria-expanded={open}
         className="mt-auto inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-primary hover:text-primary/80 transition-colors self-start"
       >
-        <span>{open ? "Close" : "Read primer"}</span>
-        <ChevronRight
-          className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-90" : "group-hover:translate-x-1"}`}
-        />
+        <span>{open ? closeBtn : readBtn}</span>
+        <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-90" : "group-hover:translate-x-1"}`} />
       </button>
     </article>
   );
 }
 
 function FAQSection() {
-  const faqs = [
-    {
-      q: "Is this really private?",
-      a: "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially in line with applicable professional obligations."
-    },
-    {
-      q: "Will anything show up on my bank or card statement?",
-      a: "Payments are processed through PayPal under a discreet descriptor. No medical or condition-specific wording appears on your statement — only the platform name."
-    },
-    {
-      q: "Can the pharmacist prescribe medication?",
-      a: "No. Pocketpill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and tell you what a prescriber needs to hear — but a licensed physician must issue any prescription."
-    },
-    {
-      q: "What if my issue turns out to be something more serious?",
-      a: "Part of the consultation is identifying when physician evaluation matters. If anything in your screening points to a red flag, you'll get clear escalation guidance and a recommendation to see a doctor in person."
-    },
-    {
-      q: "I live outside Nigeria. Can I still book?",
-      a: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run on WhatsApp and PayPal, both of which work globally. Time zones are accommodated when scheduling."
-    },
-    {
-      q: "How fast can I be seen?",
-      a: "Same-day scheduling is often available depending on demand. For text consultations the response target is within 24 hours; voice sessions are booked at a time that works for both of us."
-    },
-    {
-      q: "What if I'm not sure which tier I need?",
-      a: "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade."
-    },
-    {
-      q: "Do I have to share my real name?",
-      a: "No. Many clients use a first name or initial. What matters is that the conversation is honest — not that the file says who you are."
-    }
-  ];
-
+  const t = useT();
   return (
     <section className="relative py-28 md:py-40 bg-background overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={STAGGER}
-            className="lg:col-span-4"
-          >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="lg:col-span-4">
             <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
               <div className="w-8 h-[1px] bg-primary" />
-              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Frequently Asked</span>
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.faq.kicker}</span>
             </motion.div>
 
             <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05] mb-8">
-              The questions<br />
-              men <em className="text-primary italic">don't ask out loud.</em>
+              {t.faq.headlinePre}<br />
+              <em className="text-primary italic">{t.faq.headlineEm}</em>
             </motion.h2>
 
             <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed max-w-sm">
-              If something here isn't covered, message on WhatsApp before booking. There's no obligation to continue.
+              {t.faq.sub}
             </motion.p>
 
-            <motion.a
-              variants={FADE_UP}
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 mt-8 text-sm tracking-widest uppercase text-primary hover:text-primary/80 transition-colors"
-            >
-              <span>Ask Privately</span>
+            <motion.a variants={FADE_UP} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 mt-8 text-sm tracking-widest uppercase text-primary hover:text-primary/80 transition-colors">
+              <span>{t.faq.askPrivately}</span>
               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </motion.a>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={STAGGER}
-            className="lg:col-span-8"
-          >
-            {faqs.map((item, i) => (
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={STAGGER} className="lg:col-span-8">
+            {t.faq.items.map((item, i) => (
               <motion.div key={i} variants={FADE_UP}>
                 <FAQItem question={item.q} answer={item.a} defaultOpen={i === 0} />
               </motion.div>
@@ -1249,12 +887,7 @@ function FAQItem({ question, answer, defaultOpen = false }: { question: string; 
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="border-b border-border/40">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="group w-full flex items-start justify-between gap-6 py-7 text-left"
-      >
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="group w-full flex items-start justify-between gap-6 py-7 text-left">
         <span className="font-serif text-xl md:text-2xl leading-snug text-foreground/90 group-hover:text-primary transition-colors duration-300">
           {question}
         </span>
@@ -1268,62 +901,39 @@ function FAQItem({ question, answer, defaultOpen = false }: { question: string; 
           <span className="block w-[1px] h-3 bg-current absolute" />
         </span>
       </button>
-      <motion.div
-        initial={false}
-        animate={{
-          height: open ? "auto" : 0,
-          opacity: open ? 1 : 0
-        }}
-        transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-        className="overflow-hidden"
-      >
-        <p className="text-muted-foreground text-base md:text-[1.05rem] leading-relaxed pb-8 pr-12 max-w-2xl">
-          {answer}
-        </p>
+      <motion.div initial={false} animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }} transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }} className="overflow-hidden">
+        <p className="text-muted-foreground text-base md:text-[1.05rem] leading-relaxed pb-8 pr-12 max-w-2xl">{answer}</p>
       </motion.div>
     </div>
   );
 }
 
 function ClosingCTASection() {
+  const t = useT();
   return (
     <section className="py-32 md:py-48 relative overflow-hidden flex flex-col items-center justify-center text-center">
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/discreet-phone.png" 
-          alt="" 
-          className="w-full h-full object-cover opacity-20 mix-blend-overlay"
-        />
+        <img src="/discreet-phone.png" alt="" className="w-full h-full object-cover opacity-20 mix-blend-overlay" />
         <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10 max-w-3xl">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER}>
           <motion.div variants={FADE_UP} className="flex justify-center items-center gap-3 mb-8">
-            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">When You're Ready</span>
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">{t.closing.kicker}</span>
           </motion.div>
-          
+
           <motion.h2 variants={FADE_UP} className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-8">
-            The hardest part is <br className="hidden sm:block" />the first message.
+            {t.closing.headlinePre} <br className="hidden sm:block" />{t.closing.headlinePost}
           </motion.h2>
-          
+
           <motion.p variants={FADE_UP} className="text-muted-foreground text-lg mb-12 max-w-lg mx-auto">
-            Start privately on WhatsApp. Ask the question you've been postponing.
+            {t.closing.sub}
           </motion.p>
-          
+
           <motion.div variants={FADE_UP}>
-            <a 
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-5 rounded-sm transition-all duration-300 font-medium tracking-wide shadow-[0_10px_40px_-10px_rgba(224,92,42,0.4)] hover:shadow-[0_15px_50px_-10px_rgba(224,92,42,0.5)] hover:-translate-y-1"
-            >
-              <span>Message on WhatsApp</span>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-5 rounded-sm transition-all duration-300 font-medium tracking-wide shadow-[0_10px_40px_-10px_rgba(224,92,42,0.4)] hover:shadow-[0_15px_50px_-10px_rgba(224,92,42,0.5)] hover:-translate-y-1">
+              <span>{t.closing.cta}</span>
               <MessageCircle className="w-5 h-5" />
             </a>
           </motion.div>
@@ -1334,15 +944,16 @@ function ClosingCTASection() {
 }
 
 function Footer() {
+  const t = useT();
   return (
     <footer className="bg-background border-t border-border/40 py-12 md:py-16">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
         <a href="#" className="font-serif text-2xl tracking-wide text-foreground">
           Pocket<span className="text-primary italic">pill</span>
         </a>
-        
+
         <p className="text-xs text-muted-foreground/60 max-w-2xl leading-relaxed text-left md:text-right">
-          Pocketpill provides pharmacist consultation and health education services. Services are informational and do not constitute diagnosis, emergency care, or prescription services. Users should seek a licensed physician for diagnosis, emergencies, or treatment decisions. Confidentiality is handled in accordance with applicable professional obligations and the privacy limits of the communication tools used.
+          {t.footer.disclaimer}
         </p>
       </div>
     </footer>
