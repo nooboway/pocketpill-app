@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check } from "lucide-react";
+import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const WHATSAPP_URL = "https://wa.me/2348000000000";
@@ -32,6 +32,7 @@ export default function Home() {
         <TestimonialsSection />
         <PricingSection />
         <MonthlySupportSection />
+        <ReadBeforeBookingSection />
         <FAQSection />
         <ClosingCTASection />
       </main>
@@ -648,6 +649,160 @@ function MonthlySupportSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ReadBeforeBookingSection() {
+  const articles = [
+    {
+      kicker: "Primer",
+      readTime: "4 min read",
+      title: "What erectile dysfunction actually is",
+      excerpt: "ED is far more common — and far less binary — than the internet suggests. Here is what's actually happening, and what isn't.",
+      body: [
+        "Erectile dysfunction is the consistent difficulty in getting or keeping an erection firm enough for the kind of sex you want to have. The keyword is consistent — an off night is not a diagnosis.",
+        "Mechanically, an erection requires four things working together: nervous system signals, healthy blood flow, hormones in a normal range, and a psychological state that isn't actively shutting the process down. A breakdown in any one of these can show up as ED.",
+        "That's why a thoughtful conversation matters more than a quick prescription. Treating only the symptom — without understanding which lever is stuck — often leads to disappointment and a longer road back."
+      ]
+    },
+    {
+      kicker: "Primer",
+      readTime: "3 min read",
+      title: "Premature ejaculation: what's normal, what isn't",
+      excerpt: "There is no universal stopwatch. The honest answer involves time, control, and how you and your partner feel about it.",
+      body: [
+        "Premature ejaculation is usually defined as ejaculation that happens sooner than you'd like, with little sense of control, and that bothers you or your partner. All three matter — time alone doesn't define it.",
+        "It can be lifelong (since first sexual experiences) or acquired (showed up later). Each pattern points to different contributing factors and different starting points for guidance.",
+        "Behavioral techniques, addressing anxiety, and in some cases medication all have roles. The right combination depends on your pattern, not on a one-size-fits-all script."
+      ]
+    },
+    {
+      kicker: "When to escalate",
+      readTime: "2 min read",
+      title: "When to see a doctor in person",
+      excerpt: "Some signals are worth a face-to-face evaluation. Knowing them is part of taking yourself seriously.",
+      body: [
+        "Sudden onset ED — especially over days or a couple of weeks — can sometimes be an early signal of cardiovascular issues. It deserves a physician visit, not a forum thread.",
+        "Pain during erection, a noticeable change in shape or curvature, blood where there shouldn't be, or symptoms alongside chest pain, fainting or new headaches are all reasons to be seen in person, soon.",
+        "If you take heart, blood pressure, or psychiatric medications and have noticed a change since starting them, that is also worth a structured review with a prescriber rather than self-adjustment."
+      ]
+    },
+    {
+      kicker: "Lifestyle",
+      readTime: "3 min read",
+      title: "The four levers most men underestimate",
+      excerpt: "Sleep, alcohol, weight, and stress are not platitudes — they are the levers that quietly decide how well treatment works.",
+      body: [
+        "Sleep below six hours consistently lowers testosterone and dampens nervous system response. Many men chasing a pill would benefit more from a fixed bedtime first.",
+        "Alcohol is a depressant: a couple of drinks can take the edge off anxiety, but it also takes the edge off everything else. The pattern matters more than any single night.",
+        "Carrying significant excess weight around the midsection is metabolically active in ways that affect hormones and blood vessels. Modest, sustained loss often improves function before any other intervention.",
+        "Chronic stress keeps the body in a state that is the opposite of what arousal requires. Naming it and addressing it isn't soft — it's mechanical."
+      ]
+    }
+  ];
+
+  return (
+    <section className="relative py-28 md:py-40 bg-card/30 border-y border-border/40 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/[0.04] rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={STAGGER}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-20"
+        >
+          <div className="max-w-2xl">
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-primary" />
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Read Before Booking</span>
+            </motion.div>
+
+            <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05]">
+              You don't have to message yet.<br />
+              <em className="text-primary italic">Start by reading.</em>
+            </motion.h2>
+          </div>
+
+          <motion.p variants={FADE_UP} className="text-muted-foreground text-base leading-relaxed max-w-sm md:text-right">
+            Plain-language primers written by the same pharmacist who would take your consultation. No upsells in the body.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={STAGGER}
+          className="grid md:grid-cols-2 gap-6 md:gap-8"
+        >
+          {articles.map((a, i) => (
+            <motion.div key={i} variants={FADE_UP}>
+              <ArticleCard article={a} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function ArticleCard({
+  article
+}: {
+  article: { kicker: string; readTime: string; title: string; excerpt: string; body: string[] };
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <article className="group relative bg-background/60 border border-border/50 hover:border-primary/30 transition-colors duration-500 p-8 md:p-10 rounded-sm flex flex-col h-full">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2.5 text-primary">
+          <BookOpen className="w-4 h-4" strokeWidth={1.5} />
+          <span className="text-[10px] tracking-[0.2em] uppercase font-medium">{article.kicker}</span>
+        </div>
+        <div className="flex items-center gap-2 text-muted-foreground/70">
+          <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
+          <span className="text-[11px] tracking-wider uppercase">{article.readTime}</span>
+        </div>
+      </div>
+
+      <h3 className="font-serif text-2xl md:text-[1.65rem] leading-snug text-foreground/95 mb-4">
+        {article.title}
+      </h3>
+
+      <p className="text-muted-foreground text-base leading-relaxed mb-6">
+        {article.excerpt}
+      </p>
+
+      <motion.div
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        className="overflow-hidden"
+      >
+        <div className="space-y-4 text-foreground/75 text-[15px] leading-relaxed border-t border-border/40 pt-6 mb-6">
+          {article.body.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+      </motion.div>
+
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="mt-auto inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-primary hover:text-primary/80 transition-colors self-start"
+      >
+        <span>{open ? "Close" : "Read primer"}</span>
+        <ChevronRight
+          className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-90" : "group-hover:translate-x-1"}`}
+        />
+      </button>
+    </article>
   );
 }
 
