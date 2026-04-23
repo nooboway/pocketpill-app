@@ -37,7 +37,44 @@ export default function Home() {
       </main>
 
       <Footer />
+      <FloatingWhatsApp />
     </div>
+  );
+}
+
+function FloatingWhatsApp() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <motion.a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Start a private WhatsApp conversation"
+      initial={false}
+      animate={{
+        opacity: visible ? 1 : 0,
+        y: visible ? 0 : 20,
+        pointerEvents: visible ? "auto" : "none"
+      }}
+      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      className="group fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground pl-4 pr-5 py-3.5 rounded-full shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] ring-1 ring-primary/40"
+    >
+      <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-primary-foreground/15">
+        <span className="absolute inset-0 rounded-full bg-primary-foreground/20 animate-ping opacity-60" />
+        <MessageCircle className="w-4 h-4 relative" />
+      </span>
+      <span className="text-xs md:text-sm font-medium tracking-widest uppercase">
+        Start Privately
+      </span>
+    </motion.a>
   );
 }
 
