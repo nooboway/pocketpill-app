@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "kBGHEQUk4pEVrJZ3scXe1"
+uri = "file://artifacts/pocketpill/public/hero-texture.png"
+type = "image"
+title = "abstract dark warm texture"
+
+[[generated]]
+id = "pnalqhGbo5eH5uy84oBKt"
+uri = "file://artifacts/pocketpill/public/discreet-phone.png"
+type = "image"
+title = "moody silhouette phone holding"
