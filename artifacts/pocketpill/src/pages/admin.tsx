@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   Save, RotateCcw, Lock, ChevronRight, Check, Eye, EyeOff,
   Settings, ExternalLink, DollarSign, Users, BookOpen, RefreshCw,
   Clock, ChevronDown, MessageSquare, Mail, AlertCircle,
+  Search, X, ArrowUpDown,
 } from "lucide-react";
 import { DEFAULT_SETTINGS, type AdminSettings } from "@/lib/adminSettings";
 
@@ -14,6 +15,7 @@ type Booking = {
   reference: string;
   planName: string;
   planPrice: string;
+  planIndex: number;
   clientName: string;
   clientEmail: string;
   clientWhatsapp: string;
@@ -55,6 +57,38 @@ export default function AdminPage() {
 
   const [expandedBooking, setExpandedBooking] = useState<number | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest" | "price-high" | "price-low">("newest");
+
+  const filteredBookings = useMemo(() => {
+    let result = [...bookings];
+    // Search
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      result = result.filter(
+        (b) =>
+          b.reference.toLowerCase().includes(q) ||
+          b.clientName.toLowerCase().includes(q) ||
+          b.clientEmail.toLowerCase().includes(q) ||
+          b.clientWhatsapp.includes(q) ||
+          b.planName.toLowerCase().includes(q),
+      );
+    }
+    // Status filter
+    if (filterStatus !== "all") {
+      result = result.filter((b) => b.status === filterStatus);
+    }
+    // Sort
+    result.sort((a, b) => {
+      if (sortOrder === "newest") return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      if (sortOrder === "oldest") return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      if (sortOrder === "price-high") return b.planIndex - a.planIndex;
+      if (sortOrder === "price-low") return a.planIndex - b.planIndex;
+      return 0;
+    });
+    return result;
+  }, [bookings, searchQuery, filterStatus, sortOrder]);
 
   const getToken = useCallback(() => sessionStorage.getItem("pp_admin_token") ?? "", []);
 
@@ -524,10 +558,15 @@ export default function AdminPage() {
           {/* ── Bookings Tab ────────────────────────────────────── */}
           {activeTab === "bookings" && (
             <div id="panel-bookings" role="tabpanel" aria-labelledby="tab-bookings">
-              <div className="flex items-end justify-between mb-10">
+              {/* Header */}
+              <div className="flex items-end justify-between mb-8">
                 <div>
                   <h1 className="font-serif text-4xl mb-2">Bookings</h1>
-                  <p className="text-muted-foreground text-sm">{bookings.length} consultation{bookings.length !== 1 ? "s" : ""} total.</p>
+                  <p className="text-muted-foreground text-sm">
+                    {filteredBookings.length === bookings.length
+                      ? `${bookings.length} consultation${bookings.length !== 1 ? "s" : ""} total`
+                      : `${filteredBookings.length} of ${bookings.length} shown`}
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -541,14 +580,72 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              {/* Status legend */}
-              <div className="flex flex-wrap gap-3 mb-6">
-                {STATUS_CONFIG.map(({ value, label, cls }) => (
-                  <span key={value} className={`flex items-center gap-1.5 text-[11px] uppercase tracking-wider px-2.5 py-1.5 rounded-sm font-medium ${cls}`}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-70" aria-hidden="true" />
-                    {label} · {bookings.filter((b) => b.status === value).length}
-                  </span>
-                ))}
+              {/* Search + Filter + Sort toolbar */}
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                {/* Search input */}
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/50 pointer-events-none" aria-hidden="true" />
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); setExpandedBooking(null); }}
+                    placeholder="Search by name, reference, email, plan…"
+                    aria-label="Search bookings"
+                    className="w-full bg-card/30 border border-border/40 focus:border-primary/50 rounded-sm pl-9 pr-9 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => { setSearchQuery(""); setExpandedBooking(null); }}
+                      aria-label="Clear search"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Status filter */}
+                <div className="flex items-center gap-1 bg-card/30 border border-border/40 rounded-sm px-1.5 py-1.5 shrink-0" role="group" aria-label="Filter by status">
+                  <button
+                    type="button"
+                    onClick={() => { setFilterStatus("all"); setExpandedBooking(null); }}
+                    aria-pressed={filterStatus === "all"}
+                    className={`text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded-sm font-medium transition-colors ${filterStatus === "all" ? "bg-border/60 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    All
+                  </button>
+                  {STATUS_CONFIG.map(({ value, label, cls }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => { setFilterStatus(value); setExpandedBooking(null); }}
+                      aria-pressed={filterStatus === value}
+                      className={`text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded-sm font-medium transition-colors ${
+                        filterStatus === value ? cls : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {label}
+                      <span className="ml-1 opacity-60">{bookings.filter((b) => b.status === value).length}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Sort */}
+                <div className="relative shrink-0">
+                  <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/50 pointer-events-none" aria-hidden="true" />
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value as typeof sortOrder)}
+                    aria-label="Sort bookings"
+                    className="bg-card/30 border border-border/40 focus:border-primary/50 rounded-sm pl-8 pr-3 py-2.5 text-sm text-foreground focus:outline-none transition-colors appearance-none cursor-pointer"
+                  >
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="price-high">Highest plan</option>
+                    <option value="price-low">Lowest plan</option>
+                  </select>
+                </div>
               </div>
 
               {loadingBookings ? (
@@ -560,9 +657,21 @@ export default function AdminPage() {
                   <BookOpen className="w-10 h-10 mx-auto mb-4 opacity-30" aria-hidden="true" />
                   <p className="text-sm">No bookings yet.</p>
                 </div>
+              ) : filteredBookings.length === 0 ? (
+                <div className="text-center py-16 text-muted-foreground">
+                  <Search className="w-8 h-8 mx-auto mb-3 opacity-25" aria-hidden="true" />
+                  <p className="text-sm">No bookings match your search.</p>
+                  <button
+                    type="button"
+                    onClick={() => { setSearchQuery(""); setFilterStatus("all"); }}
+                    className="mt-3 text-xs text-primary hover:underline"
+                  >
+                    Clear filters
+                  </button>
+                </div>
               ) : (
                 <div className="space-y-2">
-                  {bookings.map((b) => {
+                  {filteredBookings.map((b) => {
                     const statusCfg = STATUS_CONFIG.find((s) => s.value === b.status) ?? STATUS_CONFIG[0];
                     const isExpanded = expandedBooking === b.id;
                     const isUpdating = updatingStatus === b.id;
