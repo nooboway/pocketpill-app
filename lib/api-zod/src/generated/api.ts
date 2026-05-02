@@ -117,6 +117,33 @@ export const GetNewsletterSubscribersResponse = zod.array(
 );
 
 /**
+ * @summary Update booking status (admin)
+ */
+export const UpdateBookingStatusParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateBookingStatusBody = zod.object({
+  status: zod.enum(["pending", "confirmed", "completed", "cancelled"]),
+});
+
+export const UpdateBookingStatusResponse = zod.object({
+  id: zod.number(),
+  reference: zod.string(),
+  planName: zod.string(),
+  planPrice: zod.string(),
+  planIndex: zod.number(),
+  clientName: zod.string(),
+  clientEmail: zod.string(),
+  clientWhatsapp: zod.string(),
+  concern: zod.string(),
+  appointmentDate: zod.string().nullish(),
+  appointmentTime: zod.string().nullish(),
+  status: zod.string(),
+  createdAt: zod.coerce.date(),
+});
+
+/**
  * @summary Create a booking
  */
 export const createBookingBodyPlanIndexMin = 0;

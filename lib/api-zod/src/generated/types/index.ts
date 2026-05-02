@@ -14,3 +14,5 @@ export * from "./newsletterSubscribeBody";
 export * from "./newsletterSubscriber";
 export * from "./pricingTier";
 export * from "./siteSettings";
+export * from "./updateBookingStatusBody";
+export * from "./updateBookingStatusBodyStatus";

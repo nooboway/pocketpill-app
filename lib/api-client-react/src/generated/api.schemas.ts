@@ -49,6 +49,20 @@ export interface NewsletterSubscriber {
   createdAt: string;
 }
 
+export type UpdateBookingStatusBodyStatus =
+  (typeof UpdateBookingStatusBodyStatus)[keyof typeof UpdateBookingStatusBodyStatus];
+
+export const UpdateBookingStatusBodyStatus = {
+  pending: "pending",
+  confirmed: "confirmed",
+  completed: "completed",
+  cancelled: "cancelled",
+} as const;
+
+export interface UpdateBookingStatusBody {
+  status: UpdateBookingStatusBodyStatus;
+}
+
 export interface CreateBookingBody {
   reference: string;
   planName: string;

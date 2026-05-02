@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import {
   Save, RotateCcw, Lock, ChevronRight, Check, Eye, EyeOff,
   Settings, ExternalLink, DollarSign, Users, BookOpen, RefreshCw,
-  Clock, ChevronDown,
+  Clock, ChevronDown, MessageSquare, Mail, AlertCircle,
 } from "lucide-react";
 import { DEFAULT_SETTINGS, type AdminSettings } from "@/lib/adminSettings";
 
@@ -54,6 +54,7 @@ export default function AdminPage() {
   const [loadingSubscribers, setLoadingSubscribers] = useState(false);
 
   const [expandedBooking, setExpandedBooking] = useState<number | null>(null);
+  const [updatingStatus, setUpdatingStatus] = useState<number | null>(null);
 
   const getToken = useCallback(() => sessionStorage.getItem("pp_admin_token") ?? "", []);
 
@@ -152,6 +153,30 @@ export default function AdminPage() {
     }
   }
 
+  async function updateBookingStatus(id: number, status: string) {
+    setUpdatingStatus(id);
+    // Optimistic update
+    setBookings((prev) => prev.map((b) => b.id === id ? { ...b, status } : b));
+    try {
+      const res = await fetch(`/api/bookings/${id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) throw new Error("Update failed");
+      const updated = await res.json() as Booking;
+      setBookings((prev) => prev.map((b) => b.id === id ? updated : b));
+    } catch {
+      // Revert on failure by re-fetching
+      void fetchBookings();
+    } finally {
+      setUpdatingStatus(null);
+    }
+  }
+
   async function handleReset() {
     setSettings(DEFAULT_SETTINGS);
     setReset(true);
@@ -204,6 +229,8 @@ export default function AdminPage() {
           </div>
 
           <form onSubmit={(e) => { e.preventDefault(); login(); }} noValidate>
+            {/* Hidden username field satisfies browser password manager heuristics */}
+            <input type="text" name="username" value="admin" autoComplete="username" readOnly aria-hidden="true" className="hidden" tabIndex={-1} />
             <div className="relative mb-4">
               <input
                 type={showPw ? "text" : "password"}
@@ -514,6 +541,16 @@ export default function AdminPage() {
                 </button>
               </div>
 
+              {/* Status legend */}
+              <div className="flex flex-wrap gap-3 mb-6">
+                {STATUS_CONFIG.map(({ value, label, cls }) => (
+                  <span key={value} className={`flex items-center gap-1.5 text-[11px] uppercase tracking-wider px-2.5 py-1.5 rounded-sm font-medium ${cls}`}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-70" aria-hidden="true" />
+                    {label} · {bookings.filter((b) => b.status === value).length}
+                  </span>
+                ))}
+              </div>
+
               {loadingBookings ? (
                 <div className="flex items-center justify-center py-24">
                   <span className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" aria-label="Loading bookings" />
@@ -524,58 +561,122 @@ export default function AdminPage() {
                   <p className="text-sm">No bookings yet.</p>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  {bookings.map((b) => (
-                    <div key={b.id} className="bg-card/30 border border-border/40 rounded-sm overflow-hidden">
-                      <button
-                        type="button"
-                        onClick={() => setExpandedBooking(expandedBooking === b.id ? null : b.id)}
-                        aria-expanded={expandedBooking === b.id}
-                        aria-controls={`booking-${b.id}`}
-                        className="w-full flex items-center justify-between px-6 py-4 hover:bg-card/50 transition-colors text-left"
-                      >
-                        <div className="flex items-center gap-6 flex-1 min-w-0">
-                          <span className="font-mono text-primary font-semibold text-sm shrink-0">{b.reference}</span>
-                          <span className="text-sm text-foreground font-medium truncate">{b.clientName}</span>
-                          <span className="text-xs text-muted-foreground hidden md:block">{b.planName}</span>
-                          <span className="text-xs font-medium text-foreground/70 hidden md:block">{b.planPrice}</span>
-                        </div>
-                        <div className="flex items-center gap-3 shrink-0 ml-4">
-                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <Clock className="w-3 h-3" aria-hidden="true" />
-                            <span>{new Date(b.createdAt).toLocaleDateString()}</span>
-                          </div>
-                          <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm font-medium ${b.status === "pending" ? "bg-amber-500/10 text-amber-400" : "bg-primary/10 text-primary"}`}>
-                            {b.status}
-                          </span>
-                          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${expandedBooking === b.id ? "rotate-180" : ""}`} aria-hidden="true" />
-                        </div>
-                      </button>
-
-                      {expandedBooking === b.id && (
-                        <motion.div
-                          id={`booking-${b.id}`}
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="border-t border-border/40 px-6 py-5"
+                <div className="space-y-2">
+                  {bookings.map((b) => {
+                    const statusCfg = STATUS_CONFIG.find((s) => s.value === b.status) ?? STATUS_CONFIG[0];
+                    const isExpanded = expandedBooking === b.id;
+                    const isUpdating = updatingStatus === b.id;
+                    return (
+                      <div key={b.id} className="bg-card/30 border border-border/40 rounded-sm overflow-hidden">
+                        {/* Row header */}
+                        <button
+                          type="button"
+                          onClick={() => setExpandedBooking(isExpanded ? null : b.id)}
+                          aria-expanded={isExpanded}
+                          aria-controls={`booking-${b.id}`}
+                          className="w-full flex items-center justify-between px-6 py-4 hover:bg-card/50 transition-colors text-left"
                         >
-                          <div className="grid md:grid-cols-3 gap-4 text-sm">
-                            <DataPoint label="Email" value={b.clientEmail} />
-                            <DataPoint label="WhatsApp" value={b.clientWhatsapp} />
-                            <DataPoint label="Plan" value={`${b.planName} — ${b.planPrice}`} />
-                            <DataPoint label="Appointment" value={b.appointmentDate ? `${b.appointmentDate}${b.appointmentTime ? ` at ${b.appointmentTime}` : ""}` : "Not scheduled"} />
-                            <DataPoint label="Booked" value={new Date(b.createdAt).toLocaleString()} />
+                          <div className="flex items-center gap-5 flex-1 min-w-0">
+                            <span className="font-mono text-primary font-semibold text-sm shrink-0">{b.reference}</span>
+                            <span className="text-sm text-foreground font-medium truncate">{b.clientName}</span>
+                            <span className="text-xs text-muted-foreground hidden md:block truncate">{b.planName}</span>
+                            <span className="text-xs font-medium text-foreground/70 hidden lg:block">{b.planPrice}</span>
                           </div>
-                          <div className="mt-4">
-                            <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Concern</div>
-                            <p className="text-sm text-foreground/80 leading-relaxed bg-background/50 border border-border/30 rounded-sm px-4 py-3">{b.concern}</p>
+                          <div className="flex items-center gap-3 shrink-0 ml-4">
+                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground hidden sm:flex">
+                              <Clock className="w-3 h-3" aria-hidden="true" />
+                              <span>{new Date(b.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm font-medium ${statusCfg.cls}`}>
+                              {isUpdating ? "…" : statusCfg.label}
+                            </span>
+                            <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${isExpanded ? "rotate-180" : ""}`} aria-hidden="true" />
                           </div>
-                        </motion.div>
-                      )}
-                    </div>
-                  ))}
+                        </button>
+
+                        {/* Expanded detail */}
+                        <AnimatePresence initial={false}>
+                          {isExpanded && (
+                            <motion.div
+                              id={`booking-${b.id}`}
+                              key="detail"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.22, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="border-t border-border/40 px-6 py-5 space-y-5">
+                                {/* Client details */}
+                                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                  <DataPointLink
+                                    label="Email"
+                                    value={b.clientEmail}
+                                    href={`mailto:${b.clientEmail}`}
+                                    icon={<Mail className="w-3 h-3" />}
+                                  />
+                                  <DataPointLink
+                                    label="WhatsApp"
+                                    value={b.clientWhatsapp}
+                                    href={`https://wa.me/${b.clientWhatsapp.replace(/\D/g, "")}`}
+                                    icon={<MessageSquare className="w-3 h-3" />}
+                                  />
+                                  <DataPoint label="Plan" value={`${b.planName} — ${b.planPrice}`} />
+                                  <DataPoint
+                                    label="Appointment"
+                                    value={b.appointmentDate ? `${b.appointmentDate}${b.appointmentTime ? ` at ${b.appointmentTime}` : ""}` : "Not scheduled"}
+                                  />
+                                  <DataPoint label="Booked" value={new Date(b.createdAt).toLocaleString()} />
+                                </div>
+
+                                {/* Concern */}
+                                <div>
+                                  <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Concern</div>
+                                  <p className="text-sm text-foreground/80 leading-relaxed bg-background/50 border border-border/30 rounded-sm px-4 py-3">{b.concern}</p>
+                                </div>
+
+                                {/* Status management */}
+                                <div>
+                                  <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2.5 flex items-center gap-2">
+                                    <AlertCircle className="w-3 h-3" aria-hidden="true" />
+                                    Update status
+                                  </div>
+                                  <div className="flex flex-wrap gap-2" role="group" aria-label={`Update status for booking ${b.reference}`}>
+                                    {STATUS_CONFIG.map(({ value, label, cls, activeCls }) => (
+                                      <button
+                                        key={value}
+                                        type="button"
+                                        disabled={isUpdating || b.status === value}
+                                        onClick={() => void updateBookingStatus(b.id, value)}
+                                        aria-pressed={b.status === value}
+                                        className={`text-[11px] uppercase tracking-wider px-3 py-2 rounded-sm font-medium border transition-all disabled:cursor-not-allowed ${
+                                          b.status === value
+                                            ? `${activeCls} border-current/30`
+                                            : "border-border/40 text-muted-foreground hover:border-border hover:text-foreground disabled:opacity-40"
+                                        }`}
+                                      >
+                                        {isUpdating && b.status !== value ? (
+                                          <span className="flex items-center gap-1.5">
+                                            <span className="w-2.5 h-2.5 border border-current/40 border-t-current rounded-full animate-spin" aria-hidden="true" />
+                                            {label}
+                                          </span>
+                                        ) : (
+                                          <span className="flex items-center gap-1.5">
+                                            {b.status === value && <Check className="w-3 h-3" aria-hidden="true" />}
+                                            {label}
+                                          </span>
+                                        )}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -635,6 +736,13 @@ export default function AdminPage() {
   );
 }
 
+const STATUS_CONFIG = [
+  { value: "pending",   label: "Pending",   cls: "bg-amber-500/10 text-amber-400",   activeCls: "bg-amber-500/15 text-amber-400" },
+  { value: "confirmed", label: "Confirmed", cls: "bg-blue-500/10 text-blue-400",     activeCls: "bg-blue-500/15 text-blue-400" },
+  { value: "completed", label: "Completed", cls: "bg-emerald-500/10 text-emerald-400", activeCls: "bg-emerald-500/15 text-emerald-400" },
+  { value: "cancelled", label: "Cancelled", cls: "bg-muted/40 text-muted-foreground", activeCls: "bg-muted/50 text-muted-foreground" },
+] as const;
+
 const inputCls = "w-full bg-background border border-border/50 focus:border-primary/50 rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors text-sm";
 
 function Section({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
@@ -664,6 +772,23 @@ function DataPoint({ label, value }: { label: string; value: string }) {
     <div>
       <div className="text-xs uppercase tracking-wider text-muted-foreground mb-0.5">{label}</div>
       <div className="text-foreground/90">{value}</div>
+    </div>
+  );
+}
+
+function DataPointLink({ label, value, href, icon }: { label: string; value: string; href: string; icon: React.ReactNode }) {
+  return (
+    <div>
+      <div className="text-xs uppercase tracking-wider text-muted-foreground mb-0.5">{label}</div>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors text-sm"
+      >
+        {icon}
+        <span className="truncate">{value}</span>
+      </a>
     </div>
   );
 }

@@ -24,6 +24,7 @@ import type {
   NewsletterSubscribeBody,
   NewsletterSubscriber,
   SiteSettings,
+  UpdateBookingStatusBody,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
@@ -433,6 +434,93 @@ export function useGetNewsletterSubscribers<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Update booking status (admin)
+ */
+export const getUpdateBookingStatusUrl = (id: number) => {
+  return `/api/bookings/${id}/status`;
+};
+
+export const updateBookingStatus = async (
+  id: number,
+  updateBookingStatusBody: UpdateBookingStatusBody,
+  options?: RequestInit,
+): Promise<Booking> => {
+  return customFetch<Booking>(getUpdateBookingStatusUrl(id), {
+    ...options,
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(updateBookingStatusBody),
+  });
+};
+
+export const getUpdateBookingStatusMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateBookingStatus>>,
+    TError,
+    { id: number; data: BodyType<UpdateBookingStatusBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof updateBookingStatus>>,
+  TError,
+  { id: number; data: BodyType<UpdateBookingStatusBody> },
+  TContext
+> => {
+  const mutationKey = ["updateBookingStatus"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateBookingStatus>>,
+    { id: number; data: BodyType<UpdateBookingStatusBody> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return updateBookingStatus(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UpdateBookingStatusMutationResult = NonNullable<
+  Awaited<ReturnType<typeof updateBookingStatus>>
+>;
+export type UpdateBookingStatusMutationBody = BodyType<UpdateBookingStatusBody>;
+export type UpdateBookingStatusMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Update booking status (admin)
+ */
+export const useUpdateBookingStatus = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateBookingStatus>>,
+    TError,
+    { id: number; data: BodyType<UpdateBookingStatusBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof updateBookingStatus>>,
+  TError,
+  { id: number; data: BodyType<UpdateBookingStatusBody> },
+  TContext
+> => {
+  return useMutation(getUpdateBookingStatusMutationOptions(options));
+};
 
 /**
  * @summary Create a booking
