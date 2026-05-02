@@ -1,16 +1,10 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ExternalLink, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe } from "lucide-react";
+import { MessageCircle, Shield, Clock, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe, Mail, ArrowRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLang, useT, LANGUAGES } from "@/i18n/LanguageProvider";
 import type { Translation } from "@/i18n/translations";
 
 const WHATSAPP_URL = "https://wa.me/2348000000000";
-
-const PAYPAL_LINKS = [
-  "https://www.paypal.com/paypalme/yourusername/10000",
-  "https://www.paypal.com/paypalme/yourusername/15000",
-  "https://www.paypal.com/paypalme/yourusername/27000"
-];
 
 const TRUST_ICONS = [
   <Clock className="w-5 h-5 text-primary" />,
@@ -49,6 +43,7 @@ export default function Home() {
         <MonthlySupportSection />
         <ReadBeforeBookingSection />
         <FAQSection />
+        <NewsletterSection />
         <ClosingCTASection />
       </main>
 
@@ -695,15 +690,13 @@ function PricingSection() {
                 </ul>
 
                 <a
-                  href={PAYPAL_LINKS[idx]}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/book?plan=${idx}`}
                   className={`flex items-center justify-center gap-2 w-full py-4 px-6 rounded-sm font-medium transition-all duration-300 ${
                     primary ? "bg-primary text-primary-foreground hover:bg-primary/90" : "border border-border hover:border-primary text-foreground hover:text-primary"
                   }`}
                 >
                   <span>{t.pricing.payBook}</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" />
                 </a>
               </motion.div>
             );
@@ -943,16 +936,118 @@ function ClosingCTASection() {
   );
 }
 
+function NewsletterSection() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+    setLoading(true);
+    setTimeout(() => {
+      try {
+        const existing = JSON.parse(localStorage.getItem("pp_newsletter_subs") ?? "[]") as string[];
+        if (!existing.includes(email)) {
+          existing.push(email);
+          localStorage.setItem("pp_newsletter_subs", JSON.stringify(existing));
+        }
+      } catch {}
+      setLoading(false);
+      setSubmitted(true);
+    }, 700);
+  }
+
+  return (
+    <section className="py-24 md:py-32 bg-card/30 border-y border-border/40">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER}>
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-primary" />
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Free newsletter</span>
+            </motion.div>
+            <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.05] mb-6">
+              Better health.<br /><em className="text-primary italic">Stronger living.</em>
+            </motion.h2>
+            <motion.p variants={FADE_UP} className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-md">
+              Weekly insights on men's health — lifestyle, medication clarity, and performance — delivered privately to your inbox. Free forever.
+            </motion.p>
+            <motion.a variants={FADE_UP} href="/newsletter" className="group inline-flex items-center gap-2 text-sm tracking-widest uppercase text-primary hover:text-primary/80 transition-colors">
+              <span>See what's inside</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] }}>
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="bg-background border border-border/50 rounded-sm p-8 md:p-10">
+                <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
+                  <Mail className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl mb-2">Join the newsletter</h3>
+                <p className="text-muted-foreground text-sm mb-6">No spam. Unsubscribe any time.</p>
+                <div className="flex gap-3">
+                  <input
+                    type="email"
+                    required
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 bg-card/50 border border-border/50 focus:border-primary/50 rounded-sm px-4 py-3.5 text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors text-sm"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="group flex items-center gap-2 bg-primary hover:bg-primary/90 disabled:opacity-60 text-primary-foreground px-5 py-3.5 rounded-sm font-medium transition-all whitespace-nowrap text-sm"
+                  >
+                    {loading ? (
+                      <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <span className="hidden sm:inline">Subscribe</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground/50">
+                  <Shield className="w-3.5 h-3.5 text-primary/40 shrink-0" strokeWidth={1.5} />
+                  <span>Your email is never shared. Unsubscribe with one click.</span>
+                </div>
+              </form>
+            ) : (
+              <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }} className="bg-background border border-primary/20 rounded-sm p-8 md:p-10 text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 border border-primary/30 mb-5">
+                  <Check className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-serif text-2xl mb-2">You're in.</h3>
+                <p className="text-muted-foreground text-sm">Your first issue is on its way. Welcome.</p>
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   const t = useT();
   return (
     <footer className="bg-background border-t border-border/40 py-12 md:py-16">
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
-        <a href="#" className="font-serif text-2xl tracking-wide text-foreground">
-          Pocket<span className="text-primary italic">pill</span>
-        </a>
-
-        <p className="text-xs text-muted-foreground/60 max-w-2xl leading-relaxed text-left md:text-right">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        <div className="flex flex-col md:flex-row gap-10 justify-between items-start md:items-center mb-8 pb-8 border-b border-border/30">
+          <a href="#" className="font-serif text-2xl tracking-wide text-foreground">
+            Pocket<span className="text-primary italic">pill</span>
+          </a>
+          <nav className="flex flex-wrap gap-x-8 gap-y-3 text-xs tracking-[0.18em] uppercase text-muted-foreground">
+            <a href="/book" className="hover:text-primary transition-colors">Book a consult</a>
+            <a href="/newsletter" className="hover:text-primary transition-colors">Newsletter</a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a>
+          </nav>
+        </div>
+        <p className="text-xs text-muted-foreground/50 max-w-2xl leading-relaxed">
           {t.footer.disclaimer}
         </p>
       </div>
