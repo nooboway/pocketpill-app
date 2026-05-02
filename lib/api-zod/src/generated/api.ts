@@ -117,6 +117,13 @@ export const GetNewsletterSubscribersResponse = zod.array(
 );
 
 /**
+ * @summary Delete a newsletter subscriber (admin)
+ */
+export const DeleteNewsletterSubscriberParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
  * @summary Update booking status (admin)
  */
 export const UpdateBookingStatusParams = zod.object({

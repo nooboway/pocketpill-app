@@ -4,7 +4,7 @@ import {
   Save, RotateCcw, Lock, ChevronRight, Check, Eye, EyeOff,
   Settings, ExternalLink, DollarSign, Users, BookOpen, RefreshCw,
   Clock, ChevronDown, MessageSquare, Mail, AlertCircle,
-  Search, X, ArrowUpDown,
+  Search, X, ArrowUpDown, Download, Trash2,
 } from "lucide-react";
 import { DEFAULT_SETTINGS, type AdminSettings } from "@/lib/adminSettings";
 
@@ -57,9 +57,21 @@ export default function AdminPage() {
 
   const [expandedBooking, setExpandedBooking] = useState<number | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<number | null>(null);
+  const [deletingSubscriber, setDeletingSubscriber] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest" | "price-high" | "price-low">("newest");
+
+  const bookingStats = useMemo(() => {
+    const pending = bookings.filter((b) => b.status === "pending").length;
+    const confirmed = bookings.filter((b) => b.status === "confirmed").length;
+    const revenue = bookings.reduce((sum, b) => {
+      const n = Number(b.planPrice.replace(/[^0-9]/g, ""));
+      return sum + (isNaN(n) ? 0 : n);
+    }, 0);
+    const currency = bookings[0]?.planPrice.replace(/[0-9,.\s]/g, "").trim() ?? "₦";
+    return { total: bookings.length, pending, confirmed, revenue, currency };
+  }, [bookings]);
 
   const filteredBookings = useMemo(() => {
     let result = [...bookings];
@@ -223,6 +235,52 @@ export default function AdminPage() {
       },
       body: JSON.stringify(DEFAULT_SETTINGS),
     }).catch(() => {});
+  }
+
+  async function deleteSubscriber(id: number) {
+    setDeletingSubscriber(id);
+    setSubscribers((prev) => prev.filter((s) => s.id !== id));
+    try {
+      const res = await fetch(`/api/newsletter/subscribers/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+      if (!res.ok) throw new Error("Delete failed");
+    } catch {
+      void fetchSubscribers();
+    } finally {
+      setDeletingSubscriber(null);
+    }
+  }
+
+  function exportCsv(rows: Booking[]) {
+    const headers = ["Reference", "Name", "Email", "WhatsApp", "Plan", "Price", "Status", "Booked", "Appointment"];
+    const escape = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const lines = rows.map((b) =>
+      [
+        b.reference,
+        b.clientName,
+        b.clientEmail,
+        b.clientWhatsapp,
+        b.planName,
+        b.planPrice,
+        b.status,
+        new Date(b.createdAt).toLocaleDateString(),
+        b.appointmentDate
+          ? `${b.appointmentDate}${b.appointmentTime ? ` ${b.appointmentTime}` : ""}`
+          : "",
+      ]
+        .map(escape)
+        .join(","),
+    );
+    const csv = [headers.join(","), ...lines].join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `pocketpill-bookings-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   function updateTier(idx: number, field: string, value: string | number | string[]) {
@@ -568,17 +626,47 @@ export default function AdminPage() {
                       : `${filteredBookings.length} of ${bookings.length} shown`}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => void fetchBookings()}
-                  disabled={loadingBookings}
-                  aria-label="Refresh bookings"
-                  className="flex items-center gap-2 border border-border/50 text-muted-foreground hover:text-foreground px-4 py-2.5 rounded-sm text-sm transition-colors disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${loadingBookings ? "animate-spin" : ""}`} aria-hidden="true" />
-                  <span>Refresh</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => exportCsv(filteredBookings)}
+                    disabled={filteredBookings.length === 0}
+                    aria-label="Export bookings as CSV"
+                    className="flex items-center gap-2 border border-border/50 text-muted-foreground hover:text-foreground px-4 py-2.5 rounded-sm text-sm transition-colors disabled:opacity-30"
+                  >
+                    <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Export CSV</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void fetchBookings()}
+                    disabled={loadingBookings}
+                    aria-label="Refresh bookings"
+                    className="flex items-center gap-2 border border-border/50 text-muted-foreground hover:text-foreground px-4 py-2.5 rounded-sm text-sm transition-colors disabled:opacity-50"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${loadingBookings ? "animate-spin" : ""}`} aria-hidden="true" />
+                    <span>Refresh</span>
+                  </button>
+                </div>
               </div>
+
+              {/* Stats bar */}
+              {bookings.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                  {[
+                    { label: "Total", value: String(bookingStats.total), sub: "bookings" },
+                    { label: "Revenue", value: `${bookingStats.currency}${bookingStats.revenue.toLocaleString()}`, sub: "collected" },
+                    { label: "Pending", value: String(bookingStats.pending), sub: "awaiting action" },
+                    { label: "Confirmed", value: String(bookingStats.confirmed), sub: "ready to consult" },
+                  ].map(({ label, value, sub }) => (
+                    <div key={label} className="bg-card/30 border border-border/40 rounded-sm px-5 py-4">
+                      <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">{label}</div>
+                      <div className="font-serif text-2xl text-foreground">{value}</div>
+                      <div className="text-[11px] text-muted-foreground/60 mt-0.5">{sub}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Search + Filter + Sort toolbar */}
               <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -822,16 +910,29 @@ export default function AdminPage() {
                 </div>
               ) : (
                 <div className="bg-card/30 border border-border/40 rounded-sm overflow-hidden">
-                  <div className="grid grid-cols-3 gap-4 px-6 py-3 border-b border-border/40 text-xs uppercase tracking-wider text-muted-foreground font-medium">
+                  <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-4 px-6 py-3 border-b border-border/40 text-xs uppercase tracking-wider text-muted-foreground font-medium">
                     <span>Email</span>
                     <span>Name</span>
                     <span>Subscribed</span>
+                    <span className="w-7" />
                   </div>
                   {subscribers.map((s) => (
-                    <div key={s.id} className="grid grid-cols-3 gap-4 px-6 py-4 border-b border-border/20 last:border-0 hover:bg-card/50 transition-colors text-sm">
+                    <div key={s.id} className="grid grid-cols-[1fr_1fr_1fr_auto] gap-4 px-6 py-4 border-b border-border/20 last:border-0 hover:bg-card/50 transition-colors text-sm items-center">
                       <span className="text-foreground/90 truncate">{s.email}</span>
                       <span className="text-muted-foreground">{s.name ?? "—"}</span>
                       <span className="text-muted-foreground text-xs">{new Date(s.createdAt).toLocaleDateString()}</span>
+                      <button
+                        type="button"
+                        onClick={() => void deleteSubscriber(s.id)}
+                        disabled={deletingSubscriber === s.id}
+                        aria-label={`Remove ${s.email}`}
+                        className="w-7 h-7 flex items-center justify-center rounded-sm text-muted-foreground/40 hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-30"
+                      >
+                        {deletingSubscriber === s.id
+                          ? <span className="w-3 h-3 border border-current/40 border-t-current rounded-full animate-spin" aria-hidden="true" />
+                          : <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
+                        }
+                      </button>
                     </div>
                   ))}
                 </div>

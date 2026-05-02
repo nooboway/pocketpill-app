@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, newsletterSubscribersTable } from "@workspace/db";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { requireAdmin } from "../middlewares/adminAuth";
 import { insertNewsletterSubscriberSchema } from "@workspace/db";
 import { sendNewsletterWelcome, sendNewsletterAdminAlert } from "../lib/email";
@@ -64,6 +64,32 @@ router.get("/newsletter/subscribers", requireAdmin, async (req, res) => {
     );
   } catch (err) {
     req.log.error({ err }, "Failed to fetch subscribers");
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/newsletter/subscribers/:id", requireAdmin, async (req, res) => {
+  const id = parseInt(String(req.params.id), 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "Invalid subscriber id" });
+    return;
+  }
+
+  try {
+    const [deleted] = await db
+      .delete(newsletterSubscribersTable)
+      .where(eq(newsletterSubscribersTable.id, id))
+      .returning();
+
+    if (!deleted) {
+      res.status(404).json({ error: "Subscriber not found" });
+      return;
+    }
+
+    req.log.info({ id }, "Subscriber deleted");
+    res.status(204).end();
+  } catch (err) {
+    req.log.error({ err }, "Failed to delete subscriber");
     res.status(500).json({ error: "Internal server error" });
   }
 });

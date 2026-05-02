@@ -436,6 +436,90 @@ export function useGetNewsletterSubscribers<
 }
 
 /**
+ * @summary Delete a newsletter subscriber (admin)
+ */
+export const getDeleteNewsletterSubscriberUrl = (id: number) => {
+  return `/api/newsletter/subscribers/${id}`;
+};
+
+export const deleteNewsletterSubscriber = async (
+  id: number,
+  options?: RequestInit,
+): Promise<void> => {
+  return customFetch<void>(getDeleteNewsletterSubscriberUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getDeleteNewsletterSubscriberMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteNewsletterSubscriber>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteNewsletterSubscriber>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["deleteNewsletterSubscriber"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteNewsletterSubscriber>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return deleteNewsletterSubscriber(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type DeleteNewsletterSubscriberMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteNewsletterSubscriber>>
+>;
+
+export type DeleteNewsletterSubscriberMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Delete a newsletter subscriber (admin)
+ */
+export const useDeleteNewsletterSubscriber = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteNewsletterSubscriber>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof deleteNewsletterSubscriber>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getDeleteNewsletterSubscriberMutationOptions(options));
+};
+
+/**
  * @summary Update booking status (admin)
  */
 export const getUpdateBookingStatusUrl = (id: number) => {
