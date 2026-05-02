@@ -34,8 +34,11 @@ router.post("/newsletter/subscribe", async (req, res) => {
     void sendNewsletterWelcome(row.email, row.name);
     void sendNewsletterAdminAlert(row.email, row.name);
   } catch (err: unknown) {
-    const pg = err as { code?: string };
-    if (pg.code === "23505") {
+    // drizzle-orm wraps pg errors in _DrizzleQueryError; the pg code lives on err.cause
+    const pgCode =
+      (err as { code?: string })?.code ??
+      (err as { cause?: { code?: string } })?.cause?.code;
+    if (pgCode === "23505") {
       res.status(409).json({ error: "Already subscribed" });
       return;
     }
