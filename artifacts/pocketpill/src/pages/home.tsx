@@ -196,7 +196,7 @@ function HeroSection() {
   return (
     <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img src="/hero-texture.png" alt="" className="w-full h-full object-cover opacity-30 mix-blend-overlay" />
+        <img src="/hero-texture.png" alt="" fetchPriority="high" decoding="async" className="w-full h-full object-cover opacity-30 mix-blend-overlay" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
       </div>
@@ -913,7 +913,7 @@ function ClosingCTASection() {
   return (
     <section className="py-32 md:py-48 relative overflow-hidden flex flex-col items-center justify-center text-center">
       <div className="absolute inset-0 z-0">
-        <img src="/discreet-phone.png" alt="" className="w-full h-full object-cover opacity-20 mix-blend-overlay" />
+        <img src="/discreet-phone.png" alt="" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-20 mix-blend-overlay" />
         <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
       </div>
 
