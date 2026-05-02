@@ -56,6 +56,23 @@ Tables (via Drizzle ORM, PostgreSQL):
 - **Rate limiting**: 30 req/min on `/api/newsletter` and `/api/bookings` (public endpoints).
 - **i18n**: 5 languages on landing page (EN/PCM/YO/IG/FR) via `LanguageProvider`.
 
+## Email Notifications (Resend)
+
+Triggered automatically after each successful API response (fire-and-forget, non-blocking):
+
+| Event | Recipients | Subject |
+|---|---|---|
+| New booking | Client + Admin | `Booking confirmed · <ref>` / `New booking · <ref>` |
+| Newsletter subscribe | Subscriber + Admin | `Welcome to Pocketpill` / `New subscriber · <email>` |
+
+- **Provider**: Resend (`resend` npm package)
+- **Secret**: `RESEND_API_KEY` (Replit secret)
+- **From address**: `Pocketpill <notifications@pocketpill.health>` — requires domain verification in Resend dashboard
+- **Admin address**: `ADMIN_EMAIL` env var, defaults to `hello@pocketpill.health`
+- **Email service**: `artifacts/api-server/src/lib/email.ts` — dark-mode HTML templates, 4 functions
+- **Graceful degradation**: If `RESEND_API_KEY` is missing, emails are skipped silently (logged as WARN); API responses are never blocked
+- **Trust proxy**: `app.set("trust proxy", 1)` set so rate-limiter correctly reads real IPs behind Replit's proxy
+
 ## Production Audit Completed
 
 - Security: Helmet headers, CORS, rate limiting, admin auth, input size limits (64kb), Zod validation

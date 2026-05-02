@@ -3,6 +3,7 @@ import { db, newsletterSubscribersTable } from "@workspace/db";
 import { desc } from "drizzle-orm";
 import { requireAdmin } from "../middlewares/adminAuth";
 import { insertNewsletterSubscriberSchema } from "@workspace/db";
+import { sendNewsletterWelcome, sendNewsletterAdminAlert } from "../lib/email";
 
 const router: IRouter = Router();
 
@@ -28,6 +29,10 @@ router.post("/newsletter/subscribe", async (req, res) => {
       name: row.name ?? null,
       createdAt: row.createdAt,
     });
+
+    // Fire emails after responding to avoid blocking the client
+    void sendNewsletterWelcome(row.email, row.name);
+    void sendNewsletterAdminAlert(row.email, row.name);
   } catch (err: unknown) {
     const pg = err as { code?: string };
     if (pg.code === "23505") {

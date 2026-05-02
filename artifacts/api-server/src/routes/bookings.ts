@@ -1,9 +1,24 @@
 import { Router, type IRouter } from "express";
-import { db, bookingsTable, insertBookingSchema } from "@workspace/db";
-import { desc } from "drizzle-orm";
+import { db, bookingsTable, insertBookingSchema, settingsTable } from "@workspace/db";
+import { desc, eq } from "drizzle-orm";
 import { requireAdmin } from "../middlewares/adminAuth";
+import { sendBookingConfirmation, sendBookingAdminAlert } from "../lib/email";
+import type { SiteSettingsData } from "@workspace/db";
 
 const router: IRouter = Router();
+
+async function getSettings(): Promise<SiteSettingsData | null> {
+  try {
+    const rows = await db
+      .select()
+      .from(settingsTable)
+      .where(eq(settingsTable.id, 1))
+      .limit(1);
+    return rows[0]?.data as SiteSettingsData ?? null;
+  } catch {
+    return null;
+  }
+}
 
 router.post("/bookings", async (req, res) => {
   const parsed = insertBookingSchema.safeParse(req.body);
@@ -22,6 +37,13 @@ router.post("/bookings", async (req, res) => {
       .returning();
 
     res.status(201).json(row);
+
+    // Fire emails after responding to avoid blocking the client
+    const settings = await getSettings();
+    if (settings) {
+      void sendBookingConfirmation(row, settings);
+    }
+    void sendBookingAdminAlert(row);
   } catch (err: unknown) {
     const pg = err as { code?: string };
     if (pg.code === "23505") {
