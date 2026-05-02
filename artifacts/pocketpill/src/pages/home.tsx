@@ -941,21 +941,22 @@ function NewsletterSection() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
     setLoading(true);
-    setTimeout(() => {
-      try {
-        const existing = JSON.parse(localStorage.getItem("pp_newsletter_subs") ?? "[]") as string[];
-        if (!existing.includes(email)) {
-          existing.push(email);
-          localStorage.setItem("pp_newsletter_subs", JSON.stringify(existing));
-        }
-      } catch {}
-      setLoading(false);
+    try {
+      await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
       setSubmitted(true);
-    }, 700);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
