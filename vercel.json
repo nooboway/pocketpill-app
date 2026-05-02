@@ -1,5 +1,10 @@
 {
   "outputDirectory": "artifacts/pocketpill/dist/public",
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "artifacts/api-server/dist/**"
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index" },
     { "source": "/(.*)", "destination": "/index.html" }
