@@ -198,10 +198,10 @@ function Navbar() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 text-[11px] md:text-sm font-medium tracking-widest uppercase bg-primary hover:bg-primary/90 text-primary-foreground px-4 md:px-5 py-2.5 rounded-sm transition-all duration-300"
+            className="group flex items-center gap-1.5 md:gap-2 text-[10px] sm:text-[11px] md:text-sm font-medium tracking-widest uppercase bg-primary hover:bg-primary/90 text-primary-foreground px-3 py-2 md:px-5 md:py-2.5 rounded-sm transition-all duration-300"
           >
             <span>{t.nav.bookConsult}</span>
-            <MessageCircle className="w-4 h-4 transition-transform group-hover:scale-110" />
+            <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:scale-110" />
           </a>
         </div>
       </div>
