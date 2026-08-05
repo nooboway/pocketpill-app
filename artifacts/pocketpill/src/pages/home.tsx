@@ -189,12 +189,12 @@ function Navbar() {
         scrolled ? "bg-background/90 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center max-w-7xl">
-        <a href="#" className="flex items-center gap-1 md:gap-1.5 font-serif text-xl md:text-2xl tracking-wide text-foreground">
-          <img src="/logo.png" alt="Pocketpill" className="h-8 w-8 md:h-10 md:w-10 object-contain" />
+      <div className="container mx-auto px-3 sm:px-6 md:px-12 flex justify-between items-center max-w-7xl gap-2">
+        <a href="#" className="flex items-center gap-1 md:gap-1.5 font-serif text-lg sm:text-xl md:text-2xl tracking-wide text-foreground shrink-0">
+          <img src="/logo.png" alt="Pocketpill" className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 object-contain" />
           <span>Pocket<span className="text-primary italic">pill</span></span>
         </a>
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
           <ThemeToggle />
           <LanguageSwitcher />
           <a
