@@ -21,7 +21,7 @@ const en = {
   },
   trust: {
     items: [
-      { num: "1 in 4", desc: "Many younger men report erectile difficulties at some point." },
+      { num: "500+", desc: "Trusted by over 500 men across West Africa and the diaspora." },
       { num: "Private", desc: "Consultations are conducted confidentially through secure channels." },
       { num: "Fast", desc: "Same-day scheduling may be available depending on demand." }
     ]
@@ -203,6 +203,32 @@ const en = {
       { q: "Do I have to share my real name?", a: "No. Many clients use a first name or initial. What matters is that the conversation is honest — not that the file says who you are." }
     ]
   },
+
+  services: {
+    kicker: "What We Treat",
+    headlinePre: "Specialized care",
+    headlineEm: "built for men.",
+    items: [
+      { title: "Get stronger erections", desc: "Private pharmacist-led guidance for erectile difficulty.", link: "erectile-dysfunction" },
+      { title: "Have longer sex", desc: "Actionable protocols for premature ejaculation.", link: "premature-ejaculation" },
+      { title: "Understand your health", desc: "Clear answers on lifestyle, testosterone, and performance.", link: "performance" }
+    ]
+  },
+  howItWorks: {
+    kicker: "How It Works",
+    headlinePre: "Getting started is",
+    headlineEm: "easy and private.",
+    steps: [
+      { num: "01", title: "Message on WhatsApp", desc: "Start a secure, private chat. Answer a few questions about your situation." },
+      { num: "02", title: "Get personalized guidance", desc: "Receive a structured review and action plan from a licensed professional." },
+      { num: "03", title: "Ongoing support", desc: "Reach out anytime to adjust your protocol or ask follow-up questions." }
+    ]
+  },
+  expertNote: {
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
+    name: "Dr. O. Ajidahun",
+    title: "Lead Pharmacist"
+  },
   closing: {
     kicker: "When You're Ready",
     headlinePre: "The hardest part is",
@@ -231,7 +257,7 @@ const pcm: Translation = {
   },
   trust: {
     items: [
-      { num: "1 in 4", desc: "Plenty younger men dey face erectile wahala one time or another." },
+      { num: "500+", desc: "Plenty younger men dey face erectile wahala one time or another." },
       { num: "Private", desc: "Every talk dey happen confidentially through secure channel." },
       { num: "Sharp", desc: "Same-day booking fit dey possible, depending on how full schedule be." }
     ]
@@ -412,6 +438,32 @@ const pcm: Translation = {
       { q: "Wetin if I no sure which tier I need?", a: "Start message for WhatsApp before you pay. Short back-and-forth enough to point you toward the right format — text, voice, or deep-dive. No pressure to upgrade." },
       { q: "I must share my real name?", a: "No. Plenty client dey use first name or initial. Wetin matter na say the conversation dey honest — no be say file dey carry who you be." }
     ]
+  },
+
+  services: {
+    kicker: "What We Treat",
+    headlinePre: "Specialized care",
+    headlineEm: "built for men.",
+    items: [
+      { title: "Get stronger erections", desc: "Private pharmacist-led guidance for erectile difficulty.", link: "erectile-dysfunction" },
+      { title: "Have longer sex", desc: "Actionable protocols for premature ejaculation.", link: "premature-ejaculation" },
+      { title: "Understand your health", desc: "Clear answers on lifestyle, testosterone, and performance.", link: "performance" }
+    ]
+  },
+  howItWorks: {
+    kicker: "How It Works",
+    headlinePre: "Getting started is",
+    headlineEm: "easy and private.",
+    steps: [
+      { num: "01", title: "Message on WhatsApp", desc: "Start a secure, private chat. Answer a few questions about your situation." },
+      { num: "02", title: "Get personalized guidance", desc: "Receive a structured review and action plan from a licensed professional." },
+      { num: "03", title: "Ongoing support", desc: "Reach out anytime to adjust your protocol or ask follow-up questions." }
+    ]
+  },
+  expertNote: {
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
+    name: "Dr. O. Ajidahun",
+    title: "Lead Pharmacist"
   },
   closing: {
     kicker: "When You Ready",
@@ -621,6 +673,32 @@ const yo: Translation = {
       { q: "Ṣé ó pọn dandan kí n pín orúkọ gangan mi?", a: "Bẹ́ẹ̀ kọ́. Ọ̀pọ̀ oníbàárà ń lo orúkọ àkọ́kọ́ tàbí àkọ́kọ́. Ohun tó ṣe pàtàkì ni pé ìjíròrò jẹ́ òtítọ́ — kì í ṣe pé fáìlì sọ ẹni tí o jẹ́." }
     ]
   },
+
+  services: {
+    kicker: "What We Treat",
+    headlinePre: "Specialized care",
+    headlineEm: "built for men.",
+    items: [
+      { title: "Get stronger erections", desc: "Private pharmacist-led guidance for erectile difficulty.", link: "erectile-dysfunction" },
+      { title: "Have longer sex", desc: "Actionable protocols for premature ejaculation.", link: "premature-ejaculation" },
+      { title: "Understand your health", desc: "Clear answers on lifestyle, testosterone, and performance.", link: "performance" }
+    ]
+  },
+  howItWorks: {
+    kicker: "How It Works",
+    headlinePre: "Getting started is",
+    headlineEm: "easy and private.",
+    steps: [
+      { num: "01", title: "Message on WhatsApp", desc: "Start a secure, private chat. Answer a few questions about your situation." },
+      { num: "02", title: "Get personalized guidance", desc: "Receive a structured review and action plan from a licensed professional." },
+      { num: "03", title: "Ongoing support", desc: "Reach out anytime to adjust your protocol or ask follow-up questions." }
+    ]
+  },
+  expertNote: {
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
+    name: "Dr. O. Ajidahun",
+    title: "Lead Pharmacist"
+  },
   closing: {
     kicker: "Nígbà Tí O Bá Ti Ṣetán",
     headlinePre: "Apá tó nira jù ni",
@@ -829,6 +907,32 @@ const ig: Translation = {
       { q: "Ọ ga-adị mkpa kekọrịta aha m n'ezie?", a: "Mba. Ọtụtụ ndị ahịa na-eji aha mbụ ma ọ bụ akara mbụ. Ihe dị mkpa bụ na mkparịta ụka bụ eziokwu — ọ bụghị na faịlụ kwuru onye ị bụ." }
     ]
   },
+
+  services: {
+    kicker: "What We Treat",
+    headlinePre: "Specialized care",
+    headlineEm: "built for men.",
+    items: [
+      { title: "Get stronger erections", desc: "Private pharmacist-led guidance for erectile difficulty.", link: "erectile-dysfunction" },
+      { title: "Have longer sex", desc: "Actionable protocols for premature ejaculation.", link: "premature-ejaculation" },
+      { title: "Understand your health", desc: "Clear answers on lifestyle, testosterone, and performance.", link: "performance" }
+    ]
+  },
+  howItWorks: {
+    kicker: "How It Works",
+    headlinePre: "Getting started is",
+    headlineEm: "easy and private.",
+    steps: [
+      { num: "01", title: "Message on WhatsApp", desc: "Start a secure, private chat. Answer a few questions about your situation." },
+      { num: "02", title: "Get personalized guidance", desc: "Receive a structured review and action plan from a licensed professional." },
+      { num: "03", title: "Ongoing support", desc: "Reach out anytime to adjust your protocol or ask follow-up questions." }
+    ]
+  },
+  expertNote: {
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
+    name: "Dr. O. Ajidahun",
+    title: "Lead Pharmacist"
+  },
   closing: {
     kicker: "Mgbe Ị Dị Njikere",
     headlinePre: "Akụkụ kacha sie ike bụ",
@@ -1036,6 +1140,32 @@ const fr: Translation = {
       { q: "Et si je ne sais pas quel niveau choisir ?", a: "Commencez par un message sur WhatsApp avant de payer. Un bref échange suffit pour vous orienter vers le bon format — écrit, vocal ou approfondi. Aucune pression pour passer à un niveau supérieur." },
       { q: "Dois-je communiquer mon vrai nom ?", a: "Non. Beaucoup de clients utilisent un prénom ou une initiale. Ce qui compte, c'est l'honnêteté de la conversation — pas ce que dit le dossier." }
     ]
+  },
+
+  services: {
+    kicker: "What We Treat",
+    headlinePre: "Specialized care",
+    headlineEm: "built for men.",
+    items: [
+      { title: "Get stronger erections", desc: "Private pharmacist-led guidance for erectile difficulty.", link: "erectile-dysfunction" },
+      { title: "Have longer sex", desc: "Actionable protocols for premature ejaculation.", link: "premature-ejaculation" },
+      { title: "Understand your health", desc: "Clear answers on lifestyle, testosterone, and performance.", link: "performance" }
+    ]
+  },
+  howItWorks: {
+    kicker: "How It Works",
+    headlinePre: "Getting started is",
+    headlineEm: "easy and private.",
+    steps: [
+      { num: "01", title: "Message on WhatsApp", desc: "Start a secure, private chat. Answer a few questions about your situation." },
+      { num: "02", title: "Get personalized guidance", desc: "Receive a structured review and action plan from a licensed professional." },
+      { num: "03", title: "Ongoing support", desc: "Reach out anytime to adjust your protocol or ask follow-up questions." }
+    ]
+  },
+  expertNote: {
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
+    name: "Dr. O. Ajidahun",
+    title: "Lead Pharmacist"
   },
   closing: {
     kicker: "Quand vous êtes prêt",
