@@ -225,9 +225,9 @@ const en = {
     ]
   },
   expertNote: {
-    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
-    name: "Dr. O. Ajidahun",
-    title: "Lead Pharmacist"
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance. We take a multidisciplinary approach, involving doctors, nurses, and specialists when and where necessary to ensure comprehensive care.",
+    name: "Dr. J.O, PharmD",
+    title: "Founder & Lead Pharmacist"
   },
   closing: {
     kicker: "When You're Ready",
@@ -461,9 +461,9 @@ const pcm: Translation = {
     ]
   },
   expertNote: {
-    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
-    name: "Dr. O. Ajidahun",
-    title: "Lead Pharmacist"
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance. We take a multidisciplinary approach, involving doctors, nurses, and specialists when and where necessary to ensure comprehensive care.",
+    name: "Dr. J.O, PharmD",
+    title: "Founder & Lead Pharmacist"
   },
   closing: {
     kicker: "When You Ready",
@@ -695,9 +695,9 @@ const yo: Translation = {
     ]
   },
   expertNote: {
-    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
-    name: "Dr. O. Ajidahun",
-    title: "Lead Pharmacist"
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance. We take a multidisciplinary approach, involving doctors, nurses, and specialists when and where necessary to ensure comprehensive care.",
+    name: "Dr. J.O, PharmD",
+    title: "Founder & Lead Pharmacist"
   },
   closing: {
     kicker: "Nígbà Tí O Bá Ti Ṣetán",
@@ -929,9 +929,9 @@ const ig: Translation = {
     ]
   },
   expertNote: {
-    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
-    name: "Dr. O. Ajidahun",
-    title: "Lead Pharmacist"
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance. We take a multidisciplinary approach, involving doctors, nurses, and specialists when and where necessary to ensure comprehensive care.",
+    name: "Dr. J.O, PharmD",
+    title: "Founder & Lead Pharmacist"
   },
   closing: {
     kicker: "Mgbe Ị Dị Njikere",
@@ -1163,9 +1163,9 @@ const fr: Translation = {
     ]
   },
   expertNote: {
-    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance.",
-    name: "Dr. O. Ajidahun",
-    title: "Lead Pharmacist"
+    quote: "Our goal is to provide you with a discreet, non-judgmental and convenient space that puts you in control. Every man deserves access to safe, private, and straightforward guidance. We take a multidisciplinary approach, involving doctors, nurses, and specialists when and where necessary to ensure comprehensive care.",
+    name: "Dr. J.O, PharmD",
+    title: "Founder & Lead Pharmacist"
   },
   closing: {
     kicker: "Quand vous êtes prêt",
