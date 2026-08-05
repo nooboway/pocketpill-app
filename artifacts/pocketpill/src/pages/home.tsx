@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe, Mail, ArrowRight } from "lucide-react";
+import { MessageCircle, Shield, Clock, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe, Mail, ArrowRight, Sun, Moon } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { useLang, useT, LANGUAGES } from "@/i18n/LanguageProvider";
 import type { Translation } from "@/i18n/translations";
 
-const WHATSAPP_URL = "https://wa.me/2348000000000";
+const WHATSAPP_URL = "https://wa.me/2347083725382";
 
 const TRUST_ICONS = [
   <Clock className="w-5 h-5 text-primary" />,
@@ -77,15 +78,12 @@ function FloatingWhatsApp() {
         pointerEvents: visible ? "auto" : "none"
       }}
       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-      className="group fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground pl-4 pr-5 py-3.5 rounded-full shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] ring-1 ring-primary/40"
+      className="group fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] transition-all hover:scale-105"
     >
-      <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-primary-foreground/15">
-        <span className="absolute inset-0 rounded-full bg-primary-foreground/20 animate-ping opacity-60" />
-        <MessageCircle className="w-4 h-4 relative" />
-      </span>
-      <span className="text-xs md:text-sm font-medium tracking-widest uppercase">
-        {t.floating.startPrivately}
-      </span>
+      <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-60" style={{ animationDuration: '3s' }} />
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 md:w-8 md:h-8 relative">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
     </motion.a>
   );
 }
@@ -146,6 +144,29 @@ function LanguageSwitcher() {
   );
 }
 
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="w-[34px] h-[34px] md:w-[36px] md:h-[36px]" />;
+
+  const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="flex items-center justify-center w-[34px] h-[34px] md:w-[36px] md:h-[36px] border border-border/40 hover:border-primary/40 rounded-sm text-foreground/80 hover:text-primary transition-colors relative"
+      aria-label="Toggle theme"
+    >
+      <Sun className="h-[14px] w-[14px] md:h-4 md:w-4 absolute transition-all duration-300 dark:scale-0 dark:-rotate-90" />
+      <Moon className="h-[14px] w-[14px] md:h-4 md:w-4 absolute transition-all duration-300 scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
+    </button>
+  );
+}
+
 function Navbar() {
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
@@ -166,10 +187,12 @@ function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center max-w-7xl">
-        <a href="#" className="font-serif text-xl md:text-2xl tracking-wide text-foreground">
-          Pocket<span className="text-primary italic">pill</span>
+        <a href="#" className="flex items-center gap-1 md:gap-1.5 font-serif text-xl md:text-2xl tracking-wide text-foreground">
+          <img src="/logo.png" alt="Pocketpill" className="h-8 w-8 md:h-10 md:w-10 object-contain" />
+          <span>Pocket<span className="text-primary italic">pill</span></span>
         </a>
         <div className="flex items-center gap-3 md:gap-4">
+          <ThemeToggle />
           <LanguageSwitcher />
           <a
             href={WHATSAPP_URL}
@@ -1039,13 +1062,15 @@ function Footer() {
     <footer className="bg-background border-t border-border/40 py-12 md:py-16">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="flex flex-col md:flex-row gap-10 justify-between items-start md:items-center mb-8 pb-8 border-b border-border/30">
-          <a href="#" className="font-serif text-2xl tracking-wide text-foreground">
-            Pocket<span className="text-primary italic">pill</span>
+          <a href="#" className="flex items-center gap-1 md:gap-1.5 font-serif text-2xl tracking-wide text-foreground">
+            <img src="/logo.png" alt="Pocketpill" className="h-9 w-9 md:h-10 md:w-10 object-contain" />
+            <span>Pocket<span className="text-primary italic">pill</span></span>
           </a>
           <nav className="flex flex-wrap gap-x-8 gap-y-3 text-xs tracking-[0.18em] uppercase text-muted-foreground">
             <a href="/book" className="hover:text-primary transition-colors">Book a consult</a>
             <a href="/newsletter" className="hover:text-primary transition-colors">Newsletter</a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a>
+            <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy</a>
+            <a href="/terms-and-conditions" className="hover:text-primary transition-colors">Terms</a>
           </nav>
         </div>
         <p className="text-xs text-muted-foreground/50 max-w-2xl leading-relaxed">

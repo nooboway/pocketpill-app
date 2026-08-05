@@ -10,7 +10,7 @@ export const LANGUAGES: { code: LangCode; label: string; short: string }[] = [
 
 const en = {
   nav: { bookConsult: "Book Consult" },
-  floating: { startPrivately: "Start Privately", aria: "Start a private WhatsApp conversation" },
+  floating: { startPrivately: "Book Consult", aria: "Start a private WhatsApp conversation" },
   hero: {
     kicker: "Private Men's Health · West Africa & Diaspora",
     headlinePre: "You've carried this long enough.",
@@ -220,7 +220,7 @@ export type Translation = typeof en;
 
 const pcm: Translation = {
   nav: { bookConsult: "Book Consult" },
-  floating: { startPrivately: "Start Quiet-Quiet", aria: "Start private WhatsApp talk" },
+  floating: { startPrivately: "Book Consult", aria: "Start private WhatsApp talk" },
   hero: {
     kicker: "Private Men Health · West Africa & Diaspora",
     headlinePre: "You don carry am too long.",
@@ -428,7 +428,7 @@ const pcm: Translation = {
 
 const yo: Translation = {
   nav: { bookConsult: "Gba Ìdánilẹ́kọ̀ọ́" },
-  floating: { startPrivately: "Bẹ̀rẹ̀ Pẹ̀lú Ìpamọ́", aria: "Bẹ̀rẹ̀ ìjíròrò WhatsApp ní ìkọ̀kọ̀" },
+  floating: { startPrivately: "Gba Ìdánilẹ́kọ̀ọ́", aria: "Bẹ̀rẹ̀ ìjíròrò WhatsApp ní ìkọ̀kọ̀" },
   hero: {
     kicker: "Ìlera Àwọn Ọkùnrin Ní Ìkọ̀kọ̀ · Ìwọ̀-Oòrùn Áfríkà & Ilẹ̀ Òkèèrè",
     headlinePre: "O ti gbé ẹrù yìí lọ́pọ̀lọpọ̀.",
@@ -636,7 +636,7 @@ const yo: Translation = {
 
 const ig: Translation = {
   nav: { bookConsult: "Debe Nzụkọ" },
-  floating: { startPrivately: "Malite Na Nzuzo", aria: "Malite mkparịta ụka WhatsApp na nzuzo" },
+  floating: { startPrivately: "Debe Nzụkọ", aria: "Malite mkparịta ụka WhatsApp na nzuzo" },
   hero: {
     kicker: "Ahụike Ụmụ Nwoke Na Nzuzo · Ọdịda Anyanwụ Afrịka & Mba Ọzọ",
     headlinePre: "Ị buruwo ihe a ogologo oge.",
@@ -844,7 +844,7 @@ const ig: Translation = {
 
 const fr: Translation = {
   nav: { bookConsult: "Réserver" },
-  floating: { startPrivately: "Commencer en privé", aria: "Démarrer une conversation WhatsApp privée" },
+  floating: { startPrivately: "Réserver", aria: "Démarrer une conversation WhatsApp privée" },
   hero: {
     kicker: "Santé masculine privée · Afrique de l'Ouest & diaspora",
     headlinePre: "Vous portez cela depuis trop longtemps.",
