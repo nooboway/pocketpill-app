@@ -2,9 +2,10 @@
 // POST /api/webhooks/paystack
 // Paystack sends events here when payments succeed, fail, etc.
 
-const crypto = require("crypto");
+import crypto from "crypto";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-module.exports = async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
