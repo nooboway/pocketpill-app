@@ -187,7 +187,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
           <ThemeToggle />
           <LanguageSwitcher />
-          <a href="/consultation" className="btn-animated">
+          <a href="/start" className="btn-animated">
             <span className="btn-animated-circle" aria-hidden="true">
               <span className="btn-animated-icon arrow" />
             </span>
@@ -324,7 +324,7 @@ function HeroSection() {
 
             <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <a
-                href="/consultation"
+                href="/start"
                 className="btn-pocket group gap-2 px-8 py-4 text-base tracking-wide"
               >
                 <span>Start Here</span>
@@ -1033,7 +1033,7 @@ function ClosingCTASection() {
           </motion.p>
 
           <motion.div variants={FADE_UP}>
-            <a href="/consultation" className="btn-pocket gap-3 px-10 py-5 text-lg tracking-wide hover:-translate-y-1">
+            <a href="/start" className="btn-pocket gap-3 px-10 py-5 text-lg tracking-wide hover:-translate-y-1">
               <span>Start Here</span>
               <ChevronRight className="w-5 h-5" />
             </a>
