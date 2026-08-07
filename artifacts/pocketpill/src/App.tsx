@@ -9,6 +9,8 @@ import AdminPage from "@/pages/admin";
 import NewsletterPage from "@/pages/newsletter";
 import PrivacyPolicyPage from "@/pages/privacy";
 import TermsAndConditionsPage from "@/pages/terms";
+import ConsultationPage from "@/pages/consultation";
+import ConsultationSuccess from "@/pages/consultation-success";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "next-themes";
@@ -26,6 +28,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/consultation" component={ConsultationPage} />
+      <Route path="/consultation/success" component={ConsultationSuccess} />
       <Route path="/book" component={BookPage} />
       <Route path="/admin" component={AdminPage} />
       <Route path="/newsletter" component={NewsletterPage} />

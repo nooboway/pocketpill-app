@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { useLang, useT, LANGUAGES } from "@/i18n/LanguageProvider";
 import type { Translation } from "@/i18n/translations";
 
-const WHATSAPP_URL = "https://wa.me/2347083725382";
+export const WHATSAPP_URL = "https://wa.me/2347083725382";
 
 const TRUST_ICONS = [
   <Clock className="w-5 h-5 text-primary" />,
@@ -35,24 +35,14 @@ export default function Home() {
 
       <main className="flex-1">
         <HeroSection />
-      <ServicesSection />
-      <TrustStrip />
-      <HowItWorksSection />
-      <ExpertNoteSection />
+        <ServicesSection />
+        <TrustStrip />
         <NarrativeSection />
         <WhyPharmacistSection />
-        <TestimonialsSection />
-        <ScreenerSection />
-        <PricingSection />
-        <MonthlySupportSection />
-        <ReadBeforeBookingSection />
-        <FAQSection />
-        <NewsletterSection />
         <ClosingCTASection />
       </main>
 
       <Footer />
-      <FloatingWhatsApp />
     </div>
   );
 }
@@ -91,7 +81,7 @@ function FloatingWhatsApp() {
   );
 }
 
-function LanguageSwitcher() {
+export function LanguageSwitcher() {
   const { lang, setLang, t } = useLang();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -147,7 +137,7 @@ function LanguageSwitcher() {
   );
 }
 
-function ThemeToggle() {
+export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -170,7 +160,7 @@ function ThemeToggle() {
   );
 }
 
-function Navbar() {
+export function Navbar() {
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
 
@@ -197,14 +187,11 @@ function Navbar() {
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
           <ThemeToggle />
           <LanguageSwitcher />
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-1 md:gap-2 text-[8px] sm:text-[9px] md:text-sm font-medium tracking-widest uppercase bg-primary hover:bg-primary/90 text-primary-foreground px-2 py-1.5 md:px-5 md:py-2.5 rounded-sm transition-all duration-300"
-          >
-            <span>{t.nav.bookConsult}</span>
-            <MessageCircle className="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:scale-110" />
+          <a href="/consultation" className="btn-animated">
+            <span className="btn-animated-circle" aria-hidden="true">
+              <span className="btn-animated-icon arrow" />
+            </span>
+            <span className="btn-animated-text">Start Here</span>
           </a>
         </div>
       </div>
@@ -229,13 +216,17 @@ function ServicesSection() {
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {t.services.items.map((item, idx) => (
-            <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: idx * 0.15 }} className="group p-8 lg:p-10 rounded-sm bg-background border border-border/40 hover:border-primary/40 transition-all duration-300">
-              <h3 className="text-2xl font-serif font-medium mb-4 text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">{item.desc}</p>
-              <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary/80 group-hover:text-primary">
-                <span>Learn more</span>
-                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </div>
+            <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: idx * 0.15 }} className="glass-card-wrapper min-h-[300px]">
+              <a href={`/${item.link}`} className="glass-card group cursor-pointer block h-full">
+                <div>
+                  <h3 className="text-2xl font-serif font-medium mb-4 text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">{item.desc}</p>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary/80 group-hover:text-primary">
+                  <span>Learn more</span>
+                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </a>
             </motion.div>
           ))}
         </div>
@@ -333,12 +324,10 @@ function HeroSection() {
 
             <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-sm transition-all duration-300 font-medium tracking-wide"
+                href="/consultation"
+                className="btn-pocket group gap-2 px-8 py-4 text-base tracking-wide"
               >
-                <span>{t.hero.ctaPrimary}</span>
+                <span>Start Here</span>
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
@@ -442,28 +431,33 @@ function WhyPharmacistSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {t.whyPharmacist.pillars.map((pillar, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className={`p-8 lg:p-10 rounded-sm border transition-colors duration-500 hover:border-primary/30 ${
-                idx === 1 ? "bg-card border-primary/20 shadow-[0_0_40px_-15px_rgba(224,92,42,0.1)]" : "bg-background border-border/40"
-              }`}
-            >
-              <h3 className="text-xl font-medium mb-8 text-foreground">{pillar.title}</h3>
-              <ul className="space-y-5">
-                {pillar.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm leading-relaxed">
-                    <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+          {t.whyPharmacist.pillars.map((pillar, idx) => {
+            const isCenter = idx === 1;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                className={`relative drop-shadow-xl overflow-hidden rounded-sm p-[1px] transition-colors duration-500 group ${isCenter ? 'bg-primary/30 hover:bg-primary/50' : 'bg-border/40 hover:bg-primary/30'}`}
+              >
+                <div className={`absolute w-56 h-56 bg-primary blur-[50px] -left-12 -top-12 opacity-30 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none rounded-full ${isCenter ? 'opacity-50' : ''}`} />
+                
+                <div className={`relative z-10 w-full h-full rounded-[3px] p-8 lg:p-10 flex flex-col ${isCenter ? 'bg-card/90 backdrop-blur-sm shadow-[0_0_40px_-15px_rgba(224,92,42,0.1)]' : 'bg-background/90 backdrop-blur-sm'}`}>
+                  <h3 className="text-xl font-medium mb-8 text-foreground group-hover:text-primary transition-colors">{pillar.title}</h3>
+                  <ul className="space-y-5">
+                    {pillar.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm leading-relaxed">
+                        <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1039,9 +1033,9 @@ function ClosingCTASection() {
           </motion.p>
 
           <motion.div variants={FADE_UP}>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-5 rounded-sm transition-all duration-300 font-medium tracking-wide shadow-[0_10px_40px_-10px_rgba(224,92,42,0.4)] hover:shadow-[0_15px_50px_-10px_rgba(224,92,42,0.5)] hover:-translate-y-1">
-              <span>{t.closing.cta}</span>
-              <MessageCircle className="w-5 h-5" />
+            <a href="/consultation" className="btn-pocket gap-3 px-10 py-5 text-lg tracking-wide hover:-translate-y-1">
+              <span>Start Here</span>
+              <ChevronRight className="w-5 h-5" />
             </a>
           </motion.div>
         </motion.div>
@@ -1147,7 +1141,7 @@ function NewsletterSection() {
   );
 }
 
-function Footer() {
+export function Footer() {
   const t = useT();
   return (
     <footer className="bg-background border-t border-border/40 py-12 md:py-16">

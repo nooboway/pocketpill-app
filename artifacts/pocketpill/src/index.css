@@ -125,3 +125,282 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+@layer components {
+  .btn-pocket {
+    appearance: none;
+    background-color: hsl(var(--primary));
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--app-font-sans);
+    font-weight: 600;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+
+  .btn-pocket:focus:not(:focus-visible):not(.focus-visible) {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .btn-pocket:hover {
+    background-color: hsl(var(--primary) / 0.9);
+  }
+
+  .btn-pocket:focus {
+    box-shadow: hsl(var(--primary) / 0.4) 0 0 0 3px;
+    outline: none;
+  }
+
+  .btn-pocket:disabled {
+    background-color: hsl(var(--primary) / 0.5);
+    border-color: rgba(27, 31, 35, .1);
+    color: rgba(255, 255, 255, .8);
+    cursor: default;
+  }
+
+  .btn-pocket:active {
+    background-color: hsl(var(--primary) / 0.95);
+    box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+  }
+
+  /* Animated circle-expand CTA button */
+  .btn-animated {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    height: 2.5rem;
+  }
+
+  .btn-animated .btn-animated-circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    left: 0;
+    display: block;
+    margin: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: hsl(var(--primary));
+    border-radius: 1.625rem;
+  }
+
+  .btn-animated .btn-animated-circle .btn-animated-icon {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+  }
+
+  .btn-animated .btn-animated-circle .btn-animated-icon.arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.55rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    background: none;
+  }
+
+  .btn-animated .btn-animated-circle .btn-animated-icon.arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.29rem;
+    right: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-right: 0.125rem solid #fff;
+    transform: rotate(45deg);
+  }
+
+  .btn-animated .btn-animated-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    padding: 0 1rem 0 3.25rem;
+    margin: 0;
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    font-size: 0.6rem;
+    line-height: 2.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  .btn-animated:hover .btn-animated-circle {
+    width: 100%;
+  }
+
+  .btn-animated:hover .btn-animated-circle .btn-animated-icon.arrow {
+    background: #fff;
+    transform: translate(0.8rem, 0);
+  }
+
+  .btn-animated:hover .btn-animated-text {
+    color: #fff;
+  }
+
+  @media (min-width: 768px) {
+    .btn-animated {
+      height: 2.75rem;
+    }
+    .btn-animated .btn-animated-circle {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+    .btn-animated .btn-animated-text {
+      font-size: 0.7rem;
+      line-height: 2.75rem;
+      padding: 0 1rem 0 3.5rem;
+      letter-spacing: 0.18em;
+    }
+  }
+
+  /* Animated Pay Button */
+  .btn-pay {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid hsl(var(--primary));
+    background-color: hsl(var(--primary));
+    border-radius: 2rem;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-pay, .btn-pay .btn-pay-icon, .btn-pay .btn-pay-text {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-pay .btn-pay-text {
+    position: absolute;
+    left: 3.5rem;
+    right: 0;
+    color: transparent;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .btn-pay .btn-pay-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--primary-foreground));
+    background-color: transparent;
+  }
+
+  .btn-pay:hover {
+    width: 100%;
+    border-radius: var(--radius-md);
+    background-color: hsl(var(--primary));
+  }
+
+  .btn-pay:hover .btn-pay-text {
+    color: hsl(var(--primary-foreground));
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .btn-pay:hover .btn-pay-icon {
+    background-color: hsl(var(--primary) / 0.8);
+  }
+
+  .btn-pay:active .btn-pay-icon {
+    background-color: hsl(var(--primary) / 0.95);
+  }
+
+  /* Glass Card Effect */
+  .glass-card-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glass-card-wrapper::before,
+  .glass-card-wrapper::after {
+    content: "";
+    background-color: hsl(var(--primary) / 0.3);
+    position: absolute;
+  }
+
+  .glass-card-wrapper::before {
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
+    top: 30%;
+    right: 7%;
+  }
+
+  .glass-card-wrapper::after {
+    background-color: transparent;
+    height: 3rem;
+    top: 8%;
+    right: 5%;
+    border: 1px solid hsl(var(--primary) / 0.3);
+  }
+
+  .glass-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    transition: all ease 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1;
+  }
+
+  .light .glass-card {
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .glass-card:hover {
+    box-shadow: 0px 0px 20px 1px hsl(var(--primary) / 0.2);
+    border: 1px solid hsl(var(--primary) / 0.45);
+  }
+}
