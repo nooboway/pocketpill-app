@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight, Check, Shield, Lock, CreditCard } from "lucide-react";
-import { usePaystackPayment } from "react-paystack";
-import { useLocation } from "wouter";
 import { Navbar, Footer } from "./home";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_b8e5c1a84f3e5b30ecba393b4a4505c24f653fa3";
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
@@ -34,7 +29,8 @@ const PLANS = [
     desc: "Focused consultation to understand your concern, discuss possible contributing factors and provide personalised lifestyle recommendations.",
     features: [],
     btn: "Choose Starter",
-    popular: false
+    popular: false,
+    paystackLink: "https://paystack.shop/pay/fngi1ly9gj"
   },
   {
     id: "full",
@@ -44,7 +40,8 @@ const PLANS = [
     desc: "Comprehensive assessment of your concern, medication review where applicable, laboratory test recommendations where necessary, interpretation of available results and a personalised care plan.",
     features: ["Where physician input is required, we'll coordinate this as part of your care."],
     btn: "Choose Full Consultation",
-    popular: true
+    popular: true,
+    paystackLink: "https://paystack.shop/pay/xta4jk5m6r"
   },
   {
     id: "complete",
@@ -60,7 +57,8 @@ const PLANS = [
       "Where clinically appropriate, we'll liaise with our partner physicians to ensure continuity of care."
     ],
     btn: "Choose Complete Care",
-    popular: false
+    popular: false,
+    paystackLink: "https://paystack.shop/pay/hh9lusj3xv"
   },
   {
     id: "priority",
@@ -75,7 +73,8 @@ const PLANS = [
       "Care coordination with partner physicians where required"
     ],
     btn: "Choose Priority Access",
-    popular: false
+    popular: false,
+    paystackLink: "https://paystack.shop/pay/7246psxu1r"
   }
 ];
 
@@ -103,50 +102,6 @@ const FAQS = [
 ];
 
 export default function ConsultationPage() {
-  const [, setLocation] = useLocation();
-  const [selectedPlan, setSelectedPlan] = useState<typeof PLANS[0] | null>(null);
-  const [email, setEmail] = useState("");
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-
-  const config = {
-    reference: (new Date()).getTime().toString(),
-    email: email,
-    amount: (selectedPlan?.price || 0) * 100,
-    publicKey: PAYSTACK_PUBLIC_KEY,
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "Selected Plan",
-          variable_name: "selected_plan",
-          value: selectedPlan?.name || ""
-        }
-      ]
-    }
-  };
-
-  const initializePayment = usePaystackPayment(config);
-
-  const handlePlanSelect = (plan: typeof PLANS[0]) => {
-    setSelectedPlan(plan);
-    setIsEmailModalOpen(true);
-  };
-
-  const onSuccess = (reference: any) => {
-    setIsEmailModalOpen(false);
-    setLocation(`/consultation/success?plan=${encodeURIComponent(selectedPlan?.name || "")}&reference=${reference.reference}`);
-  };
-
-  const onClose = () => {
-    console.log("Payment closed.");
-  };
-
-  const startCheckout = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes("@")) return;
-    setIsEmailModalOpen(false);
-    initializePayment({ onSuccess, onClose });
-  };
-
   return (
     <div className="min-h-[100dvh] flex flex-col selection:bg-primary/30">
       <Navbar />
@@ -271,15 +226,17 @@ export default function ConsultationPage() {
                       </li>
                     ))}
                   </ul>
-                  <button
-                    onClick={() => handlePlanSelect(tier)}
+                  <a
+                    href={tier.paystackLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn-pay"
                   >
                     <span className="btn-pay-text">Pay Now</span>
                     <span className="btn-pay-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 24 24" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" stroke="currentColor" height={20} fill="none"><line y2={19} y1={5} x2={12} x1={12} /><line y2={12} y1={12} x2={19} x1={5} /></svg>
                     </span>
-                  </button>
+                  </a>
                 </div>
               ))}
             </div>
@@ -305,42 +262,6 @@ export default function ConsultationPage() {
       </main>
 
       <Footer />
-
-      <Dialog open={isEmailModalOpen} onOpenChange={setIsEmailModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="font-serif text-2xl text-center">Secure Checkout</DialogTitle>
-            <DialogDescription className="text-center pt-2">
-              Please enter your email to proceed with the {selectedPlan?.name} payment.
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={startCheckout} className="space-y-6 mt-4">
-            <div className="space-y-2">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full bg-background border border-border focus:border-primary/50 rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
-              />
-            </div>
-            <button
-              type="submit"
-              className="btn-pay"
-            >
-              <span className="btn-pay-text">Pay Now</span>
-              <span className="btn-pay-icon">
-                <CreditCard className="w-5 h-5" />
-              </span>
-            </button>
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 mt-4">
-              <Lock className="w-3 h-3" />
-              <span>Payments are securely processed by Paystack</span>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
