@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { usePaystackPayment } from "react-paystack";
 import { Navbar, Footer } from "./home";
 
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_b8e5c1a84f3e5b30ecba393b4a4505c24f653fa3";
+const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
