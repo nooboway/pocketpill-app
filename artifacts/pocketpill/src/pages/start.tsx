@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Check, Shield, Lock, CreditCard } from "lucide-react";
-import { usePaystackPayment } from "react-paystack";
-import { useLocation } from "wouter";
+import { ChevronRight, Check, Shield, Lock, CreditCard, Loader2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Navbar, Footer } from "./home";
 
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_b8e5c1a84f3e5b30ecba393b4a4505c24f653fa3";
+const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] } }
 };
@@ -32,8 +30,7 @@ const PLANS = [
     desc: "Focused consultation to understand your concern, discuss possible contributing factors and provide personalised lifestyle recommendations.",
     features: [],
     btn: "Choose Starter",
-    popular: false,
-    paystackLink: "https://paystack.shop/pay/fngi1ly9gj"
+    popular: false
   },
   {
     id: "full",
@@ -43,8 +40,7 @@ const PLANS = [
     desc: "Comprehensive assessment of your concern, medication review where applicable, laboratory test recommendations where necessary, interpretation of available results and a personalised care plan.",
     features: ["Where physician input is required, we'll coordinate this as part of your care."],
     btn: "Choose Full Consultation",
-    popular: true,
-    paystackLink: "https://paystack.shop/pay/xta4jk5m6r"
+    popular: true
   },
   {
     id: "complete",
@@ -60,8 +56,7 @@ const PLANS = [
       "Where clinically appropriate, we'll liaise with our partner physicians to ensure continuity of care."
     ],
     btn: "Choose Complete Care",
-    popular: false,
-    paystackLink: "https://paystack.shop/pay/hh9lusj3xv"
+    popular: false
   },
   {
     id: "priority",
@@ -76,8 +71,7 @@ const PLANS = [
       "Care coordination with partner physicians where required"
     ],
     btn: "Choose Priority Access",
-    popular: false,
-    paystackLink: "https://paystack.shop/pay/7246psxu1r"
+    popular: false
   }
 ];
 
@@ -104,111 +98,56 @@ const FAQS = [
   }
 ];
 
-function PlanCard({ tier, onSuccess }: { tier: typeof PLANS[0], onSuccess: (reference: any, tier: typeof PLANS[0]) => void }) {
+export default function ConsultationPage() {
+  const [selectedPlan, setSelectedPlan] = useState<typeof PLANS[0] | null>(null);
   const [email, setEmail] = useState("");
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const config = {
-    reference: (new Date()).getTime().toString() + "_" + tier.id,
-    email: email,
-    amount: tier.price * 100,
-    publicKey: PAYSTACK_PUBLIC_KEY,
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "Selected Plan",
-          variable_name: "selected_plan",
-          value: tier.name
-        }
-      ]
-    }
+  const handlePlanSelect = (plan: typeof PLANS[0]) => {
+    setSelectedPlan(plan);
+    setError("");
+    setIsEmailModalOpen(true);
   };
 
-  const initializePayment = usePaystackPayment(config);
-
-  const startCheckout = (e: React.FormEvent) => {
+  const startCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) return;
-    setIsEmailModalOpen(false);
-    initializePayment({
-      onSuccess: (reference: any) => onSuccess(reference, tier),
-      onClose: () => console.log("Payment closed")
-    });
-  };
+    if (!email || !email.includes("@")) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!selectedPlan) return;
 
-  return (
-    <>
-      <div
-        className={`p-8 flex flex-col rounded-sm border relative transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 cursor-pointer group ${
-          tier.popular ? "bg-card border-primary/30 shadow-[0_0_50px_-15px_rgba(224,92,42,0.15)] lg:-translate-y-4 hover:lg:-translate-y-6" : "bg-background border-border/40"
-        }`}
-      >
-      {tier.popular && (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-primary-foreground text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">
-          Most Popular
-        </div>
-      )}
-      <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">{tier.name}</div>
-      <div className="font-serif text-4xl font-bold mb-4">{tier.priceLabel}</div>
-      <div className="text-sm text-foreground/80 mb-8 leading-relaxed">{tier.desc}</div>
-      <ul className="space-y-4 mb-10 flex-1">
-        {tier.features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0 mt-2" />
-            <span className="leading-relaxed">{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={() => setIsEmailModalOpen(true)}
-        className="btn-pay"
-      >
-        <span className="btn-pay-text">Pay Now</span>
-        <span className="btn-pay-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 24 24" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" stroke="currentColor" height={20} fill="none"><line y2={19} y1={5} x2={12} x1={12} /><line y2={12} y1={12} x2={19} x1={5} /></svg>
-        </span>
-      </button>
-      </div>
+    setIsLoading(true);
+    setError("");
 
-      <Dialog open={isEmailModalOpen} onOpenChange={setIsEmailModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="font-serif text-2xl text-center">Secure Checkout</DialogTitle>
-            <DialogDescription className="text-center pt-2">
-              Please enter your email to proceed with the {tier.name} payment.
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={startCheckout} className="space-y-6 mt-4">
-            <div className="space-y-2">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full bg-background border border-border focus:border-primary/50 rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
-              />
-            </div>
-            <button type="submit" className="btn-pay">
-              <span className="btn-pay-text">Pay Now</span>
-              <span className="btn-pay-icon"><CreditCard className="w-5 h-5" /></span>
-            </button>
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 mt-4">
-              <Lock className="w-3 h-3" />
-              <span>Payments are securely processed by Paystack</span>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
+    try {
+      const response = await fetch("/api/initialize-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          amount: selectedPlan.price,
+          plan: selectedPlan.name,
+        }),
+      });
 
-export default function ConsultationPage() {
-  const [, setLocation] = useLocation();
+      const data = await response.json();
 
-  const handleSuccess = (reference: any, tier: typeof PLANS[0]) => {
-    setLocation(`/start/success?plan=${encodeURIComponent(tier.name)}&reference=${reference.reference}`);
+      if (!response.ok || !data.authorization_url) {
+        setError(data.error || "Something went wrong. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Redirect the user to Paystack's secure hosted checkout page
+      window.location.href = data.authorization_url;
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError("Network error. Please check your connection and try again.");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -313,7 +252,38 @@ export default function ConsultationPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch">
               {PLANS.map((tier) => (
-                <PlanCard key={tier.id} tier={tier} onSuccess={handleSuccess} />
+                <div
+                  key={tier.id}
+                  className={`p-8 flex flex-col rounded-sm border relative transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 cursor-pointer group ${
+                    tier.popular ? "bg-card border-primary/30 shadow-[0_0_50px_-15px_rgba(224,92,42,0.15)] lg:-translate-y-4 hover:lg:-translate-y-6" : "bg-background border-border/40"
+                  }`}
+                >
+                  {tier.popular && (
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-primary-foreground text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">
+                      Most Popular
+                    </div>
+                  )}
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">{tier.name}</div>
+                  <div className="font-serif text-4xl font-bold mb-4">{tier.priceLabel}</div>
+                  <div className="text-sm text-foreground/80 mb-8 leading-relaxed">{tier.desc}</div>
+                  <ul className="space-y-4 mb-10 flex-1">
+                    {tier.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-3 text-muted-foreground text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0 mt-2" />
+                        <span className="leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => handlePlanSelect(tier)}
+                    className="btn-pay"
+                  >
+                    <span className="btn-pay-text">Pay Now</span>
+                    <span className="btn-pay-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 24 24" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" stroke="currentColor" height={20} fill="none"><line y2={19} y1={5} x2={12} x1={12} /><line y2={12} y1={12} x2={19} x1={5} /></svg>
+                    </span>
+                  </button>
+                </div>
               ))}
             </div>
           </div>
@@ -338,6 +308,56 @@ export default function ConsultationPage() {
       </main>
 
       <Footer />
+
+      {/* Email Checkout Modal */}
+      <Dialog open={isEmailModalOpen} onOpenChange={setIsEmailModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-2xl text-center">Secure Checkout</DialogTitle>
+            <DialogDescription className="text-center pt-2">
+              Enter your email to proceed with {selectedPlan?.name} — {selectedPlan?.priceLabel}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={startCheckout} className="space-y-6 mt-4">
+            <div className="space-y-2">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                placeholder="your@email.com"
+                className="w-full bg-background border border-border focus:border-primary/50 rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+              />
+              {error && (
+                <p className="text-red-500 text-sm">{error}</p>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn-pay disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span className="btn-pay-text">
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Processing...
+                  </span>
+                ) : (
+                  "Pay Now"
+                )}
+              </span>
+              <span className="btn-pay-icon">
+                <CreditCard className="w-5 h-5" />
+              </span>
+            </button>
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/60 mt-4">
+              <Lock className="w-3 h-3" />
+              <span>Payments are securely processed by Paystack</span>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
