@@ -2,7 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight, Check, Shield, Lock, CreditCard, Loader2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { usePaystackPayment } from "react-paystack";
 import { Navbar, Footer } from "./home";
+
+const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_b8e5c1a84f3e5b30ecba393b4a4505c24f653fa3";
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 30 },
@@ -111,7 +114,25 @@ export default function ConsultationPage() {
     setIsEmailModalOpen(true);
   };
 
-  const startCheckout = async (e: React.FormEvent) => {
+  const config = {
+    reference: (new Date()).getTime().toString() + (selectedPlan ? `_${selectedPlan.id}` : ""),
+    email: email,
+    amount: selectedPlan ? selectedPlan.price * 100 : 0,
+    publicKey: PAYSTACK_PUBLIC_KEY,
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "Selected Plan",
+          variable_name: "selected_plan",
+          value: selectedPlan?.name || ""
+        }
+      ]
+    }
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const startCheckout = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address.");
@@ -119,35 +140,14 @@ export default function ConsultationPage() {
     }
     if (!selectedPlan) return;
 
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/initialize-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          amount: selectedPlan.price,
-          plan: selectedPlan.name,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.authorization_url) {
-        setError(data.error || "Something went wrong. Please try again.");
-        setIsLoading(false);
-        return;
-      }
-
-      // Redirect the user to Paystack's secure hosted checkout page
-      window.location.href = data.authorization_url;
-    } catch (err) {
-      console.error("Checkout error:", err);
-      setError("Network error. Please check your connection and try again.");
-      setIsLoading(false);
-    }
+    setIsEmailModalOpen(false);
+    
+    initializePayment({
+      onSuccess: (reference: any) => {
+        window.location.href = `/start/success?plan=${encodeURIComponent(selectedPlan.name)}&reference=${reference.reference}`;
+      },
+      onClose: () => console.log("Payment closed")
+    });
   };
 
   return (
