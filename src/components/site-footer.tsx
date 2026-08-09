@@ -48,7 +48,7 @@ export function SiteFooter() {
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Certified doctors, pharmacists and team of healthcare professionals, on your schedule. PocketPill brings quality care to your phone — no waiting rooms, no hassle.
+              Certified doctors, pharmacists and team of healthcare professionals, on your schedule. PocketPill brings quality care to your phone.
             </p>
             <div className="mt-6 flex items-center gap-4">
               {socialLinks.map((social) => (

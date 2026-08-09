@@ -25,50 +25,30 @@ export const Route = createFileRoute("/pricing")({
 
 const plans = [
   {
-    name: "Single visit",
-    price: "$79",
-    period: "per visit",
-    description: "Ideal for one-time care or occasional health needs.",
-    features: [
-      "30-minute video visit",
-      "Diagnosis & treatment plan",
-      "Prescription sent to pharmacy",
-      "30-day message follow-up",
-      "HSA/FSA eligible",
-    ],
+    name: "Starter",
+    price: "₦10,000",
+    period: "Text consultation",
+    description: "Perfect for gaining clarity quickly.",
+    features: ["Written consultation", "Follow-up questions included", "24-hour response target"],
     cta: "Book a visit",
     highlighted: false,
   },
   {
-    name: "PocketPill Plus",
-    price: "$39",
-    period: "per month",
-    description: "Comprehensive care for you and your household.",
-    features: [
-      "Unlimited video visits",
-      "Mental health sessions included",
-      "Prescription management",
-      "Priority same-day booking",
-      "Family coverage up to 5 members",
-      "24/7 messaging",
-    ],
-    cta: "Start membership",
+    name: "Standard",
+    price: "₦15,000",
+    period: "30-min voice",
+    description: "A private session with a written summary.",
+    features: ["Private voice session", "Written summary", "Action plan included", "Priority scheduling"],
+    cta: "Book a visit",
     highlighted: true,
   },
   {
-    name: "Business",
-    price: "Custom",
-    period: "",
-    description: "Health benefits for teams of any size.",
-    features: [
-      "Employee health program",
-      "Dedicated account manager",
-      "Usage analytics dashboard",
-      "Custom integrations",
-      "Volume pricing",
-      "Implementation support",
-    ],
-    cta: "Contact sales",
+    name: "Premium",
+    price: "₦27,000",
+    period: "Deep-dive",
+    description: "Comprehensive review + tailored protocol.",
+    features: ["Extended consult", "Protocol document", "7-day follow-up access", "Ongoing guidance"],
+    cta: "Book a visit",
     highlighted: false,
   },
 ];
@@ -127,7 +107,7 @@ function PricingPage() {
                       ))}
                     </ul>
                     <Button className="mt-8 w-full bg-black text-white hover:bg-black/90" asChild>
-                      <Link to="/contact">{plan.cta}</Link>
+                      <Link to="/book" search={{ plan: plan.name, price: parseInt(plan.price.replace(/[^0-9]/g, '')) }}>{plan.cta}</Link>
                     </Button>
                   </CardContent>
                 </Card>

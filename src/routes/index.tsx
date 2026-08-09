@@ -407,7 +407,7 @@ function HomePage() {
                       ))}
                     </ul>
                     <Button className="mt-8 w-full bg-black text-white hover:bg-black/90" asChild>
-                      <Link to="/contact">{plan.cta}</Link>
+                      <Link to="/book" search={{ plan: plan.name, price: parseInt(plan.price.replace(/[^0-9]/g, '')) }}>{plan.cta}</Link>
                     </Button>
                   </CardContent>
                 </Card>

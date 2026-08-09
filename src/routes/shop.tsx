@@ -4,6 +4,7 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionHeader } from "@/components/section-header";
+import staminaCover from "@/assets/stamina_cover.png";
 
 export const Route = createFileRoute("/shop")({
   component: ShopPage,
@@ -17,7 +18,7 @@ function ShopPage() {
       slug: "the-stamina-blueprint",
       title: "The Stamina Blueprint",
       description: "The ultimate science-backed guide to optimizing physical resilience and building long-lasting stamina.",
-      coverImage: "https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=600&auto=format&fit=crop",
+      coverImage: staminaCover,
       price: 1078000,
       originalPrice: 2695000,
     }
