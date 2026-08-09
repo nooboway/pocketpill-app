@@ -14,5 +14,5 @@ export const ordersTable = pgTable("orders", {
 });
 
 export const insertOrderSchema = createInsertSchema(ordersTable).omit({ id: true, createdAt: true });
-export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type InsertOrder = Omit<typeof ordersTable.$inferInsert, "id" | "createdAt">;
 export type Order = typeof ordersTable.$inferSelect;
