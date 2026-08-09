@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Shield, Clock, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe, Mail, ArrowRight, Sun, Moon } from "lucide-react";
+import { MessageCircle, Shield, Clock, ChevronRight, Check, BookOpen, Copy, Lock, AlertTriangle, Globe, Mail, ArrowRight, Sun, Moon, Languages, Package, Truck, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { useLang, useT, LANGUAGES } from "@/i18n/LanguageProvider";
+import { useLocation, Link } from "wouter";
 import type { Translation } from "@/i18n/translations";
 
 export const WHATSAPP_URL = "https://wa.me/2347083725382";
@@ -35,10 +36,14 @@ export default function Home() {
 
       <main className="flex-1">
         <HeroSection />
+        <DiscreetDeliveryStrip />
         <ServicesSection />
         <TrustStrip />
         <NarrativeSection />
         <WhyPharmacistSection />
+        <ClinicalTeamSection />
+        <ClinicallyProvenSection />
+        <FAQSection />
         <ClosingCTASection />
       </main>
 
@@ -103,10 +108,9 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((o) => !o)}
         aria-label={t.langSwitcher.label}
         aria-expanded={open}
-        className="flex items-center gap-2 text-[11px] md:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-primary transition-colors px-2.5 py-2 border border-border/40 hover:border-primary/40 rounded-sm"
+        className={`cir-tabs__t gap-2 px-3 ${open ? 'active' : ''}`}
       >
-        <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
-        <span>{current.short}</span>
+        <Languages className="w-[18px] h-[18px]" strokeWidth={1.5} />
       </button>
       {open && (
         <motion.div
@@ -143,26 +147,36 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return <div className="w-[34px] h-[34px] md:w-[36px] md:h-[36px]" />;
+  if (!mounted) return <div className="w-[49px] h-[28px]" />;
 
   const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
-    <button
-      type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="flex items-center justify-center w-[34px] h-[34px] md:w-[36px] md:h-[36px] border border-border/40 hover:border-primary/40 rounded-sm text-foreground/80 hover:text-primary transition-colors relative"
-      aria-label="Toggle theme"
-    >
-      <Sun className="h-[14px] w-[14px] md:h-4 md:w-4 absolute transition-all duration-300 dark:scale-0 dark:-rotate-90" />
-      <Moon className="h-[14px] w-[14px] md:h-4 md:w-4 absolute transition-all duration-300 scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
-    </button>
+    <label className="theme-switch" aria-label="Toggle theme">
+      <input 
+        type="checkbox" 
+        checked={isDark}
+        onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+      />
+      <span className="theme-slider" />
+    </label>
   );
 }
 
 export function Navbar() {
   const t = useT();
   const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -184,15 +198,47 @@ export function Navbar() {
           <img src="/logo.png" alt="Pocketpill" className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 object-contain" />
           <span>Pocket<span className="text-primary italic">pill</span></span>
         </a>
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
-          <ThemeToggle />
-          <LanguageSwitcher />
-          <a href="/start" className="btn-animated">
-            <span className="btn-animated-circle" aria-hidden="true">
-              <span className="btn-animated-icon arrow" />
-            </span>
-            <span className="btn-animated-text">Start Here</span>
-          </a>
+        <div className="flex items-center justify-end shrink-0" ref={menuRef}>
+          <div 
+            className="relative"
+            onMouseEnter={() => setMenuOpen(true)}
+            onMouseLeave={() => setMenuOpen(false)}
+          >
+            <button 
+              className={`hamburger-bg ${menuOpen ? 'is-open' : ''}`}
+              aria-label="Toggle Menu"
+            >
+              <div className="menu__icon">
+                <span />
+                <span />
+                <span />
+              </div>
+            </button>
+
+            {menuOpen && (
+              <div className="absolute right-0 top-full pt-4 z-50">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="min-w-[220px] bg-background/95 backdrop-blur-xl border border-border/60 rounded-xl shadow-2xl p-2 flex flex-col gap-1"
+                >
+                  <Link href="/">
+                    <a className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${location === '/' ? 'bg-primary/10 text-primary' : 'text-foreground/80 hover:bg-card hover:text-foreground'}`} onClick={() => setMenuOpen(false)}>Home</a>
+                  </Link>
+                  <Link href="/shop">
+                    <a className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${location.startsWith('/shop') ? 'bg-primary/10 text-primary' : 'text-foreground/80 hover:bg-card hover:text-foreground'}`} onClick={() => setMenuOpen(false)}>Shop</a>
+                  </Link>
+                  <div className="flex items-center justify-between px-4 py-3 rounded-lg transition-colors hover:bg-card">
+                    <span className="text-sm font-medium text-foreground/80">Light / Dark Mode</span>
+                    <ThemeToggle />
+                  </div>
+                  <Link href="/start">
+                    <a className="px-4 py-3 rounded-lg text-sm font-medium transition-colors text-foreground/80 hover:bg-card hover:text-foreground" onClick={() => setMenuOpen(false)}>Start Here</a>
+                  </Link>
+                </motion.div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </motion.nav>
@@ -272,7 +318,7 @@ function ExpertNoteSection() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px]" />
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
             <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-muted overflow-hidden border border-border/50 shrink-0">
-               <img src="/hero-texture.png" alt="Expert" className="w-full h-full object-cover opacity-60 mix-blend-overlay" />
+               <img src="/expert_pharmacist.png" alt="Clinical Lead" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="text-primary font-serif text-5xl leading-none absolute -top-4 -left-6 md:left-48 md:top-8 select-none">"</div>
@@ -296,9 +342,9 @@ function HeroSection() {
   return (
     <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img src="/hero-texture.png" alt="" fetchPriority="high" decoding="async" className="w-full h-full object-cover opacity-30 mix-blend-overlay" />
+        <img src="/happy_patient.png" alt="Happy Patient" fetchPriority="high" decoding="async" className="w-full h-full object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/20" />
       </div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10 max-w-7xl">
@@ -458,6 +504,47 @@ function WhyPharmacistSection() {
               </motion.div>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ClinicalTeamSection() {
+  const t = useT();
+  return (
+    <section className="py-24 md:py-32 relative bg-background">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="relative">
+            <div className="aspect-[4/3] rounded-sm overflow-hidden border border-border/50 shadow-2xl relative z-10">
+              <img src="/consultation_scene.png" alt="Clinical Consultation" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+          </motion.div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER}>
+            <motion.div variants={FADE_UP} className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[1px] bg-primary" />
+              <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Doctor of Pharmacy-Led</span>
+            </motion.div>
+            <motion.h2 variants={FADE_UP} className="font-serif text-4xl md:text-5xl leading-[1.1] mb-8">
+              Clinical Oversight <em className="text-primary italic">You Can Trust</em>
+            </motion.h2>
+            <motion.div variants={FADE_UP} className="text-muted-foreground text-lg space-y-6">
+              <p>
+                Unlike generic wellness brands, Pocketpill is strictly governed by licensed Doctors of Pharmacy and clinical specialists. We ensure every health management plan is safe, effective, and tailored to your unique metabolic needs.
+              </p>
+              <p>
+                From your initial online consultation to ongoing WhatsApp support, our clinical team monitors your progress, handles prescription adjustments, and guarantees you are taking the right steps toward your health goals.
+              </p>
+            </motion.div>
+            <motion.div variants={FADE_UP} className="mt-10">
+              <a href="/start" className="inline-flex items-center gap-2 font-medium text-primary hover:text-primary/80 uppercase tracking-widest text-sm transition-colors group">
+                <span>Meet the Clinical Team</span>
+                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1163,5 +1250,62 @@ export function Footer() {
         </p>
       </div>
     </footer>
+  );
+}
+
+function DiscreetDeliveryStrip() {
+  return (
+    <div className="bg-foreground text-background py-4 relative z-20">
+      <div className="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-sm font-medium uppercase tracking-wider">
+        <div className="flex items-center gap-2">
+          <Package className="w-5 h-5 text-primary" />
+          <span>100% Discreet Packaging</span>
+        </div>
+        <div className="hidden md:block w-1 h-1 rounded-full bg-primary/50" />
+        <div className="flex items-center gap-2">
+          <Truck className="w-5 h-5 text-primary" />
+          <span>Fast Nationwide Delivery</span>
+        </div>
+        <div className="hidden md:block w-1 h-1 rounded-full bg-primary/50" />
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-primary" />
+          <span>No Awkward Pharmacy Visits</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClinicallyProvenSection() {
+  return (
+    <section className="py-24 bg-card/10 border-y border-border/40">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl text-center">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={STAGGER} className="max-w-3xl mx-auto">
+          <motion.div variants={FADE_UP} className="flex justify-center items-center gap-3 mb-6">
+            <span className="text-xs tracking-[0.2em] uppercase text-primary font-medium">Science & Efficacy</span>
+          </motion.div>
+          <motion.h2 variants={FADE_UP} className="font-serif text-3xl md:text-5xl leading-[1.1] mb-12">
+            Proven Clinical <em className="text-primary italic">Results</em>
+          </motion.h2>
+          <div className="grid md:grid-cols-3 gap-8 text-left">
+            <motion.div variants={FADE_UP} className="bg-background p-8 rounded-sm border border-border/50 shadow-sm">
+              <div className="text-4xl font-serif text-primary mb-4">85%</div>
+              <h3 className="font-medium mb-2">Success Rate</h3>
+              <p className="text-sm text-muted-foreground">First-line PDE5 inhibitors are effective for up to 85% of men experiencing erectile difficulties.</p>
+            </motion.div>
+            <motion.div variants={FADE_UP} className="bg-background p-8 rounded-sm border border-border/50 shadow-sm">
+              <div className="text-4xl font-serif text-primary mb-4">3-4x</div>
+              <h3 className="font-medium mb-2">Duration Increase</h3>
+              <p className="text-sm text-muted-foreground">Targeted clinical protocols can increase stamina and delay climax by 3 to 4 times on average.</p>
+            </motion.div>
+            <motion.div variants={FADE_UP} className="bg-background p-8 rounded-sm border border-border/50 shadow-sm">
+              <div className="text-4xl font-serif text-primary mb-4">FDA</div>
+              <h3 className="font-medium mb-2">Approved Medications</h3>
+              <p className="text-sm text-muted-foreground">We only prescribe globally recognized, scientifically backed treatments sourced directly from manufacturers.</p>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 }

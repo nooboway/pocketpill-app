@@ -11,6 +11,9 @@ import PrivacyPolicyPage from "@/pages/privacy";
 import TermsAndConditionsPage from "@/pages/terms";
 import ConsultationPage from "@/pages/start";
 import ConsultationSuccess from "@/pages/start-success";
+import LeadCapturePage from "@/pages/lead-capture";
+import ShopPage from "@/pages/shop";
+import CheckoutPage from "@/pages/checkout";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "next-themes";
@@ -35,6 +38,9 @@ function Router() {
       <Route path="/newsletter" component={NewsletterPage} />
       <Route path="/privacy-policy" component={PrivacyPolicyPage} />
       <Route path="/terms-and-conditions" component={TermsAndConditionsPage} />
+      <Route path="/free-blueprint" component={LeadCapturePage} />
+      <Route path="/shop" component={ShopPage} />
+      <Route path="/checkout/:slug" component={CheckoutPage} />
       <Route component={NotFound} />
     </Switch>
   );
