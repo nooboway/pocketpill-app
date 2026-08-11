@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
@@ -40,6 +41,11 @@ const ContactRoute = ContactRouteImport.update({
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/shop': typeof ShopRoute
   '/services/acne': typeof ServicesAcneRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/shop': typeof ShopRoute
   '/services/acne': typeof ServicesAcneRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/shop': typeof ShopRoute
   '/services/acne': typeof ServicesAcneRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/how-it-works'
+    | '/login'
     | '/pricing'
     | '/shop'
     | '/services/acne'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/how-it-works'
+    | '/login'
     | '/pricing'
     | '/shop'
     | '/services/acne'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/how-it-works'
+    | '/login'
     | '/pricing'
     | '/shop'
     | '/services/acne'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
   ShopRoute: typeof ShopRoute
   ServicesAcneRoute: typeof ServicesAcneRoute
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   HowItWorksRoute: HowItWorksRoute,
+  LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
   ShopRoute: ShopRoute,
   ServicesAcneRoute: ServicesAcneRoute,

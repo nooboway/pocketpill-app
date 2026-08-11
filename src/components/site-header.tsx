@@ -41,10 +41,10 @@ export function SiteHeader({ className }: { className?: string }) {
 
         <div className="hidden items-center gap-3 md:flex">
           <Button variant="ghost" size="sm" asChild>
-            <Link to="/contact">Log in</Link>
+            <Link to="/login">Log in</Link>
           </Button>
           <Button size="sm" className="bg-black text-white hover:bg-black/90" asChild>
-            <Link to="/contact">Book a visit</Link>
+            <Link to="/contact">Book a consult</Link>
           </Button>
         </div>
 
@@ -74,13 +74,13 @@ export function SiteHeader({ className }: { className?: string }) {
               </nav>
               <div className="flex flex-col gap-3">
                 <Button variant="outline" asChild>
-                  <Link to="/contact" onClick={() => setOpen(false)}>
+                  <Link to="/login" onClick={() => setOpen(false)}>
                     Log in
                   </Link>
                 </Button>
                 <Button className="bg-black text-white hover:bg-black/90" asChild>
                   <Link to="/contact" onClick={() => setOpen(false)}>
-                    Book a visit
+                    Book a consult
                   </Link>
                 </Button>
               </div>

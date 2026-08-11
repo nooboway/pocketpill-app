@@ -19,9 +19,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — PocketPill" },
-      { name: "description", content: "Get in touch with the PocketPill care team. We're here to help." },
+      { name: "description", content: "Book a consult with the PocketPill care team. We're here to help." },
       { property: "og:title", content: "Contact — PocketPill" },
-      { property: "og:description", content: "Get in touch with the PocketPill care team. We're here to help." },
+      { property: "og:description", content: "Book a consult with the PocketPill care team. We're here to help." },
       { property: "og:url", content: "/contact" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -91,7 +91,7 @@ function ContactPage() {
                 <SectionHeader
                   align="left"
                   eyebrow="Contact"
-                  title="Get in touch"
+                  title="Book a consult"
                   description="Fill out the form and our care team will reach out within one business day."
                 />
                 <div className="mt-8 space-y-6">
