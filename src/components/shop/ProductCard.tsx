@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface ProductProps {
   slug: string;
@@ -10,6 +13,7 @@ interface ProductProps {
 }
 
 export function ProductCard({ slug, title, description, coverImage, price, originalPrice }: ProductProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const formattedPrice = (price / 100).toLocaleString('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 });
   const formattedOriginal = originalPrice ? (originalPrice / 100).toLocaleString('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }) : null;
 
@@ -32,8 +36,43 @@ export function ProductCard({ slug, title, description, coverImage, price, origi
           )}
           <span className="text-lg font-bold text-primary font-mono">{formattedPrice}</span>
         </div>
-        <Link to={`/checkout/${slug}`} className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-          Buy Now
+        
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <button className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+              Buy Now
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader className="flex flex-row items-center justify-between">
+              <DialogTitle>Checkout</DialogTitle>
+              {/* Close button provided automatically by DialogHeader, or explicitly added here if needed. 
+                  Adding an explicit close button just in case user meant a very obvious one. */}
+            </DialogHeader>
+            <div className="flex flex-col items-center justify-center p-6 text-center space-y-4">
+              <div className="text-4xl">🛍️</div>
+              <h3 className="text-lg font-semibold">{title}</h3>
+              <p className="text-muted-foreground text-sm">Total: {formattedPrice}</p>
+              
+              <div className="w-full pt-4 space-y-3 border-t">
+                <p className="text-sm">Payment integration goes here.</p>
+                <button className="w-full inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow" onClick={() => alert("Proceeding to payment...")}>
+                  Proceed to Payment
+                </button>
+                <button className="w-full inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground" onClick={() => setIsOpen(false)}>
+                  Cancel & Close
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+      
+      {/* Nudge toward booking a consult */}
+      <div className="w-full mt-4 pt-4 border-t border-border/50 text-center">
+        <p className="text-xs text-muted-foreground mb-2">Need a personalized plan?</p>
+        <Link to="/services" className="text-xs font-semibold text-primary hover:underline">
+          Book a Consultation →
         </Link>
       </div>
     </div>

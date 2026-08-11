@@ -5,10 +5,11 @@ const footerLinks = [
   {
     title: "Care",
     links: [
-      { label: "Urgent care", to: "/services" },
-      { label: "Mental health", to: "/services" },
-      { label: "Prescriptions", to: "/services" },
-      { label: "Chronic care", to: "/services" },
+      { label: "Sexual Health", to: "/services/sexual-health" },
+      { label: "Hair Loss", to: "/services/hair-loss" },
+      { label: "Acne", to: "/services/acne" },
+      { label: "Scarring & Hyperpigmentation", to: "/services/scarring" },
+      { label: "Weight Loss", to: "/services/weight-loss" },
     ],
   },
   {

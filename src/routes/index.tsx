@@ -96,21 +96,21 @@ const differentiators = [
 
 const testimonials = [
   {
-    quote: "I delayed reaching out for months because I felt embarrassed. The consultation was private, calm, and practical. I left with clearer next steps than I had from weeks of searching online.",
-    author: "Tunde A.",
+    quote: "I was skeptical about starting a weight loss protocol, but having a doctor on WhatsApp to talk through the side effects and dosage made a huge difference. By week 4, my cravings were gone. The discreet delivery to my office in Lagos was a lifesaver.",
+    author: "Bode A.",
     location: "Lagos",
     rating: 5,
   },
   {
-    quote: "What stood out was the discretion. No awkwardness, no judgment — just a direct conversation that helped me understand what questions I should be asking.",
-    author: "Michael O.",
+    quote: "I've struggled with my hairline for three years. The PocketPill protocol gave me a clear, step-by-step routine with actual prescription-grade serums. It's been 3 months and my barber just pointed out the new growth.",
+    author: "Emeka O.",
     location: "Abuja",
     rating: 5,
   },
   {
-    quote: "I expected generic advice. What I got was a thoughtful conversation tailored to my situation. The written follow-up was especially useful.",
-    author: "K.",
-    location: "London",
+    quote: "What stood out was the privacy. No awkward waiting rooms, no judgment. We just had a direct, professional conversation about my performance issues, and the written protocol I got was clear and effective. My confidence is fully back.",
+    author: "Kelechi N.",
+    location: "Port Harcourt",
     rating: 5,
   },
 ];
@@ -220,17 +220,6 @@ function HomePage() {
                   height={1024}
                   className="relative z-10 rounded-3xl object-cover shadow-2xl"
                 />
-                <div className="absolute -bottom-6 -left-6 z-20 rounded-2xl bg-white p-4 shadow-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-soft">
-                      <Video className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">Next available</p>
-                      <p className="text-xs text-muted-foreground">in 12 minutes</p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -241,8 +230,8 @@ function HomePage() {
           <div className="container-tight py-10">
             <div className="grid gap-8 sm:grid-cols-3">
               <div className="text-center">
-                <p className="font-heading text-4xl font-bold text-foreground">500+</p>
-                <p className="mt-1 text-sm text-muted-foreground">Trusted by over 500 men across West Africa and the diaspora.</p>
+                <p className="font-heading text-4xl font-bold text-foreground">Proven</p>
+                <p className="mt-1 text-sm text-muted-foreground">Trusted by men across West Africa and the diaspora to deliver real results.</p>
               </div>
               <div className="text-center">
                 <p className="font-heading text-4xl font-bold text-foreground">Private</p>
@@ -372,49 +361,7 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Pricing */}
-        <section className="section-padding bg-background">
-          <div className="container-tight">
-            <SectionHeader
-              eyebrow="Pricing"
-              title="Simple pricing. Clear next steps."
-              description="No hidden fees. No surprise bills. Choose the plan that fits your needs."
-            />
-            <div className="mt-16 grid gap-6 lg:grid-cols-3">
-              {pricingPlans.map((plan) => (
-                <Card
-                  key={plan.name}
-                  className={`relative flex flex-col border-border/60 ${plan.highlighted ? "border-2 border-primary shadow-xl" : "bg-card"}`}
-                >
-                  {plan.highlighted && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                      Most popular
-                    </span>
-                  )}
-                  <CardContent className="flex flex-1 flex-col p-6">
-                    <h3 className="font-heading text-xl font-semibold text-foreground">{plan.name}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
-                    <div className="mt-6">
-                      <span className="font-heading text-4xl font-bold text-foreground">{plan.price}</span>
-                      {plan.period && <span className="text-sm text-muted-foreground"> {plan.period}</span>}
-                    </div>
-                    <ul className="mt-6 flex-1 space-y-3">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button className="mt-8 w-full bg-black text-white hover:bg-black/90" asChild>
-                      <Link to="/contact">{plan.cta}</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* FAQ */}
         <section className="section-padding bg-cream">

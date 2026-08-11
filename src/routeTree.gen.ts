@@ -14,8 +14,13 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesAcneRouteImport } from './routes/services.acne'
+import { Route as ServicesHairLossRouteImport } from './routes/services.hair-loss'
+import { Route as ServicesScarringRouteImport } from './routes/services.scarring'
+import { Route as ServicesSexualHealthRouteImport } from './routes/services.sexual-health'
+import { Route as ServicesWeightLossRouteImport } from './routes/services.weight-loss'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,14 +47,39 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesAcneRoute = ServicesAcneRouteImport.update({
+  id: '/services/acne',
+  path: '/services/acne',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesHairLossRoute = ServicesHairLossRouteImport.update({
+  id: '/services/hair-loss',
+  path: '/services/hair-loss',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesScarringRoute = ServicesScarringRouteImport.update({
+  id: '/services/scarring',
+  path: '/services/scarring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesSexualHealthRoute = ServicesSexualHealthRouteImport.update({
+  id: '/services/sexual-health',
+  path: '/services/sexual-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesWeightLossRoute = ServicesWeightLossRouteImport.update({
+  id: '/services/weight-loss',
+  path: '/services/weight-loss',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -59,8 +89,13 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/services/acne': typeof ServicesAcneRoute
+  '/services/hair-loss': typeof ServicesHairLossRoute
+  '/services/scarring': typeof ServicesScarringRoute
+  '/services/sexual-health': typeof ServicesSexualHealthRoute
+  '/services/weight-loss': typeof ServicesWeightLossRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +103,13 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/services/acne': typeof ServicesAcneRoute
+  '/services/hair-loss': typeof ServicesHairLossRoute
+  '/services/scarring': typeof ServicesScarringRoute
+  '/services/sexual-health': typeof ServicesSexualHealthRoute
+  '/services/weight-loss': typeof ServicesWeightLossRoute
+  '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +118,13 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/services/acne': typeof ServicesAcneRoute
+  '/services/hair-loss': typeof ServicesHairLossRoute
+  '/services/scarring': typeof ServicesScarringRoute
+  '/services/sexual-health': typeof ServicesSexualHealthRoute
+  '/services/weight-loss': typeof ServicesWeightLossRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +134,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/how-it-works'
     | '/pricing'
-    | '/services'
     | '/shop'
+    | '/services/acne'
+    | '/services/hair-loss'
+    | '/services/scarring'
+    | '/services/sexual-health'
+    | '/services/weight-loss'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +148,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/how-it-works'
     | '/pricing'
-    | '/services'
     | '/shop'
+    | '/services/acne'
+    | '/services/hair-loss'
+    | '/services/scarring'
+    | '/services/sexual-health'
+    | '/services/weight-loss'
+    | '/services'
   id:
     | '__root__'
     | '/'
@@ -107,8 +162,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/how-it-works'
     | '/pricing'
-    | '/services'
     | '/shop'
+    | '/services/acne'
+    | '/services/hair-loss'
+    | '/services/scarring'
+    | '/services/sexual-health'
+    | '/services/weight-loss'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,8 +177,13 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PricingRoute: typeof PricingRoute
-  ServicesRoute: typeof ServicesRoute
   ShopRoute: typeof ShopRoute
+  ServicesAcneRoute: typeof ServicesAcneRoute
+  ServicesHairLossRoute: typeof ServicesHairLossRoute
+  ServicesScarringRoute: typeof ServicesScarringRoute
+  ServicesSexualHealthRoute: typeof ServicesSexualHealthRoute
+  ServicesWeightLossRoute: typeof ServicesWeightLossRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -158,18 +223,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/acne': {
+      id: '/services/acne'
+      path: '/services/acne'
+      fullPath: '/services/acne'
+      preLoaderRoute: typeof ServicesAcneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/hair-loss': {
+      id: '/services/hair-loss'
+      path: '/services/hair-loss'
+      fullPath: '/services/hair-loss'
+      preLoaderRoute: typeof ServicesHairLossRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/scarring': {
+      id: '/services/scarring'
+      path: '/services/scarring'
+      fullPath: '/services/scarring'
+      preLoaderRoute: typeof ServicesScarringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/sexual-health': {
+      id: '/services/sexual-health'
+      path: '/services/sexual-health'
+      fullPath: '/services/sexual-health'
+      preLoaderRoute: typeof ServicesSexualHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/weight-loss': {
+      id: '/services/weight-loss'
+      path: '/services/weight-loss'
+      fullPath: '/services/weight-loss'
+      preLoaderRoute: typeof ServicesWeightLossRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -181,8 +281,13 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   HowItWorksRoute: HowItWorksRoute,
   PricingRoute: PricingRoute,
-  ServicesRoute: ServicesRoute,
   ShopRoute: ShopRoute,
+  ServicesAcneRoute: ServicesAcneRoute,
+  ServicesHairLossRoute: ServicesHairLossRoute,
+  ServicesScarringRoute: ServicesScarringRoute,
+  ServicesSexualHealthRoute: ServicesSexualHealthRoute,
+  ServicesWeightLossRoute: ServicesWeightLossRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
