@@ -76,6 +76,9 @@
   /* Accordion Animations */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  /* Marquee Animation */
+  --animate-marquee: marquee 40s linear infinite;
 }
 
 @keyframes accordion-down {
@@ -86,6 +89,11 @@
 @keyframes accordion-up {
   from { height: var(--radix-accordion-content-height); }
   to { height: 0; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
 }
 
 :root {

@@ -28,9 +28,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "PocketPill — Private Men's Health Consultations" },
-      { name: "description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp." },
+      { name: "description", content: "Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation." },
       { property: "og:title", content: "PocketPill — Private Men's Health Consultations" },
-      { property: "og:description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp." },
+      { property: "og:description", content: "Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation." },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -60,7 +60,7 @@ const services = [
 const steps = [
   {
     icon: MessageSquare,
-    title: "Message on WhatsApp",
+    title: "Start an online consultation",
     description: "Start a secure, private chat. Answer a few questions about your situation.",
   },
   {
@@ -96,22 +96,52 @@ const differentiators = [
 
 const testimonials = [
   {
-    quote: "I was skeptical about starting a weight loss protocol, but having a doctor on WhatsApp to talk through the side effects and dosage made a huge difference. By week 4, my cravings were gone. The discreet delivery to my office in Lagos was a lifesaver.",
+    quote: "I was skeptical about starting a weight loss protocol, but having a doctor available online to talk through the side effects and dosage made a huge difference. By week 4, my cravings were gone. The discreet delivery to my office in Lagos was a lifesaver.",
     author: "Bode A.",
-    location: "Lagos",
+    location: "Weight Loss Protocol",
     rating: 5,
   },
   {
     quote: "I've struggled with my hairline for three years. The PocketPill protocol gave me a clear, step-by-step routine with actual prescription-grade serums. It's been 3 months and my barber just pointed out the new growth.",
     author: "Emeka O.",
-    location: "Abuja",
+    location: "Hair Loss Protocol",
     rating: 5,
   },
   {
     quote: "What stood out was the privacy. No awkward waiting rooms, no judgment. We just had a direct, professional conversation about my performance issues, and the written protocol I got was clear and effective. My confidence is fully back.",
     author: "Kelechi N.",
-    location: "Port Harcourt",
+    location: "Performance Protocol",
     rating: 5,
+  },
+  {
+    quote: "I had cystic breakouts on my jawline that nothing over-the-counter could fix. PocketPill set me up with a medical-grade protocol that actually targeted the inflammation. By week 6, my skin was completely clear.",
+    author: "Amina Y.",
+    location: "Acne Protocol",
+    rating: 4,
+  },
+  {
+    quote: "I lost so much volume and experienced severe thinning after pregnancy. The bundled monthly management is what saved me. I don't have to think about refills; I just follow the serum routine and send progress photos for the doc every month.",
+    author: "Ngozi C.",
+    location: "Hair Loss Protocol",
+    rating: 5,
+  },
+  {
+    quote: "I had dark hyperpigmentation on my jawline from old shaving bumps that just wouldn't fade. The PocketPill protocol gave me clinical-strength formulas I couldn't get at the pharmacy. Faded them significantly within the first two months.",
+    author: "David U.",
+    location: "Scarring & Hyperpigmentation",
+    rating: 4,
+  },
+  {
+    quote: "I kept putting this off because the thought of sitting in a waiting room was terrifying. PocketPill made it entirely discreet online. The doctor explained the actual cause and gave me a clear protocol. My confidence has completely returned.",
+    author: "Tunde O.",
+    location: "Performance Protocol",
+    rating: 5,
+  },
+  {
+    quote: "I wasn't looking to be a bodybuilder, I just wanted to get rid of my gut and get my stamina back. The appetite suppression is real. I'm down 8kg in 6 weeks.",
+    author: "Paul E.",
+    location: "Weight Loss Protocol",
+    rating: 4,
   },
 ];
 
@@ -148,7 +178,7 @@ const pricingPlans = [
 const faqs = [
   {
     question: "Is this really private?",
-    answer: "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially.",
+    answer: "Yes. Consultations happen through a secure online portal with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially.",
   },
   {
     question: "Will anything show up on my bank or card statement?",
@@ -160,11 +190,11 @@ const faqs = [
   },
   {
     question: "I live outside Nigeria. Can I still book?",
-    answer: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run on WhatsApp and secure payment links, both of which work globally.",
+    answer: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run through our secure online platform and payment links, both of which work globally.",
   },
   {
     question: "What if I'm not sure which tier I need?",
-    answer: "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
+    answer: "Start an online message before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
   },
 ];
 
@@ -186,13 +216,13 @@ function HomePage() {
                 You've carried this long enough. Start here.
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp. Clear guidance. Confidential communication. No waiting rooms.
+                Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation. Clear guidance. Confidential communication. No waiting rooms.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" className="bg-black text-white hover:bg-black/90" asChild>
-                  <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">
-                    Start on WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  <Link to="/contact">
+                    Start Online Consultation <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
                   <a href="#pricing">See Pricing</a>
@@ -275,7 +305,7 @@ function HomePage() {
             <SectionHeader
               eyebrow="How it works"
               title="Getting started is easy and private."
-              description="No waiting rooms. No paperwork. Just clear guidance on WhatsApp."
+              description="No waiting rooms. No paperwork. Just clear guidance online."
             />
             <div className="mt-16 grid gap-8 md:grid-cols-3">
               {steps.map((step, index) => (
@@ -303,7 +333,7 @@ function HomePage() {
                   align="left"
                   eyebrow="Why PocketPill"
                   title="The problem is often not the condition. It is the silence."
-                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance over WhatsApp."
+                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance online."
                 />
                 <div className="mt-8 grid gap-6 sm:grid-cols-2">
                   {differentiators.map((item) => (
@@ -330,7 +360,7 @@ function HomePage() {
         </section>
 
         {/* Testimonials */}
-        <section className="section-padding bg-black text-white">
+        <section className="section-padding bg-black text-white overflow-hidden">
           <div className="container-tight">
             <SectionHeader
               eyebrow="In Their Words"
@@ -338,9 +368,12 @@ function HomePage() {
               description="Shared with permission. Names and details have been adjusted to protect privacy."
               className="[&_h2]:text-white [&_p]:text-white/70 [&_span]:text-primary"
             />
-            <div className="mt-16 grid gap-6 md:grid-cols-3">
-              {testimonials.map((testimonial) => (
-                <Card key={testimonial.author} className="border-white/10 bg-white/5 text-white backdrop-blur">
+          </div>
+          
+          <div className="mt-16 relative flex w-full">
+            <div className="flex animate-marquee gap-6 min-w-max pr-6">
+              {testimonials.map((testimonial, idx) => (
+                <Card key={`t1-${idx}`} className="w-[350px] md:w-[400px] border-white/10 bg-white/5 text-white backdrop-blur shrink-0">
                   <CardContent className="p-6">
                     <div className="flex gap-1">
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -352,7 +385,28 @@ function HomePage() {
                     <p className="mt-4 text-base leading-relaxed text-white/90">"{testimonial.quote}"</p>
                     <div className="mt-6">
                       <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-xs text-white/60">{testimonial.location}</p>
+                      <p className="text-xs text-primary/80 font-medium">{testimonial.location}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <div className="flex animate-marquee gap-6 min-w-max pr-6" aria-hidden="true">
+              {testimonials.map((testimonial, idx) => (
+                <Card key={`t2-${idx}`} className="w-[350px] md:w-[400px] border-white/10 bg-white/5 text-white backdrop-blur shrink-0">
+                  <CardContent className="p-6">
+                    <div className="flex gap-1">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <svg key={i} className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="mt-4 text-base leading-relaxed text-white/90">"{testimonial.quote}"</p>
+                    <div className="mt-6">
+                      <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
+                      <p className="text-xs text-primary/80 font-medium">{testimonial.location}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -369,7 +423,7 @@ function HomePage() {
             <SectionHeader
               eyebrow="FAQ"
               title="The questions men don't ask out loud."
-              description="If something here isn't covered, message on WhatsApp before booking. There's no obligation to continue."
+              description="If something here isn't covered, send us a message before booking. There's no obligation to continue."
             />
             <div className="mt-12">
               <FAQAccordion items={faqs} />
@@ -382,11 +436,11 @@ function HomePage() {
           <div className="container-tight text-center">
             <h2 className="heading-lg text-white">The hardest part is the first message.</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Start privately on WhatsApp. Ask the question you've been postponing.
+              Start your private online consultation. Ask the question you've been postponing.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-white/90" asChild>
-                <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">Message on WhatsApp</a>
+                <Link to="/contact">Start Online Consultation</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" asChild>
                 <a href="#pricing">View pricing</a>
