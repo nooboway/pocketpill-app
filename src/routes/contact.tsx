@@ -43,8 +43,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Phone",
-    value: "1-800-POCKET-1",
-    href: "tel:1-800-POCKET-1",
+    value: "+234 708 372 5382",
+    href: "tel:+2347083725382",
   },
   {
     icon: Mail,
@@ -55,7 +55,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Office",
-    value: "Denver, CO",
+    value: "Ikeja, Lagos, Nigeria",
     href: "#",
   },
 ];

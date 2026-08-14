@@ -6,7 +6,7 @@ const footerLinks = [
     title: "Care",
     links: [
       { label: "Urgent care", to: "/services" },
-      { label: "Mental health", to: "/services" },
+      { label: "Mental health", to: "/mental-health" },
       { label: "Prescriptions", to: "/services" },
       { label: "Chronic care", to: "/services" },
     ],
@@ -21,11 +21,18 @@ const footerLinks = [
     ],
   },
   {
+    title: "Support",
+    links: [
+      { label: "Help center", to: "/help-center" },
+      { label: "FAQ", to: "/help-center" },
+    ],
+  },
+  {
     title: "Legal",
     links: [
-      { label: "Privacy policy", to: "/contact" },
-      { label: "Terms of service", to: "/contact" },
-      { label: "NDPR notice", to: "/contact" },
+      { label: "Privacy policy", to: "/privacy-policy" },
+      { label: "Terms of use", to: "/terms-of-use" },
+      { label: "NDPR notice", to: "/privacy-policy#ndpr" },
     ],
   },
 ];
@@ -64,7 +71,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3 lg:col-span-8">
+          <div className="grid gap-8 sm:grid-cols-4 lg:col-span-8">
             {footerLinks.map((group) => (
               <div key={group.title}>
                 <h3 className="font-heading text-sm font-semibold text-foreground">{group.title}</h3>

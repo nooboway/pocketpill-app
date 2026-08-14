@@ -28,9 +28,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "PocketPill — Private Men's Health Consultations" },
-      { name: "description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp." },
+      { name: "description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform." },
       { property: "og:title", content: "PocketPill — Private Men's Health Consultations" },
-      { property: "og:description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp." },
+      { property: "og:description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform." },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -60,8 +60,8 @@ const services = [
 const steps = [
   {
     icon: MessageSquare,
-    title: "Message on WhatsApp",
-    description: "Start a secure, private chat. Answer a few questions about your situation.",
+    title: "Consult online privately",
+    description: "Start a secure, private session. Answer a few questions about your situation.",
   },
   {
     icon: UserRound,
@@ -148,7 +148,7 @@ const pricingPlans = [
 const faqs = [
   {
     question: "Is this really private?",
-    answer: "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially.",
+    answer: "Yes. Consultations happen on our secure, encrypted communication platform. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially.",
   },
   {
     question: "Will anything show up on my bank or card statement?",
@@ -160,11 +160,11 @@ const faqs = [
   },
   {
     question: "I live outside Nigeria. Can I still book?",
-    answer: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run on WhatsApp and secure payment links, both of which work globally.",
+    answer: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run on our secure online portal and secure payment links, both of which work globally.",
   },
   {
     question: "What if I'm not sure which tier I need?",
-    answer: "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
+    answer: "Contact our care team before booking. A short exchange is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
   },
 ];
 
@@ -186,13 +186,13 @@ function HomePage() {
                 You've carried this long enough. Start here.
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via WhatsApp. Clear guidance. Confidential communication. No waiting rooms.
+                Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform. Clear guidance. Confidential communication. No waiting rooms.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" className="bg-black text-white hover:bg-black/90" asChild>
-                  <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">
-                    Start on WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  <Link to="/contact">
+                    Book a consultation <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
                   <a href="#pricing">See Pricing</a>
@@ -286,7 +286,7 @@ function HomePage() {
             <SectionHeader
               eyebrow="How it works"
               title="Getting started is easy and private."
-              description="No waiting rooms. No paperwork. Just clear guidance on WhatsApp."
+              description="No waiting rooms. No paperwork. Just clear guidance online."
             />
             <div className="mt-16 grid gap-8 md:grid-cols-3">
               {steps.map((step, index) => (
@@ -314,7 +314,7 @@ function HomePage() {
                   align="left"
                   eyebrow="Why PocketPill"
                   title="The problem is often not the condition. It is the silence."
-                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance over WhatsApp."
+                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance over our secure platform."
                 />
                 <div className="mt-8 grid gap-6 sm:grid-cols-2">
                   {differentiators.map((item) => (
@@ -422,7 +422,7 @@ function HomePage() {
             <SectionHeader
               eyebrow="FAQ"
               title="The questions men don't ask out loud."
-              description="If something here isn't covered, message on WhatsApp before booking. There's no obligation to continue."
+              description="If something here isn't covered, reach out to our team before booking. There's no obligation to continue."
             />
             <div className="mt-12">
               <FAQAccordion items={faqs} />
@@ -435,11 +435,11 @@ function HomePage() {
           <div className="container-tight text-center">
             <h2 className="heading-lg text-white">The hardest part is the first message.</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Start privately on WhatsApp. Ask the question you've been postponing.
+              Start privately online. Ask the question you've been postponing.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-white/90" asChild>
-                <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">Message on WhatsApp</a>
+                <Link to="/contact">Book a Consultation</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" asChild>
                 <a href="#pricing">View pricing</a>

@@ -13,10 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HelpCenterRouteImport } from './routes/help-center'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as MentalHealthRouteImport } from './routes/mental-health'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as TermsOfUseRouteImport } from './routes/terms-of-use'
 import { Route as CheckoutSlugRouteImport } from './routes/checkout.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -39,14 +43,29 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpCenterRoute = HelpCenterRouteImport.update({
+  id: '/help-center',
+  path: '/help-center',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentalHealthRoute = MentalHealthRouteImport.update({
+  id: '/mental-health',
+  path: '/mental-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -57,6 +76,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfUseRoute = TermsOfUseRouteImport.update({
+  id: '/terms-of-use',
+  path: '/terms-of-use',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutSlugRoute = CheckoutSlugRouteImport.update({
@@ -70,10 +94,14 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/help-center': typeof HelpCenterRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mental-health': typeof MentalHealthRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/terms-of-use': typeof TermsOfUseRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +109,14 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/help-center': typeof HelpCenterRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mental-health': typeof MentalHealthRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/terms-of-use': typeof TermsOfUseRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
 }
 export interface FileRoutesById {
@@ -93,10 +125,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/help-center': typeof HelpCenterRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mental-health': typeof MentalHealthRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
+  '/terms-of-use': typeof TermsOfUseRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
 }
 export interface FileRouteTypes {
@@ -106,10 +142,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/book'
     | '/contact'
+    | '/help-center'
     | '/how-it-works'
+    | '/mental-health'
     | '/pricing'
+    | '/privacy-policy'
     | '/services'
     | '/shop'
+    | '/terms-of-use'
     | '/checkout/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,10 +157,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/book'
     | '/contact'
+    | '/help-center'
     | '/how-it-works'
+    | '/mental-health'
     | '/pricing'
+    | '/privacy-policy'
     | '/services'
     | '/shop'
+    | '/terms-of-use'
     | '/checkout/$slug'
   id:
     | '__root__'
@@ -128,10 +172,14 @@ export interface FileRouteTypes {
     | '/about'
     | '/book'
     | '/contact'
+    | '/help-center'
     | '/how-it-works'
+    | '/mental-health'
     | '/pricing'
+    | '/privacy-policy'
     | '/services'
     | '/shop'
+    | '/terms-of-use'
     | '/checkout/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -140,10 +188,14 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
+  HelpCenterRoute: typeof HelpCenterRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  MentalHealthRoute: typeof MentalHealthRoute
   PricingRoute: typeof PricingRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ServicesRoute: typeof ServicesRoute
   ShopRoute: typeof ShopRoute
+  TermsOfUseRoute: typeof TermsOfUseRoute
   CheckoutSlugRoute: typeof CheckoutSlugRoute
 }
 
@@ -177,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help-center': {
+      id: '/help-center'
+      path: '/help-center'
+      fullPath: '/help-center'
+      preLoaderRoute: typeof HelpCenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
@@ -184,11 +243,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mental-health': {
+      id: '/mental-health'
+      path: '/mental-health'
+      fullPath: '/mental-health'
+      preLoaderRoute: typeof MentalHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -203,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-of-use': {
+      id: '/terms-of-use'
+      path: '/terms-of-use'
+      fullPath: '/terms-of-use'
+      preLoaderRoute: typeof TermsOfUseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout/$slug': {
@@ -220,10 +300,14 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BookRoute: BookRoute,
   ContactRoute: ContactRoute,
+  HelpCenterRoute: HelpCenterRoute,
   HowItWorksRoute: HowItWorksRoute,
+  MentalHealthRoute: MentalHealthRoute,
   PricingRoute: PricingRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   ServicesRoute: ServicesRoute,
   ShopRoute: ShopRoute,
+  TermsOfUseRoute: TermsOfUseRoute,
   CheckoutSlugRoute: CheckoutSlugRoute,
 }
 export const routeTree = rootRouteImport

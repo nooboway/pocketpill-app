@@ -41,6 +41,7 @@ const services = [
     title: "Mental health",
     description: "Speak with licensed therapists and psychiatrists for anxiety, depression, stress, ADHD, and medication management.",
     details: ["Therapy sessions", "Psychiatric evaluations", "Medication management", "Crisis support resources"],
+    href: "/mental-health",
   },
   {
     icon: Pill,
@@ -87,22 +88,44 @@ function ServicesPage() {
               description="From everyday issues to specialized support, PocketPill connects you with providers who can help."
             />
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <Card key={service.title} className="border-border/60 bg-card transition-shadow hover:shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft">
-                      <service.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="mt-5 font-heading text-xl font-semibold text-foreground">{service.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-                    <ul className="mt-4 space-y-1.5">
-                      {service.details.map((detail) => (
-                        <li key={detail} className="text-sm text-muted-foreground">&bull; {detail}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+              {services.map((service) => {
+                const CardWrapper = service.href ? Link : 'div';
+                return (
+                  <Card 
+                    key={service.title} 
+                    className={`border-border/60 bg-card transition-all ${
+                      service.href 
+                        ? 'hover:shadow-lg hover:border-primary/30 cursor-pointer group' 
+                        : 'hover:shadow-md'
+                    }`}
+                  >
+                    {/* @ts-ignore */}
+                    <CardWrapper to={service.href} className="block h-full">
+                      <CardContent className="p-6 flex flex-col h-full justify-between">
+                        <div>
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft transition-colors group-hover:bg-primary">
+                            <service.icon className="h-6 w-6 text-primary transition-colors group-hover:text-white" />
+                          </div>
+                          <h3 className="mt-5 font-heading text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                            {service.title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+                          <ul className="mt-4 space-y-1.5 mb-6">
+                            {service.details.map((detail) => (
+                              <li key={detail} className="text-sm text-muted-foreground">&bull; {detail}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        {service.href && (
+                          <div className="flex items-center text-sm font-semibold text-primary group-hover:translate-x-1 transition-transform">
+                            Learn more about our mental health services <ArrowRight className="ml-2 h-4 w-4" />
+                          </div>
+                        )}
+                      </CardContent>
+                    </CardWrapper>
+                  </Card>
+                );
+              })}
             </div>
             <div className="mt-16 text-center">
               <Button size="lg" className="bg-black text-white hover:bg-black/90" asChild>
