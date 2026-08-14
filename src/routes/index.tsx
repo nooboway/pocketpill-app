@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   Activity,
   ArrowRight,
@@ -113,6 +114,60 @@ const testimonials = [
     location: "London",
     rating: 5,
   },
+  {
+    quote: "Living in the diaspora, finding culturally aware healthcare felt impossible. PocketPill bridged that gap for me — the pharmacist understood my concerns without me having to over-explain.",
+    author: "Chidi E.",
+    location: "Houston",
+    rating: 5,
+  },
+  {
+    quote: "I was sceptical about an online consultation. But the pharmacist was thorough, asked the right questions, and the action plan was incredibly detailed. Worth every naira.",
+    author: "Emeka N.",
+    location: "Port Harcourt",
+    rating: 5,
+  },
+  {
+    quote: "The follow-up message a week later genuinely surprised me. It showed they cared beyond just the session. That's rare in healthcare here.",
+    author: "Dapo S.",
+    location: "Ibadan",
+    rating: 5,
+  },
+  {
+    quote: "I've been dealing with performance anxiety for years and never told anyone. PocketPill made it easy to finally talk about it without feeling judged.",
+    author: "Femi B.",
+    location: "Lagos",
+    rating: 5,
+  },
+  {
+    quote: "Fast, private, and the pharmacist knew exactly what to look for. Saved me an awkward trip to the pharmacy. 10/10.",
+    author: "Victor U.",
+    location: "Enugu",
+    rating: 5,
+  },
+  {
+    quote: "My wife noticed the difference within weeks. That alone made the consultation priceless. Thank you, PocketPill.",
+    author: "Segun D.",
+    location: "Abeokuta",
+    rating: 5,
+  },
+  {
+    quote: "As a busy professional, I appreciated the flexibility. I had my consultation during a lunch break and received my summary the same evening.",
+    author: "Nonso K.",
+    location: "Abuja",
+    rating: 5,
+  },
+  {
+    quote: "The pharmacist helped me understand why my previous medications weren't working. That clarity alone changed everything for me.",
+    author: "Yemi O.",
+    location: "Benin City",
+    rating: 5,
+  },
+  {
+    quote: "I tried three different clinics before finding PocketPill. This was the first time someone actually listened and explained things properly.",
+    author: "James A.",
+    location: "Warri",
+    rating: 5,
+  },
 ];
 
 const pricingPlans = [
@@ -167,6 +222,48 @@ const faqs = [
     answer: "Contact our care team before booking. A short exchange is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
   },
 ];
+
+/* ── Animated count-up component ── */
+function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLParagraphElement>(null);
+  const hasAnimated = useRef(false);
+
+  const startAnimation = useCallback(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+    const duration = 1600; // ms
+    let start: number | null = null;
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [target]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) startAnimation();
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [startAnimation]);
+
+  return (
+    <p ref={ref} className="font-heading text-4xl font-bold text-foreground">
+      {count.toLocaleString()}{suffix}
+    </p>
+  );
+}
 
 function HomePage() {
   return (
@@ -241,7 +338,7 @@ function HomePage() {
           <div className="container-tight py-10">
             <div className="grid gap-8 sm:grid-cols-3">
               <div className="text-center">
-                <p className="font-heading text-4xl font-bold text-foreground">500+</p>
+                <AnimatedCounter target={500} suffix="+" />
                 <p className="mt-1 text-sm text-muted-foreground">Trusted by over 500 men across West Africa and the diaspora.</p>
               </div>
               <div className="text-center">
@@ -340,8 +437,8 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="section-padding bg-black text-white">
+        {/* Testimonials – infinite scrolling marquee */}
+        <section className="section-padding bg-black text-white overflow-hidden">
           <div className="container-tight">
             <SectionHeader
               eyebrow="In Their Words"
@@ -349,26 +446,30 @@ function HomePage() {
               description="Shared with permission. Names and details have been adjusted to protect privacy."
               className="[&_h2]:text-white [&_p]:text-white/70 [&_span]:text-primary"
             />
-            <div className="mt-16 grid gap-6 md:grid-cols-3">
-              {testimonials.map((testimonial) => (
-                <Card key={testimonial.author} className="border-white/10 bg-white/5 text-white backdrop-blur">
-                  <CardContent className="p-6">
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <svg key={i} className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="mt-4 text-base leading-relaxed text-white/90">"{testimonial.quote}"</p>
-                    <div className="mt-6">
-                      <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-xs text-white/60">{testimonial.location}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          </div>
+          {/* Marquee row */}
+          <div className="mt-16 flex animate-marquee pause-on-hover">
+            {[...testimonials, ...testimonials].map((testimonial, idx) => (
+              <Card
+                key={`${testimonial.author}-${idx}`}
+                className="mx-3 min-w-[320px] max-w-[360px] shrink-0 border-white/10 bg-white/5 text-white backdrop-blur"
+              >
+                <CardContent className="p-6">
+                  <div className="flex gap-1">
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <svg key={i} className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-base leading-relaxed text-white/90 whitespace-normal">"{testimonial.quote}"</p>
+                  <div className="mt-6">
+                    <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
+                    <p className="text-xs text-white/60">{testimonial.location}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 
