@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useRouter } from "@tanstack/react-router";
 import {
   Activity,
   ArrowRight,
@@ -266,6 +267,14 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 }
 
 function HomePage() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (window.location.hostname.startsWith('shop.')) {
+      router.navigate({ to: '/shop', replace: true });
+    }
+  }, [router]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />

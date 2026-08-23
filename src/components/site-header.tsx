@@ -7,12 +7,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Services", to: "/services" },
-  { label: "Shop", to: "/shop" },
-  { label: "How it works", to: "/how-it-works" },
-  { label: "Pricing", to: "/pricing" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
+  { label: "Services", to: "/services", external: false },
+  { label: "Shop", to: "https://shop.pocketpill.co", external: true },
+  { label: "How it works", to: "/how-it-works", external: false },
+  { label: "Pricing", to: "/pricing", external: false },
+  { label: "About", to: "/about", external: false },
+  { label: "Contact", to: "/contact", external: false },
 ];
 
 export function SiteHeader({ className }: { className?: string }) {
@@ -28,14 +28,24 @@ export function SiteHeader({ className }: { className?: string }) {
 
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              activeProps={{ className: "text-foreground" }}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </Link>
+            link.external ? (
+              <a
+                key={link.to}
+                href={link.to}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.to}
+                to={link.to}
+                activeProps={{ className: "text-foreground" }}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            )
           ))}
         </nav>
 
@@ -62,14 +72,25 @@ export function SiteHeader({ className }: { className?: string }) {
               </Link>
               <nav className="flex flex-col gap-4">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setOpen(false)}
-                    className="text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
+                  link.external ? (
+                    <a
+                      key={link.to}
+                      href={link.to}
+                      onClick={() => setOpen(false)}
+                      className="text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={() => setOpen(false)}
+                      className="text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  )
                 ))}
               </nav>
               <div className="flex flex-col gap-3">
