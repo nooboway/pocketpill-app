@@ -47,7 +47,7 @@ export const products: Product[] = [
     productType: "physical",
     shortDescription: "A curated collection of everyday wellness products designed to support healthy routines and general wellbeing.",
     fullDescription: "Our Wellness Supplement Package is thoughtfully assembled to complement your daily routine. This package includes a selection of products aimed at supporting general wellbeing as part of a balanced lifestyle.",
-    coverImage: null, // Placeholder to be updated with actual image
+    coverImage: "/wellness_placeholder.png",
     galleryImages: [],
     price: 1500000, // 15,000 NGN (placeholder price)
     compareAtPrice: null,
@@ -81,7 +81,7 @@ export const products: Product[] = [
     productType: "physical",
     shortDescription: "A one-month respiratory wellness package designed to support a healthy daily routine.",
     fullDescription: "The Smoke Detox Package provides a one-month supply of wellness products, including herbal wellness tea and respiratory comfort items, designed as a comprehensive wellness routine to support comfortable breathing.",
-    coverImage: null, // Placeholder
+    coverImage: "/smoke_detox_placeholder.png",
     galleryImages: [],
     price: 2500000, // 25,000 NGN (placeholder)
     compareAtPrice: null,
@@ -160,7 +160,7 @@ export const products: Product[] = [
     productType: "digital",
     shortDescription: "The ultimate science-backed guide to optimizing physical resilience and building long-lasting stamina.",
     fullDescription: "The ultimate science-backed guide to optimizing physical resilience and building long-lasting stamina.",
-    coverImage: "/src/assets/stamina_cover.png",
+    coverImage: "/stamina_blueprint_cover.png",
     galleryImages: [],
     price: 1078000,
     compareAtPrice: 2695000,
