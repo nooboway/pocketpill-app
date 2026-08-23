@@ -101,7 +101,7 @@ function ContactPage() {
                       href={item.href}
                       className="flex items-center gap-4 text-foreground transition-colors hover:text-primary"
                     >
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
                         <item.icon className="h-5 w-5 text-primary" />
                       </div>
                       <div>
@@ -113,7 +113,7 @@ function ContactPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-border/60 bg-cream p-8">
+              <div className="rounded-2xl border border-border/60 bg-muted p-8">
                 {submitted ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-white">

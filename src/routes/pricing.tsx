@@ -114,7 +114,7 @@ function PricingPage() {
               ))}
             </div>
 
-            <div className="mt-16 rounded-2xl bg-cream p-8 text-center">
+            <div className="mt-16 rounded-2xl bg-muted p-8 text-center">
               <h3 className="font-heading text-2xl font-semibold text-foreground">Need help choosing?</h3>
               <p className="mt-2 text-muted-foreground">Our team can answer questions about coverage, plans, and getting started.</p>
               <Button className="mt-6 bg-black text-white hover:bg-black/90" asChild>

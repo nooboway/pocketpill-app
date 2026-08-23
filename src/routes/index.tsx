@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "@tanstack/react-router";
+import { conditions } from "@/lib/conditions";
+import { products } from "@/lib/products";
 import {
   Activity,
   ArrowRight,
@@ -29,10 +31,10 @@ export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "PocketPill — Private Men's Health Consultations" },
-      { name: "description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform." },
-      { property: "og:title", content: "PocketPill — Private Men's Health Consultations" },
-      { property: "og:description", content: "Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform." },
+      { title: "PocketPill — Nigeria's Private Telehealth & ePharmacy for Men" },
+      { name: "description", content: "PocketPill — Nigeria's private telehealth & ePharmacy platform for men. Pharmacist-led consultations for erectile dysfunction, premature ejaculation, hair loss, weight management, and wellness. Discreet. Secure. Same-day." },
+      { property: "og:title", content: "PocketPill — Nigeria's Private Telehealth & ePharmacy for Men" },
+      { property: "og:description", content: "PocketPill — Nigeria's private telehealth & ePharmacy platform for men. Pharmacist-led consultations for erectile dysfunction, premature ejaculation, hair loss, weight management, and wellness. Discreet. Secure. Same-day." },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -41,23 +43,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const services = [
-  {
-    icon: Activity,
-    title: "Get stronger erections",
-    description: "Private pharmacist-led guidance for erectile difficulty.",
-  },
-  {
-    icon: Clock,
-    title: "Have longer sex",
-    description: "Actionable protocols for premature ejaculation.",
-  },
-  {
-    icon: Stethoscope,
-    title: "Understand your health",
-    description: "Clear answers on lifestyle, testosterone, and performance.",
-  },
-];
+// Services are now driven by the conditions data file
 
 const steps = [
   {
@@ -77,22 +63,30 @@ const steps = [
   },
 ];
 
-const differentiators = [
+const pharmacistAdvantages = [
   {
     title: "Medication Expertise",
-    description: "Understand common treatment options and safety considerations, and spot red flags.",
+    description: "Pharmacists know drug interactions, side effects, and safety better than most — helping you avoid red flags.",
   },
   {
     title: "Root-Cause Guidance",
-    description: "Discuss lifestyle, stress, medication, and health contributors.",
+    description: "We look beyond symptoms to discuss lifestyle, stress, medication, and health contributors.",
+  },
+  {
+    title: "Faster Access",
+    description: "No long wait for a doctor's appointment. Get guidance quickly without the gate-keeping.",
   },
   {
     title: "Referral When Needed",
-    description: "Know when physician evaluation matters. Support, not guesswork.",
+    description: "When physician evaluation or specialist care is needed, we'll tell you. Support, not guesswork.",
   },
   {
-    title: "NDPR-compliant Privacy",
-    description: "Your conversations are encrypted and kept strictly confidential.",
+    title: "NDPC-Certified Privacy",
+    description: "Your conversations are encrypted and handled with strict NDPR confidentiality. We are officially NDPC registered.",
+  },
+  {
+    title: "Culturally Aware",
+    description: "Built for West African men and the diaspora. We understand the context, the culture, and the barriers.",
   },
 ];
 
@@ -292,16 +286,16 @@ function HomePage() {
                 You've carried this long enough. Start here.
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Private pharmacist-led consultations for erectile dysfunction and premature ejaculation via our secure platform. Clear guidance. Confidential communication. No waiting rooms.
+                Private pharmacist-led consultations for erectile dysfunction, premature ejaculation, hair loss, weight management, and more — from your phone, same day.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button size="lg" className="bg-black text-white hover:bg-black/90" asChild>
-                  <Link to="/contact">
+                  <Link to="/book">
                     Book a consultation <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <a href="#pricing">See Pricing</a>
+                  <a href="#what-we-treat">What we treat</a>
                 </Button>
               </div>
               <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">
@@ -318,7 +312,7 @@ function HomePage() {
 
             <div className="relative flex items-center justify-center lg:justify-end">
               <div className="relative w-full max-w-md lg:max-w-lg">
-                <div className="absolute -inset-4 rounded-full bg-orange-soft/50 blur-3xl" />
+                <div className="absolute -inset-4 rounded-full bg-primary/10/50 blur-3xl" />
                 <img
                   src={heroImage}
                   alt="A friendly doctor on a video call with a prescription bottle nearby"
@@ -328,7 +322,7 @@ function HomePage() {
                 />
                 <div className="absolute -bottom-6 -left-6 z-20 rounded-2xl bg-white p-4 shadow-xl">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-soft">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
                       <Video className="h-5 w-5 text-primary" />
                     </div>
                     <div>
@@ -343,7 +337,7 @@ function HomePage() {
         </section>
 
         {/* Trust bar */}
-        <section className="border-y border-border bg-cream">
+        <section className="border-y border-border bg-muted">
           <div className="container-tight py-10">
             <div className="grid gap-8 sm:grid-cols-3">
               <div className="text-center">
@@ -362,32 +356,42 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Services */}
-        <section className="section-padding bg-background">
+        {/* What We Treat — Condition Selector */}
+        <section id="what-we-treat" className="section-padding bg-background">
           <div className="container-tight">
             <SectionHeader
               eyebrow="What We Treat"
               title="Specialized care built for men."
-              description="From erectile dysfunction to premature ejaculation, PocketPill gives you access to private, actionable protocols."
+              description="From erectile dysfunction to hair loss to weight management, PocketPill gives you access to private, actionable protocols."
             />
             <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <Card key={service.title} className="group border-border/60 bg-card transition-shadow hover:shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft transition-colors group-hover:bg-primary">
-                      <service.icon className="h-6 w-6 text-primary transition-colors group-hover:text-white" />
-                    </div>
-                    <h3 className="mt-5 font-heading text-xl font-semibold text-foreground">{service.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
+              {conditions.map((condition) => (
+                <Link
+                  key={condition.slug}
+                  to="/conditions/$slug"
+                  params={{ slug: condition.slug }}
+                  className="group block"
+                >
+                  <Card className="h-full border-border/60 bg-card transition-all hover:shadow-lg hover:border-primary/30">
+                    <CardContent className="p-6">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary">
+                        <condition.icon className="h-6 w-6 text-primary transition-colors group-hover:text-white" />
+                      </div>
+                      <h3 className="mt-5 font-heading text-xl font-semibold text-foreground group-hover:text-primary transition-colors">{condition.shortTitle}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{condition.tagline}</p>
+                      <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                        Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
         {/* How it works */}
-        <section className="section-padding bg-cream">
+        <section className="section-padding bg-muted">
           <div className="container-tight">
             <SectionHeader
               eyebrow="How it works"
@@ -411,19 +415,19 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Why PocketPill */}
+        {/* Why Pharmacist-Led */}
         <section className="section-padding bg-background">
           <div className="container-tight">
             <div className="grid gap-12 lg:grid-cols-2">
               <div className="flex flex-col justify-center">
                 <SectionHeader
                   align="left"
-                  eyebrow="Why PocketPill"
-                  title="The problem is often not the condition. It is the silence."
-                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance over our secure platform."
+                  eyebrow="Why Pharmacist-Led?"
+                  title="The advantage most men don't know about."
+                  description="Most telehealth platforms connect you with a doctor who writes a prescription. PocketPill connects you with a pharmacist who actually understands the medication — interactions, timing, side effects, and what to avoid. When you need a doctor, we refer you."
                 />
                 <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                  {differentiators.map((item) => (
+                  {pharmacistAdvantages.map((item) => (
                     <div key={item.title}>
                       <h3 className="font-heading text-lg font-semibold text-foreground">{item.title}</h3>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
@@ -432,7 +436,7 @@ function HomePage() {
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
-                <div className="absolute -inset-4 rounded-full bg-orange-soft/40 blur-3xl" />
+                <div className="absolute -inset-4 rounded-full bg-primary/10/40 blur-3xl" />
                 <img
                   src={doctorsImage}
                   alt="A diverse group of certified doctors, pharmacists and team of healthcare professionals"
@@ -527,7 +531,7 @@ function HomePage() {
         </section>
 
         {/* FAQ */}
-        <section className="section-padding bg-cream">
+        <section className="section-padding bg-muted">
           <div className="container-tight max-w-3xl">
             <SectionHeader
               eyebrow="FAQ"
@@ -540,6 +544,84 @@ function HomePage() {
           </div>
         </section>
 
+        {/* Featured Products */}
+        <section className="section-padding bg-background">
+          <div className="container-tight">
+            <SectionHeader
+              eyebrow="Shop"
+              title="Wellness products & diagnostics"
+              description="Browse our curated selection of health products, screening kits, and wellness packages."
+            />
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {products.filter(p => p.featured && p.active).slice(0, 3).map((product) => (
+                <Link
+                  key={product.id}
+                  to="/checkout/$slug"
+                  params={{ slug: product.slug }}
+                  className="group block"
+                >
+                  <Card className="h-full border-border/60 bg-card transition-all hover:shadow-lg hover:border-primary/30 overflow-hidden">
+                    <div className="aspect-[4/3] w-full bg-muted/20 overflow-hidden">
+                      {product.coverImage ? (
+                        <img src={product.coverImage} alt={product.name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Pill className="h-10 w-10 text-muted-foreground/30" />
+                        </div>
+                      )}
+                    </div>
+                    <CardContent className="p-5">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-primary">{product.category}</span>
+                      <h3 className="mt-1 font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{product.name}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{product.shortDescription}</p>
+                      <div className="mt-3 flex items-baseline gap-2">
+                        {product.compareAtPrice && (
+                          <span className="text-xs text-muted-foreground line-through font-mono">₦{(product.compareAtPrice / 100).toLocaleString()}</span>
+                        )}
+                        <span className="text-lg font-bold text-primary font-mono">₦{(product.price / 100).toLocaleString()}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-10 text-center">
+              <Button variant="outline" size="lg" asChild>
+                <a href="https://shop.pocketpill.co">
+                  Visit the full shop <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* NDPC Certification */}
+        <section className="py-12 bg-muted">
+          <div className="container-tight flex flex-col items-center justify-center text-center">
+            <a 
+              href="/ndpc-certificate.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-4 rounded-2xl bg-background p-8 shadow-sm transition-all hover:shadow-md max-w-md w-full border border-border/50"
+              title="View NDPC Registration Certificate"
+            >
+              <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary shadow-inner">
+                <div className="absolute inset-1.5 rounded-full border-2 border-white/40 border-dashed"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <h3 className="font-heading text-lg font-bold text-foreground">NDPC Certified Platform</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  PocketPill is officially registered and compliant with the Nigeria Data Protection Commission. Your consultation and medical data are encrypted and handled with strict NDPR confidentiality.
+                </p>
+                <span className="mt-4 inline-flex items-center text-sm font-semibold text-primary group-hover:underline">
+                  View Official Certificate <ArrowRight className="ml-1 h-4 w-4" />
+                </span>
+              </div>
+            </a>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="section-padding bg-primary text-primary-foreground">
           <div className="container-tight text-center">
@@ -549,10 +631,10 @@ function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-white/90" asChild>
-                <Link to="/contact">Book a Consultation</Link>
+                <Link to="/book">Book a Consultation</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" asChild>
-                <a href="#pricing">View pricing</a>
+                <a href="https://shop.pocketpill.co">Visit the Shop</a>
               </Button>
             </div>
           </div>
@@ -563,3 +645,4 @@ function HomePage() {
     </div>
   );
 }
+

@@ -57,7 +57,7 @@ function CheckoutPage() {
         
         {/* Discount Badge */}
         {isDiscounted && (
-          <div className="absolute top-0 right-0 bg-[#e05c2a] text-white font-bold px-6 py-2 rounded-bl-xl z-10 font-sans tracking-wide">
+          <div className="absolute top-0 right-0 bg-primary text-primary-foreground font-bold px-6 py-2 rounded-bl-xl z-10 font-sans tracking-wide">
             {discountPercent}% DISCOUNT
           </div>
         )}

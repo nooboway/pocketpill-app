@@ -15,6 +15,7 @@ const footerLinks = [
     title: "Company",
     links: [
       { label: "About", to: "/about" },
+      { label: "Blog", to: "/blog" },
       { label: "Pricing", to: "/pricing" },
       { label: "How it works", to: "/how-it-works" },
       { label: "Contact", to: "/contact" },
@@ -25,6 +26,7 @@ const footerLinks = [
     links: [
       { label: "Help center", to: "/help-center" },
       { label: "FAQ", to: "/help-center" },
+      { label: "Community", to: "https://t.me/pocketpill" },
     ],
   },
   {
@@ -78,9 +80,15 @@ export function SiteFooter() {
                 <ul className="mt-4 space-y-3">
                   {group.links.map((link) => (
                     <li key={link.label}>
-                      <Link to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                        {link.label}
-                      </Link>
+                      {link.to.startsWith('http') ? (
+                        <a href={link.to} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -93,8 +101,8 @@ export function SiteFooter() {
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
           </p>
-          <p className="text-xs text-muted-foreground">
-            PocketPill is not a replacement for emergency care. If you are experiencing a medical emergency, call 112.
+          <p className="text-xs text-muted-foreground text-center sm:text-right">
+            PocketPill is not a replacement for emergency care.<br className="hidden sm:block" /> If you are experiencing a medical emergency, call 112.
           </p>
         </div>
       </div>

@@ -100,7 +100,7 @@ function MentalHealthPage() {
               </div>
             </div>
             <div className="relative flex items-center justify-center">
-              <div className="w-full max-w-md rounded-3xl border border-border/60 bg-cream p-8 shadow-2xl relative">
+              <div className="w-full max-w-md rounded-3xl border border-border/60 bg-muted p-8 shadow-2xl relative">
                 <div className="absolute top-0 right-0 -mt-6 -mr-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-lg">
                   <Brain className="h-8 w-8 animate-pulse" />
                 </div>
@@ -134,7 +134,7 @@ function MentalHealthPage() {
         </section>
 
         {/* The Nigeria Context Section */}
-        <section id="about-service" className="section-padding bg-cream">
+        <section id="about-service" className="section-padding bg-muted">
           <div className="container-tight">
             <div className="mx-auto max-w-3xl text-center space-y-6">
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">Addressing the Gap</span>
@@ -165,7 +165,7 @@ function MentalHealthPage() {
               {mentalServices.map((service) => (
                 <Card key={service.title} className="border-border/60 bg-card transition-shadow hover:shadow-lg">
                   <CardContent className="p-6 flex flex-col h-full">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
                       <service.icon className="h-6 w-6 text-primary" />
                     </div>
                     <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">{service.title}</h3>
@@ -178,7 +178,7 @@ function MentalHealthPage() {
         </section>
 
         {/* FAQs */}
-        <section className="section-padding bg-cream">
+        <section className="section-padding bg-muted">
           <div className="container-tight max-w-3xl">
             <SectionHeader
               eyebrow="FAQ"

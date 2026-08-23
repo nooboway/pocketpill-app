@@ -12,6 +12,7 @@ const navLinks = [
   { label: "How it works", to: "/how-it-works", external: false },
   { label: "Pricing", to: "/pricing", external: false },
   { label: "About", to: "/about", external: false },
+  { label: "Blog", to: "/blog", external: false },
   { label: "Contact", to: "/contact", external: false },
 ];
 
@@ -50,11 +51,8 @@ export function SiteHeader({ className }: { className?: string }) {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/contact">Log in</Link>
-          </Button>
           <Button size="sm" className="bg-black text-white hover:bg-black/90" asChild>
-            <Link to="/contact">Book a visit</Link>
+            <Link to="/book">Book a visit</Link>
           </Button>
         </div>
 
@@ -94,13 +92,8 @@ export function SiteHeader({ className }: { className?: string }) {
                 ))}
               </nav>
               <div className="flex flex-col gap-3">
-                <Button variant="outline" asChild>
-                  <Link to="/contact" onClick={() => setOpen(false)}>
-                    Log in
-                  </Link>
-                </Button>
                 <Button className="bg-black text-white hover:bg-black/90" asChild>
-                  <Link to="/contact" onClick={() => setOpen(false)}>
+                  <Link to="/book" onClick={() => setOpen(false)}>
                     Book a visit
                   </Link>
                 </Button>

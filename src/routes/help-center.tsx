@@ -111,7 +111,7 @@ function HelpCenter() {
           </div>
         </section>
 
-        <section className="section-padding bg-cream">
+        <section className="section-padding bg-muted">
           <div className="container-tight max-w-3xl">
             <SectionHeader
               eyebrow="FAQ"

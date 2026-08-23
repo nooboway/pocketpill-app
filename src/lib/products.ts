@@ -1,4 +1,4 @@
-import vencheckerCover from "@/assets/venchecker.png";
+import vencheckerCover from "@/assets/venchecker.jpeg";
 
 export type ProductCategory =
   | "Wellness"
@@ -120,7 +120,7 @@ export const products: Product[] = [
     fullDescription: "The Venchecker 4-in-1 STI Self-Test Kit offers a private and convenient first-line screening option for four common infections. Utilizing a whole-blood/finger-prick method, it provides rapid results generally read within approximately 15–20 minutes.",
     coverImage: vencheckerCover,
     galleryImages: [],
-    price: 1250000, // 12,500 NGN (placeholder)
+    price: 500000, // 5,000 NGN
     compareAtPrice: 1500000,
     stockQuantity: 200,
     sku: "DIA-VEN-4IN1",

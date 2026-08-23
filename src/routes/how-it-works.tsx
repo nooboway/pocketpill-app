@@ -77,7 +77,7 @@ function HowItWorksPage() {
 
             <div className="mt-16 space-y-12">
               {steps.map((step, index) => (
-                <div key={step.title} className="grid gap-8 rounded-2xl border border-border/60 bg-cream p-8 md:grid-cols-[auto_1fr]">
+                <div key={step.title} className="grid gap-8 rounded-2xl border border-border/60 bg-muted p-8 md:grid-cols-[auto_1fr]">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-black text-white">
                     <step.icon className="h-6 w-6" />
                   </div>

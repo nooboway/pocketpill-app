@@ -103,7 +103,7 @@ function ServicesPage() {
                     <CardWrapper to={service.href} className="block h-full">
                       <CardContent className="p-6 flex flex-col h-full justify-between">
                         <div>
-                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft transition-colors group-hover:bg-primary">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary">
                             <service.icon className="h-6 w-6 text-primary transition-colors group-hover:text-white" />
                           </div>
                           <h3 className="mt-5 font-heading text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
