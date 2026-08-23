@@ -587,9 +587,9 @@ function HomePage() {
             </div>
             <div className="mt-10 text-center">
               <Button variant="outline" size="lg" asChild>
-                <a href="https://shop.pocketpill.co">
+                <Link to="/shop">
                   Visit the full shop <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>
@@ -634,7 +634,7 @@ function HomePage() {
                 <Link to="/book">Book a Consultation</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" asChild>
-                <a href="https://shop.pocketpill.co">Visit the Shop</a>
+                <Link to="/shop">Visit the Shop</Link>
               </Button>
             </div>
           </div>

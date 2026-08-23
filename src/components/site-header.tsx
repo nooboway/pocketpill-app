@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Services", to: "/services", external: false },
-  { label: "Shop", to: "https://shop.pocketpill.co", external: true },
+  { label: "Shop", to: "/shop", external: false },
   { label: "How it works", to: "/how-it-works", external: false },
   { label: "Pricing", to: "/pricing", external: false },
   { label: "About", to: "/about", external: false },
