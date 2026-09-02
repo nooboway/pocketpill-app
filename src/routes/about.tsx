@@ -83,7 +83,7 @@ function AboutPage() {
                 </div>
               </div>
               <div className="relative flex items-center justify-center">
-                <div className="absolute -inset-4 rounded-full bg-primary/10/40 blur-3xl" />
+                <div className="absolute -inset-4 rounded-full bg-orange-soft/40 blur-3xl" />
                 <img
                   src={doctorsImage}
                   alt="PocketPill certified doctors, pharmacists and team of healthcare professionals"
@@ -97,7 +97,7 @@ function AboutPage() {
           </div>
         </section>
 
-        <section className="section-padding bg-muted">
+        <section className="section-padding bg-cream">
           <div className="container-tight">
             <SectionHeader
               eyebrow="Our values"

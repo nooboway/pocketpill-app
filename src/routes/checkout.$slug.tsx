@@ -1,8 +1,19 @@
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { getProductBySlug } from "@/lib/products";
+import staminaCover from "@/assets/stamina_cover.png";
 
 export const Route = createFileRoute("/checkout/$slug")({
+  head: () => ({
+    meta: [
+      { title: "Secure Checkout — PocketPill" },
+      { name: "description", content: "Complete your PocketPill purchase securely with Paystack and get instant digital delivery to your email." },
+      { property: "og:title", content: "Secure Checkout — PocketPill" },
+      { property: "og:description", content: "Complete your PocketPill purchase securely with Paystack and get instant digital delivery to your email." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
   component: CheckoutPage,
 });
 
@@ -12,18 +23,27 @@ function CheckoutPage() {
   const [email, setEmail] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const product = getProductBySlug(slug);
+  // Mock product data for the tripwire
+  const mockTripwire = {
+    id: 1,
+    title: "The Stamina Blueprint",
+    price: 10780, // ₦10,780 in Naira (API expects Naira)
+    originalPrice: 26950,
+    coverImage: staminaCover,
+  };
+
+  const product = slug === "the-stamina-blueprint" ? mockTripwire : null;
 
   const handleCheckout = async () => {
     setIsProcessing(true);
     try {
-      const res = await fetch("/api/initialize-payment", {
+      const res = await fetch("/api/public/initialize-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
-          amount: product ? product.price / 100 : 10780,
-          plan: product?.name || "Product"
+          amount: product?.price || 10780,
+          plan: product?.title || "Digital Product"
         })
       });
       const data = await res.json();
@@ -46,47 +66,30 @@ function CheckoutPage() {
     return <div className="p-24 text-center mt-20 text-foreground">Product not found.</div>;
   }
 
-  const priceNaira = product.price / 100;
-  const originalPriceNaira = product.compareAtPrice ? product.compareAtPrice / 100 : null;
-  const isDiscounted = originalPriceNaira !== null && originalPriceNaira > priceNaira;
-  const discountPercent = isDiscounted ? Math.round(((originalPriceNaira! - priceNaira) / originalPriceNaira!) * 100) : 0;
-
   return (
     <div className="min-h-screen bg-background pt-32 pb-16 px-6 flex items-center justify-center">
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-0 bg-card rounded-2xl border border-border/50 relative overflow-hidden shadow-2xl">
         
         {/* Discount Badge */}
-        {isDiscounted && (
-          <div className="absolute top-0 right-0 bg-primary text-primary-foreground font-bold px-6 py-2 rounded-bl-xl z-10 font-sans tracking-wide">
-            {discountPercent}% DISCOUNT
-          </div>
-        )}
+        <div className="absolute top-0 right-0 bg-[#e05c2a] text-white font-bold px-6 py-2 rounded-bl-xl z-10 font-sans tracking-wide">
+          60% DISCOUNT
+        </div>
 
         {/* Left Side: Product Details */}
         <div className="flex flex-col p-8 md:p-12">
           <h1 className="text-3xl font-serif font-bold text-foreground mb-6">Secure Checkout</h1>
           <div className="relative rounded-lg overflow-hidden border border-border/50 shadow-lg mb-6">
-            {product.coverImage ? (
-              <img src={product.coverImage} alt={product.name} className="w-full h-64 object-cover" />
-            ) : (
-              <div className="w-full h-64 bg-muted/20 flex items-center justify-center">
-                <span className="text-muted-foreground">No cover available</span>
-              </div>
-            )}
+            <img src={product.coverImage} alt={product.title} className="w-full h-64 object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white font-serif">{product.name}</h2>
+            <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white font-serif">{product.title}</h2>
           </div>
           
           <div className="mt-2 flex items-baseline space-x-4">
-            {originalPriceNaira && (
-              <span className="text-xl text-muted-foreground line-through font-mono">₦{originalPriceNaira.toLocaleString()}</span>
-            )}
-            <span className="text-4xl font-bold text-primary font-mono">₦{priceNaira.toLocaleString()}</span>
+            <span className="text-xl text-muted-foreground line-through font-mono">₦{product.originalPrice.toLocaleString()}</span>
+            <span className="text-4xl font-bold text-primary font-mono">₦{product.price.toLocaleString()}</span>
           </div>
           <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-            {product.productType === 'digital' 
-              ? "Secure digital delivery. The product will be sent immediately to your email address upon successful payment."
-              : "Secure checkout. Your product will be processed and shipped."}
+            Secure digital delivery. The PDF blueprint will be sent immediately to your email address upon successful payment.
           </p>
         </div>
 
@@ -94,7 +97,7 @@ function CheckoutPage() {
         <div className="flex flex-col justify-center p-8 md:p-12 bg-black/5 md:border-l border-border/50">
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2 font-sans">Email Address for {product.productType === 'digital' ? 'Delivery' : 'Order Updates'}</label>
+              <label className="block text-sm font-medium text-foreground mb-2 font-sans">Email Address for Delivery</label>
               <input 
                 type="email" 
                 value={email}
@@ -109,7 +112,7 @@ function CheckoutPage() {
               onClick={handleCheckout}
               className="bg-primary text-primary-foreground font-semibold rounded-md w-full py-4 text-lg mt-4 disabled:opacity-50 shadow-xl hover:bg-primary/90 transition-colors"
             >
-              {isProcessing ? "Connecting to Paystack..." : `Pay Securely ₦${priceNaira.toLocaleString()}`}
+              {isProcessing ? "Connecting to Paystack..." : `Pay Securely ₦${product.price.toLocaleString()}`}
             </button>
 
             <div className="flex justify-center mt-6">

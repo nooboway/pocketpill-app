@@ -5,16 +5,24 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 type BookSearch = {
   plan?: string;
   price?: number;
-  condition?: string;
 };
 
 export const Route = createFileRoute("/book")({
+  head: () => ({
+    meta: [
+      { title: "Book a Private Consultation — PocketPill" },
+      { name: "description", content: "Book a discreet pharmacist-led consultation on PocketPill. Pay securely in Naira and get your session confirmed on WhatsApp." },
+      { property: "og:title", content: "Book a Private Consultation — PocketPill" },
+      { property: "og:description", content: "Book a discreet pharmacist-led consultation on PocketPill. Pay securely in Naira and get your session confirmed on WhatsApp." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: BookPage,
   validateSearch: (search: Record<string, unknown>): BookSearch => {
     const result: BookSearch = {};
     if (search['plan']) result.plan = search['plan'] as string;
     if (search['price']) result.price = Number(search['price']);
-    if (search['condition']) result.condition = search['condition'] as string;
     return result;
   },
 });
@@ -28,24 +36,17 @@ function BookPage() {
   // Defaults if no search params
   const planName = search.plan || "Standard Consultation";
   const planPrice = search.price || 25000;
-  const conditionSlug = search.condition;
-  
-  // Try to format condition slug for display if present
-  const conditionDisplay = conditionSlug 
-    ? conditionSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    : "General Men's Health";
 
   const handleCheckout = async () => {
     setIsProcessing(true);
     try {
-      const res = await fetch("/api/initialize-payment", {
+      const res = await fetch("/api/public/initialize-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
           amount: planPrice, // Backend expects Naira and converts to kobo
-          plan: planName,
-          condition: conditionSlug
+          plan: planName
         })
       });
       const data = await res.json();
@@ -75,11 +76,6 @@ function BookPage() {
           <div className="mt-2 flex flex-col space-y-2">
             <span className="text-sm text-muted-foreground uppercase tracking-widest font-semibold">Selected Plan</span>
             <span className="text-2xl font-bold text-foreground font-serif">{planName}</span>
-          </div>
-
-          <div className="mt-6 flex flex-col space-y-2">
-            <span className="text-sm text-muted-foreground uppercase tracking-widest font-semibold">Area of Focus</span>
-            <span className="text-xl font-medium text-foreground">{conditionDisplay}</span>
           </div>
           
           <div className="mt-8 flex flex-col space-y-2">
