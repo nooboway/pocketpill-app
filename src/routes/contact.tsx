@@ -19,9 +19,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — PocketPill" },
-      { name: "description", content: "Book a consult with the PocketPill care team. We're here to help." },
+      { name: "description", content: "Book a visit or get in touch with the PocketPill care team. We're here to help." },
       { property: "og:title", content: "Contact — PocketPill" },
-      { property: "og:description", content: "Book a consult with the PocketPill care team. We're here to help." },
+      { property: "og:description", content: "Book a visit or get in touch with the PocketPill care team. We're here to help." },
       { property: "og:url", content: "/contact" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -55,7 +55,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Office",
-    value: "Ikeja, Lagos",
+    value: "Denver, CO",
     href: "#",
   },
 ];
@@ -91,8 +91,8 @@ function ContactPage() {
                 <SectionHeader
                   align="left"
                   eyebrow="Contact"
-                  title="Book a consult"
-                  description="Fill out the form and our care team will reach out within one business day."
+                  title="Book a visit or get in touch"
+                  description="Fill out the form and our care team will reach out within one business day to confirm your appointment."
                 />
                 <div className="mt-8 space-y-6">
                   {contactInfo.map((item) => (
@@ -121,7 +121,7 @@ function ContactPage() {
                     </div>
                     <h3 className="mt-6 font-heading text-2xl font-semibold text-foreground">Request received</h3>
                     <p className="mt-2 max-w-sm text-muted-foreground">
-                      Thank you for reaching out. Our care team will contact you within one business day.
+                      Thank you for reaching out. Our care team will contact you within one business day to confirm your appointment.
                     </p>
                     <Button className="mt-6 bg-black text-white hover:bg-black/90" onClick={() => setSubmitted(false)}>
                       Send another message
@@ -197,11 +197,11 @@ function ContactPage() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="sexual-health">Sexual Health</SelectItem>
-                                <SelectItem value="hair-loss">Hair Loss</SelectItem>
-                                <SelectItem value="acne">Acne</SelectItem>
-                                <SelectItem value="scarring">Scarring & Hyperpigmentation</SelectItem>
-                                <SelectItem value="weight-loss">Weight Loss</SelectItem>
+                                <SelectItem value="urgent-care">Urgent care</SelectItem>
+                                <SelectItem value="mental-health">Mental health</SelectItem>
+                                <SelectItem value="prescription">Prescription refill</SelectItem>
+                                <SelectItem value="chronic-care">Chronic care</SelectItem>
+                                <SelectItem value="dermatology">Dermatology</SelectItem>
                                 <SelectItem value="other">Other</SelectItem>
                               </SelectContent>
                             </Select>
@@ -223,10 +223,10 @@ function ContactPage() {
                         )}
                       />
                       <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
-                        Send message <Send className="ml-2 h-4 w-4" />
+                        Book appointment <Send className="ml-2 h-4 w-4" />
                       </Button>
                       <p className="text-xs text-muted-foreground">
-                        By submitting, you agree to our privacy policy. For emergencies, call 112.
+                        By submitting, you agree to our privacy policy. This form is for appointment requests only. For emergencies, call 112.
                       </p>
                     </form>
                   </Form>

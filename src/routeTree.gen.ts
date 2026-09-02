@@ -11,17 +11,17 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
-import { Route as ServicesIndexRouteImport } from './routes/services.index'
-import { Route as ServicesAcneRouteImport } from './routes/services.acne'
-import { Route as ServicesHairLossRouteImport } from './routes/services.hair-loss'
-import { Route as ServicesScarringRouteImport } from './routes/services.scarring'
-import { Route as ServicesSexualHealthRouteImport } from './routes/services.sexual-health'
-import { Route as ServicesWeightLossRouteImport } from './routes/services.weight-loss'
+import { Route as CheckoutSlugRouteImport } from './routes/checkout.$slug'
+import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
+import { Route as ApiPublicInitializePaymentRouteImport } from './routes/api/public/initialize-payment'
+import { Route as ApiPublicVerifyPaymentRouteImport } from './routes/api/public/verify-payment'
+import { Route as ApiPublicWebhooksPaystackRouteImport } from './routes/api/public/webhooks/paystack'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -43,14 +48,14 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -58,145 +63,142 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesIndexRoute = ServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
+const CheckoutSlugRoute = CheckoutSlugRouteImport.update({
+  id: '/checkout/$slug',
+  path: '/checkout/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesAcneRoute = ServicesAcneRouteImport.update({
-  id: '/services/acne',
-  path: '/services/acne',
+const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
+  id: '/payment/success',
+  path: '/payment/success',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesHairLossRoute = ServicesHairLossRouteImport.update({
-  id: '/services/hair-loss',
-  path: '/services/hair-loss',
+const ApiPublicInitializePaymentRoute =
+  ApiPublicInitializePaymentRouteImport.update({
+    id: '/api/public/initialize-payment',
+    path: '/api/public/initialize-payment',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicVerifyPaymentRoute = ApiPublicVerifyPaymentRouteImport.update({
+  id: '/api/public/verify-payment',
+  path: '/api/public/verify-payment',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesScarringRoute = ServicesScarringRouteImport.update({
-  id: '/services/scarring',
-  path: '/services/scarring',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesSexualHealthRoute = ServicesSexualHealthRouteImport.update({
-  id: '/services/sexual-health',
-  path: '/services/sexual-health',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesWeightLossRoute = ServicesWeightLossRouteImport.update({
-  id: '/services/weight-loss',
-  path: '/services/weight-loss',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const ApiPublicWebhooksPaystackRoute =
+  ApiPublicWebhooksPaystackRouteImport.update({
+    id: '/api/public/webhooks/paystack',
+    path: '/api/public/webhooks/paystack',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
-  '/services/acne': typeof ServicesAcneRoute
-  '/services/hair-loss': typeof ServicesHairLossRoute
-  '/services/scarring': typeof ServicesScarringRoute
-  '/services/sexual-health': typeof ServicesSexualHealthRoute
-  '/services/weight-loss': typeof ServicesWeightLossRoute
-  '/services/': typeof ServicesIndexRoute
+  '/checkout/$slug': typeof CheckoutSlugRoute
+  '/payment/success': typeof PaymentSuccessRoute
+  '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
+  '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
-  '/services/acne': typeof ServicesAcneRoute
-  '/services/hair-loss': typeof ServicesHairLossRoute
-  '/services/scarring': typeof ServicesScarringRoute
-  '/services/sexual-health': typeof ServicesSexualHealthRoute
-  '/services/weight-loss': typeof ServicesWeightLossRoute
-  '/services': typeof ServicesIndexRoute
+  '/checkout/$slug': typeof CheckoutSlugRoute
+  '/payment/success': typeof PaymentSuccessRoute
+  '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
+  '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/how-it-works': typeof HowItWorksRoute
-  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/services': typeof ServicesRoute
   '/shop': typeof ShopRoute
-  '/services/acne': typeof ServicesAcneRoute
-  '/services/hair-loss': typeof ServicesHairLossRoute
-  '/services/scarring': typeof ServicesScarringRoute
-  '/services/sexual-health': typeof ServicesSexualHealthRoute
-  '/services/weight-loss': typeof ServicesWeightLossRoute
-  '/services/': typeof ServicesIndexRoute
+  '/checkout/$slug': typeof CheckoutSlugRoute
+  '/payment/success': typeof PaymentSuccessRoute
+  '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
+  '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/book'
     | '/contact'
     | '/how-it-works'
-    | '/login'
     | '/pricing'
+    | '/services'
     | '/shop'
-    | '/services/acne'
-    | '/services/hair-loss'
-    | '/services/scarring'
-    | '/services/sexual-health'
-    | '/services/weight-loss'
-    | '/services/'
+    | '/checkout/$slug'
+    | '/payment/success'
+    | '/api/public/initialize-payment'
+    | '/api/public/verify-payment'
+    | '/api/public/webhooks/paystack'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/book'
     | '/contact'
     | '/how-it-works'
-    | '/login'
     | '/pricing'
-    | '/shop'
-    | '/services/acne'
-    | '/services/hair-loss'
-    | '/services/scarring'
-    | '/services/sexual-health'
-    | '/services/weight-loss'
     | '/services'
+    | '/shop'
+    | '/checkout/$slug'
+    | '/payment/success'
+    | '/api/public/initialize-payment'
+    | '/api/public/verify-payment'
+    | '/api/public/webhooks/paystack'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/book'
     | '/contact'
     | '/how-it-works'
-    | '/login'
     | '/pricing'
+    | '/services'
     | '/shop'
-    | '/services/acne'
-    | '/services/hair-loss'
-    | '/services/scarring'
-    | '/services/sexual-health'
-    | '/services/weight-loss'
-    | '/services/'
+    | '/checkout/$slug'
+    | '/payment/success'
+    | '/api/public/initialize-payment'
+    | '/api/public/verify-payment'
+    | '/api/public/webhooks/paystack'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
   HowItWorksRoute: typeof HowItWorksRoute
-  LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
+  ServicesRoute: typeof ServicesRoute
   ShopRoute: typeof ShopRoute
-  ServicesAcneRoute: typeof ServicesAcneRoute
-  ServicesHairLossRoute: typeof ServicesHairLossRoute
-  ServicesScarringRoute: typeof ServicesScarringRoute
-  ServicesSexualHealthRoute: typeof ServicesSexualHealthRoute
-  ServicesWeightLossRoute: typeof ServicesWeightLossRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
+  CheckoutSlugRoute: typeof CheckoutSlugRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
+  ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
+  ApiPublicVerifyPaymentRoute: typeof ApiPublicVerifyPaymentRoute
+  ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -215,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -229,18 +238,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -250,46 +259,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/': {
-      id: '/services/'
-      path: '/services'
-      fullPath: '/services/'
-      preLoaderRoute: typeof ServicesIndexRouteImport
+    '/checkout/$slug': {
+      id: '/checkout/$slug'
+      path: '/checkout/$slug'
+      fullPath: '/checkout/$slug'
+      preLoaderRoute: typeof CheckoutSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/acne': {
-      id: '/services/acne'
-      path: '/services/acne'
-      fullPath: '/services/acne'
-      preLoaderRoute: typeof ServicesAcneRouteImport
+    '/payment/success': {
+      id: '/payment/success'
+      path: '/payment/success'
+      fullPath: '/payment/success'
+      preLoaderRoute: typeof PaymentSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/hair-loss': {
-      id: '/services/hair-loss'
-      path: '/services/hair-loss'
-      fullPath: '/services/hair-loss'
-      preLoaderRoute: typeof ServicesHairLossRouteImport
+    '/api/public/initialize-payment': {
+      id: '/api/public/initialize-payment'
+      path: '/api/public/initialize-payment'
+      fullPath: '/api/public/initialize-payment'
+      preLoaderRoute: typeof ApiPublicInitializePaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/scarring': {
-      id: '/services/scarring'
-      path: '/services/scarring'
-      fullPath: '/services/scarring'
-      preLoaderRoute: typeof ServicesScarringRouteImport
+    '/api/public/verify-payment': {
+      id: '/api/public/verify-payment'
+      path: '/api/public/verify-payment'
+      fullPath: '/api/public/verify-payment'
+      preLoaderRoute: typeof ApiPublicVerifyPaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/sexual-health': {
-      id: '/services/sexual-health'
-      path: '/services/sexual-health'
-      fullPath: '/services/sexual-health'
-      preLoaderRoute: typeof ServicesSexualHealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/weight-loss': {
-      id: '/services/weight-loss'
-      path: '/services/weight-loss'
-      fullPath: '/services/weight-loss'
-      preLoaderRoute: typeof ServicesWeightLossRouteImport
+    '/api/public/webhooks/paystack': {
+      id: '/api/public/webhooks/paystack'
+      path: '/api/public/webhooks/paystack'
+      fullPath: '/api/public/webhooks/paystack'
+      preLoaderRoute: typeof ApiPublicWebhooksPaystackRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -298,17 +300,17 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BookRoute: BookRoute,
   ContactRoute: ContactRoute,
   HowItWorksRoute: HowItWorksRoute,
-  LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
+  ServicesRoute: ServicesRoute,
   ShopRoute: ShopRoute,
-  ServicesAcneRoute: ServicesAcneRoute,
-  ServicesHairLossRoute: ServicesHairLossRoute,
-  ServicesScarringRoute: ServicesScarringRoute,
-  ServicesSexualHealthRoute: ServicesSexualHealthRoute,
-  ServicesWeightLossRoute: ServicesWeightLossRoute,
-  ServicesIndexRoute: ServicesIndexRoute,
+  CheckoutSlugRoute: CheckoutSlugRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
+  ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,
+  ApiPublicVerifyPaymentRoute: ApiPublicVerifyPaymentRoute,
+  ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

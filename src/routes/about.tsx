@@ -78,7 +78,7 @@ function AboutPage() {
                 </div>
                 <div className="mt-8">
                   <Button className="bg-black text-white hover:bg-black/90" asChild>
-                    <Link to="/contact">Book a consult <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                    <Link to="/contact">Book a visit <ArrowRight className="ml-2 h-4 w-4" /></Link>
                   </Button>
                 </div>
               </div>

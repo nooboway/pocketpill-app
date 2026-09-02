@@ -1,36 +1,50 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState, type CSSProperties } from "react";
 import {
-  Activity,
   ArrowRight,
-  Calendar,
+  ArrowUpRight,
   Check,
-  Clock,
-  HeartPulse,
-  MessageSquare,
+  ChevronRight,
+  Clock3,
+  LockKeyhole,
+  MessageCircle,
   Pill,
   ShieldCheck,
   Stethoscope,
-  UserRound,
-  Video,
+  Truck,
 } from "lucide-react";
 
 import { FAQAccordion } from "@/components/faq-accordion";
-import { SectionHeader } from "@/components/section-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import heroImage from "@/assets/hero-nigerian.png";
-import doctorsImage from "@/assets/doctors-nigerian.png";
+import catConsult from "@/assets/oh-cat-consult.jpg";
+import catIntimacy from "@/assets/oh-cat-intimacy.jpg";
+import catPerformance from "@/assets/oh-cat-performance.jpg";
+import catSupplements from "@/assets/oh-cat-supplements.jpg";
+import careTeam from "@/assets/oh-care-team.jpg";
+import heroPharmacist from "@/assets/oh-hero-2.jpg";
+import pocketpillEditorial from "@/assets/pocketpill-editorial.png";
+import pocketpillPortrait from "@/assets/pocketpill-portrait.png";
+import staminaCover from "@/assets/stamina_cover.png";
+
+const WHATSAPP = "https://wa.me/2347083725382";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "PocketPill — Private Men's Health Consultations" },
-      { name: "description", content: "Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation." },
-      { property: "og:title", content: "PocketPill — Private Men's Health Consultations" },
-      { property: "og:description", content: "Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation." },
+      { title: "PocketPill — Medicines and care, made simple" },
+      {
+        name: "description",
+        content:
+          "Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
+      },
+      { property: "og:title", content: "PocketPill — Medicines and care, made simple" },
+      {
+        property: "og:description",
+        content:
+          "Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
+      },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -39,412 +53,516 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const services = [
+const careCategories = [
   {
-    icon: Activity,
-    title: "Get stronger erections",
-    description: "Private pharmacist-led guidance for erectile difficulty.",
+    image: catPerformance,
+    eyebrow: "Performance",
+    title: "Erections & performance",
+    description: "Private, pharmacist-led guidance for erectile difficulty.",
+    to: "/services" as const,
   },
   {
-    icon: Clock,
-    title: "Have longer sex",
-    description: "Actionable protocols for premature ejaculation.",
+    image: catIntimacy,
+    eyebrow: "Intimacy",
+    title: "Lasting longer",
+    description: "Actionable support for premature ejaculation and confidence.",
+    to: "/services" as const,
   },
   {
-    icon: Stethoscope,
-    title: "Understand your health",
-    description: "Clear answers on lifestyle, testosterone, and performance.",
-  },
-];
-
-const steps = [
-  {
-    icon: MessageSquare,
-    title: "Start an online consultation",
-    description: "Start a secure, private chat. Answer a few questions about your situation.",
+    image: catSupplements,
+    eyebrow: "Pharmacy",
+    title: "Medication & safety",
+    description: "Understand options, interactions, and the questions to ask.",
+    to: "/shop" as const,
   },
   {
-    icon: UserRound,
-    title: "Get personalized guidance",
-    description: "Receive a structured review and action plan from a licensed professional.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Ongoing support",
-    description: "Reach out anytime to adjust your protocol or ask follow-up questions.",
-  },
-];
-
-const differentiators = [
-  {
-    title: "Medication Expertise",
-    description: "Understand common treatment options and safety considerations, and spot red flags.",
-  },
-  {
-    title: "Root-Cause Guidance",
-    description: "Discuss lifestyle, stress, medication, and health contributors.",
-  },
-  {
-    title: "Referral When Needed",
-    description: "Know when physician evaluation matters. Support, not guesswork.",
-  },
-  {
-    title: "NDPR-compliant Privacy",
-    description: "Your conversations are encrypted and kept strictly confidential.",
-  },
-];
-
-const testimonials = [
-  {
-    quote: "I was skeptical about starting a weight loss protocol, but having a doctor available online to talk through the side effects and dosage made a huge difference. By week 4, my cravings were gone. The discreet delivery to my office in Lagos was a lifesaver.",
-    author: "Bode A.",
-    location: "Weight Loss Protocol",
-    rating: 5,
-  },
-  {
-    quote: "I've struggled with my hairline for three years. The PocketPill protocol gave me a clear, step-by-step routine with actual prescription-grade serums. It's been 3 months and my barber just pointed out the new growth.",
-    author: "Emeka O.",
-    location: "Hair Loss Protocol",
-    rating: 5,
-  },
-  {
-    quote: "What stood out was the privacy. No awkward waiting rooms, no judgment. We just had a direct, professional conversation about my performance issues, and the written protocol I got was clear and effective. My confidence is fully back.",
-    author: "Kelechi N.",
-    location: "Performance Protocol",
-    rating: 5,
-  },
-  {
-    quote: "I had cystic breakouts on my jawline that nothing over-the-counter could fix. PocketPill set me up with a medical-grade protocol that actually targeted the inflammation. By week 6, my skin was completely clear.",
-    author: "Amina Y.",
-    location: "Acne Protocol",
-    rating: 4,
-  },
-  {
-    quote: "I lost so much volume and experienced severe thinning after pregnancy. The bundled monthly management is what saved me. I don't have to think about refills; I just follow the serum routine and send progress photos for the doc every month.",
-    author: "Ngozi C.",
-    location: "Hair Loss Protocol",
-    rating: 5,
-  },
-  {
-    quote: "I had dark hyperpigmentation on my jawline from old shaving bumps that just wouldn't fade. The PocketPill protocol gave me clinical-strength formulas I couldn't get at the pharmacy. Faded them significantly within the first two months.",
-    author: "David U.",
-    location: "Scarring & Hyperpigmentation",
-    rating: 4,
-  },
-  {
-    quote: "I kept putting this off because the thought of sitting in a waiting room was terrifying. PocketPill made it entirely discreet online. The doctor explained the actual cause and gave me a clear protocol. My confidence has completely returned.",
-    author: "Tunde O.",
-    location: "Performance Protocol",
-    rating: 5,
-  },
-  {
-    quote: "I wasn't looking to be a bodybuilder, I just wanted to get rid of my gut and get my stamina back. The appetite suppression is real. I'm down 8kg in 6 weeks.",
-    author: "Paul E.",
-    location: "Weight Loss Protocol",
-    rating: 4,
-  },
-];
-
-const pricingPlans = [
-  {
-    name: "Starter",
-    price: "₦10,000",
-    period: "Text consultation",
-    description: "Perfect for gaining clarity quickly.",
-    features: ["Written consultation", "Follow-up questions included", "24-hour response target"],
-    cta: "Book now",
-    highlighted: false,
-  },
-  {
-    name: "Standard",
-    price: "₦15,000",
-    period: "30-min voice",
-    description: "A private session with a written summary.",
-    features: ["Private voice session", "Written summary", "Action plan included", "Priority scheduling"],
-    cta: "Book now",
-    highlighted: true,
-  },
-  {
-    name: "Premium",
-    price: "₦27,000",
-    period: "Deep-dive",
-    description: "Comprehensive review + tailored protocol.",
-    features: ["Extended consult", "Protocol document", "7-day follow-up access", "Ongoing guidance"],
-    cta: "Book now",
-    highlighted: false,
+    image: catConsult,
+    eyebrow: "Talk to someone",
+    title: "Private consultations",
+    description: "Text, voice, or deep-dive sessions on your schedule.",
+    to: "/book" as const,
   },
 ];
 
 const faqs = [
   {
     question: "Is this really private?",
-    answer: "Yes. Consultations happen through a secure online portal with the pharmacist. There is no public profile, no waiting room, no front-desk handover. Your name is never shared, and notes are kept confidentially.",
+    answer:
+      "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, waiting room, or front-desk handover. Your conversations are treated confidentially.",
   },
   {
-    question: "Will anything show up on my bank or card statement?",
-    answer: "Payments are processed securely under a discreet descriptor. No medical or condition-specific wording appears on your statement — only the platform name.",
+    question: "What happens after I reach out?",
+    answer:
+      "A licensed pharmacist asks a few focused questions, listens to what is going on, and shares clear next steps. If you need a prescriber, we will tell you what to ask for and when to seek further care.",
   },
   {
     question: "Can the pharmacist prescribe medication?",
-    answer: "No. Pocketpill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and tell you what a prescriber needs to hear — but a licensed physician must issue any prescription.",
+    answer:
+      "PocketPill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and help you prepare for a prescriber, but a licensed physician must issue any prescription.",
   },
   {
-    question: "I live outside Nigeria. Can I still book?",
-    answer: "Yes. The service is built for the West African community at home and across the diaspora. Sessions run through our secure online platform and payment links, both of which work globally.",
+    question: "Do you deliver across Nigeria?",
+    answer:
+      "PocketPill is built for people in Nigeria. Delivery availability and timing depend on your area and order, and our team can confirm the details before you pay.",
   },
   {
-    question: "What if I'm not sure which tier I need?",
-    answer: "Start an online message before paying. A short back-and-forth is enough to point you toward the right format — text, voice, or deep-dive. There is no pressure to upgrade.",
+    question: "What if I am not sure where to start?",
+    answer:
+      "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right route. There is no pressure to book.",
   },
 ];
 
-function HomePage() {
+function IntroLoader() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timeout = window.setTimeout(() => setVisible(false), reducedMotion ? 220 : 2100);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  if (!visible) return null;
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <SiteHeader />
+    <div className="intro-loader" role="status" aria-label="Loading PocketPill">
+      <div className="intro-loader__content">
+        <span className="pocket-mark">P</span>
+        <span className="intro-loader__wordmark">PocketPill</span>
+      </div>
+      <div className="intro-loader__track" aria-hidden="true">
+        <span />
+      </div>
+    </div>
+  );
+}
 
-      <main className="flex-1">
-        {/* Hero */}
-        <section className="relative overflow-hidden bg-background">
-          <div className="container-tight grid min-h-[calc(100vh-4rem)] items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
-            <div className="flex flex-col justify-center">
-              <span className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
-                Private Men's Health · West Africa & Diaspora
-              </span>
-              <h1 className="heading-xl text-foreground">
-                You've carried this long enough. Start here.
+function HomePage() {
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="page-frame min-h-screen bg-white text-[#0b2119]">
+      <IntroLoader />
+
+      <main className="overflow-x-clip">
+        <section className="hero-shell">
+          <div className="hero-shell__image">
+            <img
+              src={pocketpillPortrait}
+              alt="PocketPill campaign portrait"
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="hero-shell__scrim" />
+          <SiteHeader overlay />
+
+          <div className="hero-shell__body">
+            <div className="hero-shell__heading">
+              <span className="hero-eyebrow">Nigeria e-pharmacy + telehealth</span>
+              <h1 className="hero-title">
+                <span className="hero-title__line">Your health,</span>
+                <span className="hero-title__line hero-title__line--accent">handled.</span>
               </h1>
-              <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-                Private pharmacist-led online consultations for erectile dysfunction and premature ejaculation. Clear guidance. Confidential communication. No waiting rooms.
+            </div>
+
+            <div className="hero-shell__bottom">
+              <div className="hero-tagline">
+                <span>Order simply.</span>
+                <span>Feel looked after.</span>
+              </div>
+              <div className="hero-shell__actions">
+                <div className="hero-glass-card hidden md:flex">
+                  <div className="hero-glass-card__icon">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#b6e3c7]">
+                      Pharmacist support
+                    </p>
+                    <p className="mt-1 text-sm font-medium text-white">
+                      A real person when you need help.
+                    </p>
+                  </div>
+                </div>
+                <Link to="/book" className="pill-button pill-button--light">
+                  Shop medicines <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="hero-scroll-cue hidden sm:flex">
+            <span>Scroll to explore</span>
+            <span className="hero-scroll-cue__line" />
+          </div>
+        </section>
+
+        <section className="trust-band">
+          {[
+            ["01", "Trusted medicines", "Order pharmacy essentials without the guesswork."],
+            ["02", "Talk to a pharmacist", "Get practical guidance before you choose."],
+            ["03", "Virtual consultations", "Connect with care from wherever you are in Nigeria."],
+            ["04", "Discreet delivery", "Your health information and order stay private."],
+          ].map(([number, title, description]) => (
+            <div key={number} className="trust-band__item" data-reveal>
+              <span className="trust-band__number">{number}</span>
+              <div>
+                <p className="font-heading text-sm font-bold text-[#133c2c]">{title}</p>
+                <p className="mt-1 text-xs leading-5 text-[#718078]">{description}</p>
+              </div>
+            </div>
+          ))}
+        </section>
+
+        <section className="editorial-section bg-white" id="care">
+          <div className="editorial-container">
+            <div className="editorial-heading-row" data-reveal>
+              <div>
+                <span className="eyebrow">Pharmacy + telehealth</span>
+                <h2 className="section-title mt-5 max-w-3xl">
+                  Everything you need to take the next step.
+                </h2>
+              </div>
+              <Link to="/services" className="text-link">
+                Explore all care <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="program-list">
+              {[
+                {
+                  number: "01",
+                  icon: Stethoscope,
+                  title: "I want to speak to someone",
+                  body: "Ask a pharmacist a private question or book a virtual consultation when you need more support.",
+                  cta: "Book a consultation",
+                  to: "/book" as const,
+                },
+                {
+                  number: "02",
+                  icon: Pill,
+                  title: "I need my medicines",
+                  body: "Find trusted pharmacy products, upload a prescription, and get your order delivered in Nigeria.",
+                  cta: "Shop medicines",
+                  to: "/shop" as const,
+                },
+                {
+                  number: "03",
+                  icon: Clock3,
+                  title: "I am not sure what to take",
+                  body: "Start with a conversation. We will help you understand your options and what to ask next.",
+                  cta: "Chat with a pharmacist",
+                  to: "/how-it-works" as const,
+                },
+              ].map((item, index) => (
+                <Link
+                  key={item.number}
+                  to={item.to}
+                  className="program-row"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
+                >
+                  <span className="program-row__number">{item.number}</span>
+                  <span className="program-row__icon">
+                    <item.icon className="h-5 w-5" strokeWidth={1.6} />
+                  </span>
+                  <span className="program-row__copy">
+                    <strong>{item.title}</strong>
+                    <span>{item.body}</span>
+                  </span>
+                  <span className="program-row__cta">
+                    {item.cta} <ChevronRight className="h-4 w-4" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="story-section" id="about">
+          <div className="story-section__ghost" aria-hidden="true">
+            <span>Human</span>
+            <span>Care</span>
+          </div>
+          <div className="editorial-container story-section__grid">
+            <div className="story-section__visual" data-reveal>
+              <img
+                src={pocketpillEditorial}
+                alt="PocketPill editorial campaign"
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="story-section__caption">
+                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#b6e3c7]">
+                  From shelf to doorstep
+                </p>
+                <p className="mt-2 max-w-xs font-heading text-xl font-semibold leading-tight text-white">
+                  Your medicines and care, in one calmer place.
+                </p>
+              </div>
+            </div>
+            <div className="story-section__copy" data-reveal>
+              <span className="eyebrow eyebrow--light">Care that fits Nigerian life</span>
+              <h2 className="section-title section-title--light mt-6">
+                Healthcare should feel easier to access.
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-[#c4d8cc]">
+                Whether you need a trusted medicine, a quick pharmacist answer, or a virtual consultation,
+                PocketPill gives you a clear place to begin. No long queues. No confusing language. No
+                awkward handover.
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button size="lg" className="bg-black text-white hover:bg-black/90" asChild>
-                  <Link to="/contact">
-                    Start Online Consultation <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <a href="#pricing">See Pricing</a>
-                </Button>
+              <div className="story-checks">
+                {[
+                  "Licensed pharmacist guidance",
+                  "Prescription support",
+                  "Discreet ordering and delivery",
+                  "Telehealth from home",
+                ].map((item) => (
+                  <span key={item}>
+                    <Check className="h-4 w-4 text-[#b6e3c7]" /> {item}
+                  </span>
+                ))}
               </div>
-              <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  <span>Private & Secure</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-primary" />
-                  <span>Fast scheduling</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center lg:justify-end">
-              <div className="relative w-full max-w-md lg:max-w-lg">
-                <div className="absolute -inset-4 rounded-full bg-orange-soft/50 blur-3xl" />
-                <img
-                  src={heroImage}
-                  alt="A friendly doctor on a video call with a prescription bottle nearby"
-                  width={1024}
-                  height={1024}
-                  className="relative z-10 rounded-3xl object-cover shadow-2xl"
-                />
-              </div>
+              <a
+                href={WHATSAPP}
+                target="_blank"
+                rel="noreferrer"
+                className="pill-button pill-button--mint mt-10"
+              >
+                Chat with a pharmacist <MessageCircle className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </section>
 
-        {/* Trust bar */}
-        <section className="border-y border-border bg-cream">
-          <div className="container-tight py-10">
-            <div className="grid gap-8 sm:grid-cols-3">
-              <div className="text-center">
-                <p className="font-heading text-4xl font-bold text-foreground">Proven</p>
-                <p className="mt-1 text-sm text-muted-foreground">Trusted by men across West Africa and the diaspora to deliver real results.</p>
+        <section className="editorial-section facilities-section bg-[#f5f7f2]">
+          <div className="editorial-container facilities-grid">
+            <div className="facilities-copy" data-reveal>
+              <div className="facilities-mark">
+                <LockKeyhole className="h-5 w-5" />
               </div>
-              <div className="text-center">
-                <p className="font-heading text-4xl font-bold text-foreground">Private</p>
-                <p className="mt-1 text-sm text-muted-foreground">Consultations are conducted confidentially through secure channels.</p>
-              </div>
-              <div className="text-center">
-                <p className="font-heading text-4xl font-bold text-foreground">Fast</p>
-                <p className="mt-1 text-sm text-muted-foreground">Same-day scheduling may be available depending on demand.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Services */}
-        <section className="section-padding bg-background">
-          <div className="container-tight">
-            <SectionHeader
-              eyebrow="What We Treat"
-              title="Specialized care built for men."
-              description="From erectile dysfunction to premature ejaculation, PocketPill gives you access to private, actionable protocols."
-            />
-            <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <Card key={service.title} className="group border-border/60 bg-card transition-shadow hover:shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft transition-colors group-hover:bg-primary">
-                      <service.icon className="h-6 w-6 text-primary transition-colors group-hover:text-white" />
+              <span className="eyebrow mt-6">Your care, your pace</span>
+              <h2 className="section-title mt-5 max-w-xl">
+                Your pharmacy, with a human on the other end.
+              </h2>
+              <p className="mt-6 max-w-md text-base leading-8 text-[#6b7b73]">
+                Good care is more than a product in a basket. Get help finding the right option,
+                understand how to use it, and know when to speak to a doctor.
+              </p>
+              <div className="difference-list">
+                {[
+                  {
+                    icon: ShieldCheck,
+                    title: "Quality pharmacy care",
+                    body: "Straightforward explanations from a licensed pharmacist.",
+                  },
+                  {
+                    icon: LockKeyhole,
+                    title: "Discreet by design",
+                    body: "Private support and delivery that respect your time and your story.",
+                  },
+                  {
+                    icon: Truck,
+                    title: "Delivered in Nigeria",
+                    body: "Order from home and let our team help with the next step.",
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="difference-list__item">
+                    <span>
+                      <item.icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.body}</p>
                     </div>
-                    <h3 className="mt-5 font-heading text-xl font-semibold text-foreground">{service.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section className="section-padding bg-cream">
-          <div className="container-tight">
-            <SectionHeader
-              eyebrow="How it works"
-              title="Getting started is easy and private."
-              description="No waiting rooms. No paperwork. Just clear guidance online."
-            />
-            <div className="mt-16 grid gap-8 md:grid-cols-3">
-              {steps.map((step, index) => (
-                <div key={step.title} className="relative">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
-                    <step.icon className="h-6 w-6" />
                   </div>
-                  <div className="mt-6">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-primary">Step {index + 1}</span>
-                    <h3 className="mt-2 font-heading text-xl font-semibold text-foreground">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why PocketPill */}
-        <section className="section-padding bg-background">
-          <div className="container-tight">
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div className="flex flex-col justify-center">
-                <SectionHeader
-                  align="left"
-                  eyebrow="Why PocketPill"
-                  title="The problem is often not the condition. It is the silence."
-                  description="Many men delay getting informed guidance because they want privacy, discretion, and a judgment-free conversation. Pocketpill is built to lower that barrier: direct access to pharmacist-led education and structured guidance online."
-                />
-                <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                  {differentiators.map((item) => (
-                    <div key={item.title}>
-                      <h3 className="font-heading text-lg font-semibold text-foreground">{item.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-                    </div>
-                  ))}
-                </div>
+                ))}
               </div>
-              <div className="relative flex items-center justify-center">
-                <div className="absolute -inset-4 rounded-full bg-orange-soft/40 blur-3xl" />
+            </div>
+
+            <div className="facilities-photos">
+              <figure
+                className="photo-card photo-card--tall"
+                data-reveal
+                style={{ "--reveal-delay": "80ms" } as CSSProperties}
+              >
                 <img
-                  src={doctorsImage}
-                  alt="A diverse group of certified doctors, pharmacists and team of healthcare professionals"
-                  width={1024}
-                  height={768}
+                  src={heroPharmacist}
+                  alt="Pharmacist ready to answer questions"
                   loading="lazy"
-                  className="relative z-10 rounded-3xl object-cover shadow-2xl"
                 />
-              </div>
+                <figcaption>
+                  <strong>Human-first</strong>
+                  <span>Clear answers, without the clinical distance.</span>
+                </figcaption>
+              </figure>
+              <figure
+                className="photo-card photo-card--short"
+                data-reveal
+                style={{ "--reveal-delay": "220ms" } as CSSProperties}
+              >
+                <img src={careTeam} alt="PocketPill care team" loading="lazy" />
+                <figcaption>
+                  <strong>Always within reach</strong>
+                  <span>Care that fits into real life.</span>
+                </figcaption>
+              </figure>
             </div>
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="section-padding bg-black text-white overflow-hidden">
-          <div className="container-tight">
-            <SectionHeader
-              eyebrow="In Their Words"
-              title="Quiet conversations. Lasting clarity."
-              description="Shared with permission. Names and details have been adjusted to protect privacy."
-              className="[&_h2]:text-white [&_p]:text-white/70 [&_span]:text-primary"
-            />
-          </div>
-          
-          <div className="mt-16 relative flex w-full">
-            <div className="flex animate-marquee gap-6 min-w-max pr-6">
-              {testimonials.map((testimonial, idx) => (
-                <Card key={`t1-${idx}`} className="w-[350px] md:w-[400px] border-white/10 bg-white/5 text-white backdrop-blur shrink-0">
-                  <CardContent className="p-6">
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <svg key={i} className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="mt-4 text-base leading-relaxed text-white/90">"{testimonial.quote}"</p>
-                    <div className="mt-6">
-                      <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-xs text-primary/80 font-medium">{testimonial.location}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+        <section className="dark-band" id="numbers">
+          <div className="editorial-container">
+            <div data-reveal>
+              <span className="eyebrow eyebrow--light">The PocketPill promise</span>
+              <h2 className="section-title section-title--light mt-5 max-w-2xl">
+                The essentials, without the runaround.
+              </h2>
             </div>
-            
-            <div className="flex animate-marquee gap-6 min-w-max pr-6" aria-hidden="true">
-              {testimonials.map((testimonial, idx) => (
-                <Card key={`t2-${idx}`} className="w-[350px] md:w-[400px] border-white/10 bg-white/5 text-white backdrop-blur shrink-0">
-                  <CardContent className="p-6">
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <svg key={i} className="h-4 w-4 fill-primary text-primary" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="mt-4 text-base leading-relaxed text-white/90">"{testimonial.quote}"</p>
-                    <div className="mt-6">
-                      <p className="font-heading text-sm font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-xs text-primary/80 font-medium">{testimonial.location}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+            <dl className="stats-grid">
+              {[
+                ["Rx", "prescription support when you need it"],
+                ["1:1", "human guidance from a pharmacist"],
+                ["NIGERIA", "delivery designed around your city"],
+                ["Care", "pharmacy and telehealth in one place"],
+              ].map(([value, label], index) => (
+                <div
+                  key={value}
+                  className="stat-cell"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
+                >
+                  <dd>{value}</dd>
+                  <dt>{label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        <section className="editorial-section testimonials-section bg-white" id="testimonials">
+          <div className="editorial-container">
+            <div data-reveal>
+              <span className="eyebrow">Why people choose PocketPill</span>
+              <h2 className="section-title mt-5 max-w-2xl">Private, calm, and practical.</h2>
+            </div>
+            <div className="testimonials-grid">
+              {[
+                [
+                  "“",
+                  "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
+                  "Tunde A.",
+                  "Nigeria",
+                ],
+                [
+                  "“",
+                  "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
+                  "Emeka C.",
+                  "Lekki",
+                ],
+                [
+                  "“",
+                  "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
+                  "Kelechi O.",
+                  "Ikeja",
+                ],
+              ].map(([quote, body, name, role], index) => (
+                <figure
+                  key={name}
+                  className="testimonial-card"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 120}ms` } as CSSProperties}
+                >
+                  <span className="testimonial-card__quote">{quote}</span>
+                  <blockquote>{body}</blockquote>
+                  <figcaption>
+                    <strong>{name}</strong>
+                    <span>{role}</span>
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </div>
         </section>
 
+        <section className="editorial-section pharmacy-section bg-[#fffefa]" id="pharmacy">
+          <div className="editorial-container pharmacy-grid">
+            <div className="pharmacy-cover" data-reveal>
+              <img src={staminaCover} alt="The Stamina Blueprint cover" loading="lazy" />
+            </div>
+            <div data-reveal>
+              <span className="eyebrow">Health guides</span>
+              <h2 className="section-title mt-5 max-w-xl">Useful answers, in plain language.</h2>
+              <p className="mt-5 max-w-xl text-base leading-8 text-[#6b7b73]">
+                The Stamina Blueprint is a practical, pharmacist-written guide for lasting longer
+                and rebuilding confidence. Instant access, clear language, and a private place to
+                start.
+              </p>
+              <Link to="/shop" className="pill-button pill-button--solid mt-8">
+                Explore the pharmacy <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
 
-
-        {/* FAQ */}
-        <section className="section-padding bg-cream">
-          <div className="container-tight max-w-3xl">
-            <SectionHeader
-              eyebrow="FAQ"
-              title="The questions men don't ask out loud."
-              description="If something here isn't covered, send us a message before booking. There's no obligation to continue."
-            />
-            <div className="mt-12">
+        <section className="editorial-section faq-section bg-[#f5f7f2]" id="faq">
+          <div className="editorial-container faq-container">
+            <div className="text-center" data-reveal>
+              <span className="eyebrow">Questions, answered</span>
+              <h2 className="section-title mt-5">Good care starts with a question.</h2>
+              <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-[#6b7b73]">
+                Not sure whether to shop, chat, or book? Send us a private message before you pay. We
+                will help you find the right route.
+              </p>
+            </div>
+            <div className="faq-card" data-reveal>
               <FAQAccordion items={faqs} />
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="section-padding bg-primary text-primary-foreground">
-          <div className="container-tight text-center">
-            <h2 className="heading-lg text-white">The hardest part is the first message.</h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
-              Start your private online consultation. Ask the question you've been postponing.
+        <section className="closing-section">
+          <div className="closing-section__inner" data-reveal>
+            <span className="eyebrow eyebrow--light">Made for Nigeria</span>
+            <h2 className="section-title section-title--light mx-auto mt-6 max-w-3xl">
+              Medicines and care, without the runaround.
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-[#c4d8cc]">
+              Order trusted pharmacy products or speak to a pharmacist from the comfort of home.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button size="lg" variant="secondary" className="bg-white text-black hover:bg-white/90" asChild>
-                <Link to="/contact">Start Online Consultation</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10" asChild>
-                <a href="#pricing">View pricing</a>
-              </Button>
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link to="/shop" className="pill-button pill-button--mint">
+                Shop medicines <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <a
+                href={WHATSAPP}
+                target="_blank"
+                rel="noreferrer"
+                className="pill-button pill-button--outline-light"
+              >
+                Talk to a pharmacist <MessageCircle className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </section>
