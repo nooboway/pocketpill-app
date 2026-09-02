@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Facebook, Instagram, Linkedin, Twitter, ShieldCheck } from "lucide-react";
+import ndpcBadge from "@/assets/ndpc-badge.png";
 
 const footerLinks = [
   {
@@ -74,10 +75,14 @@ export function SiteFooter() {
                 href="/ndpc-certificate.pdf" 
                 target="_blank" 
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                className="inline-block transition-opacity hover:opacity-80"
               >
-                <ShieldCheck className="h-4 w-4 text-[#b6e3c7]" />
-                NDPC Certified
+                <img 
+                  src={ndpcBadge} 
+                  alt="NDPC Certified Badge" 
+                  className="h-20 w-auto rounded-md shadow-sm" 
+                  loading="lazy"
+                />
               </a>
             </div>
           </div>
