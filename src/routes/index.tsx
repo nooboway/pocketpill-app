@@ -467,41 +467,96 @@ function HomePage() {
               <span className="eyebrow">Why people choose PocketPill</span>
               <h2 className="section-title mt-5 max-w-2xl">Private, calm, and practical.</h2>
             </div>
-            <div className="testimonials-grid">
-              {[
-                [
-                  "“",
-                  "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
-                  "Tunde A.",
-                  "Nigeria",
-                ],
-                [
-                  "“",
-                  "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
-                  "Emeka C.",
-                  "Lekki",
-                ],
-                [
-                  "“",
-                  "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
-                  "Kelechi O.",
-                  "Ikeja",
-                ],
-              ].map(([quote, body, name, role], index) => (
-                <figure
-                  key={name}
-                  className="testimonial-card"
-                  data-reveal
-                  style={{ "--reveal-delay": `${index * 120}ms` } as CSSProperties}
-                >
-                  <span className="testimonial-card__quote">{quote}</span>
-                  <blockquote>{body}</blockquote>
-                  <figcaption>
-                    <strong>{name}</strong>
-                    <span>{role}</span>
-                  </figcaption>
-                </figure>
-              ))}
+            <div className="testimonials-marquee-wrapper" data-reveal>
+              <div className="testimonials-marquee">
+                {[...[
+                  [
+                    "“",
+                    "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
+                    "Tunde A.",
+                    "Nigeria",
+                  ],
+                  [
+                    "“",
+                    "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
+                    "Emeka C.",
+                    "Lekki",
+                  ],
+                  [
+                    "“",
+                    "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
+                    "Kelechi O.",
+                    "Ikeja",
+                  ],
+                  [
+                    "“",
+                    "A total game-changer. They guided me through the treatment plan and checked in on me. Very professional.",
+                    "Chima U.",
+                    "Abuja",
+                  ],
+                  [
+                    "“",
+                    "I was skeptical at first, but the quality of care and how quickly they deliver is unmatched.",
+                    "Femi D.",
+                    "Nigeria",
+                  ],
+                  [
+                    "“",
+                    "The Stamina Blueprint was exactly what I needed. Everything is handled with so much respect and privacy.",
+                    "David M.",
+                    "Port Harcourt",
+                  ],
+                ], ...[
+                  [
+                    "“",
+                    "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
+                    "Tunde A.",
+                    "Nigeria",
+                  ],
+                  [
+                    "“",
+                    "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
+                    "Emeka C.",
+                    "Lekki",
+                  ],
+                  [
+                    "“",
+                    "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
+                    "Kelechi O.",
+                    "Ikeja",
+                  ],
+                  [
+                    "“",
+                    "A total game-changer. They guided me through the treatment plan and checked in on me. Very professional.",
+                    "Chima U.",
+                    "Abuja",
+                  ],
+                  [
+                    "“",
+                    "I was skeptical at first, but the quality of care and how quickly they deliver is unmatched.",
+                    "Femi D.",
+                    "Nigeria",
+                  ],
+                  [
+                    "“",
+                    "The Stamina Blueprint was exactly what I needed. Everything is handled with so much respect and privacy.",
+                    "David M.",
+                    "Port Harcourt",
+                  ],
+                ]].map(([quote, body, name, role], index) => (
+                  <figure
+                    key={`${name}-${index}`}
+                    className="testimonial-card"
+                  >
+                    <span className="testimonial-card__quote">{quote}</span>
+                    <blockquote>{body}</blockquote>
+                    <figcaption>
+                      <strong>{name}</strong>
+                      <span>{role}</span>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
             </div>
           </div>
         </section>
