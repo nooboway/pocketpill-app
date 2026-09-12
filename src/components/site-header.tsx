@@ -86,7 +86,7 @@ export function SiteHeader({
             )}
             asChild
           >
-            <Link to="/book">
+            <Link to="/app">
               Start care <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
             </Link>
           </Button>
@@ -139,7 +139,7 @@ export function SiteHeader({
                   className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
                   asChild
                 >
-                  <Link to="/book" onClick={() => setOpen(false)}>
+                  <Link to="/app" onClick={() => setOpen(false)}>
                     Start care <ArrowUpRight className="ml-1.5 h-4 w-4" />
                   </Link>
                 </Button>

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Activity, HeartPulse, Pill, Stethoscope, UserRound, MessageSquare, Brain, Baby } from "lucide-react";
+import { ArrowRight, Activity, HeartPulse, Pill, Stethoscope, UserRound, MessageSquare, Brain, Baby, FlaskConical, Cross } from "lucide-react";
 
 import { SectionHeader } from "@/components/section-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -25,6 +25,27 @@ export const Route = createFileRoute("/services")({
 
 const services = [
   {
+    icon: FlaskConical,
+    title: "Oncology & specialty care",
+    description: "Expert sourcing for hard-to-find oncology medications and specialized clinical pharmacy care.",
+    details: ["Specialty medication sourcing", "Side effect management", "Clinical pharmacy support"],
+    href: "/services/oncology",
+  },
+  {
+    icon: Cross,
+    title: "Clinical pharmacy",
+    description: "Human-first clinical guidance, medication counseling, interactions check, and chronic care management.",
+    details: ["Medication counseling", "Interactions check", "Chronic care management"],
+    href: "/services/clinical-pharmacy",
+  },
+  {
+    icon: Brain,
+    title: "Mental health",
+    description: "Speak with licensed therapists and psychiatrists for anxiety, depression, stress, ADHD, and medication management.",
+    details: ["Therapy sessions", "Psychiatric evaluations", "Medication management", "Crisis support resources"],
+    href: "/services/mental-health",
+  },
+  {
     icon: Stethoscope,
     title: "Urgent care",
     description: "Get quick treatment for colds, flu, sinus infections, allergies, rashes, minor injuries, UTIs, and more.",
@@ -35,12 +56,6 @@ const services = [
     title: "Primary care",
     description: "Build an ongoing relationship with a primary care provider who knows your health history.",
     details: ["Annual wellness visits", "Preventive screenings", "Health risk reviews", "Referral coordination"],
-  },
-  {
-    icon: Brain,
-    title: "Mental health",
-    description: "Speak with licensed therapists and psychiatrists for anxiety, depression, stress, ADHD, and medication management.",
-    details: ["Therapy sessions", "Psychiatric evaluations", "Medication management", "Crisis support resources"],
   },
   {
     icon: Pill,
@@ -88,18 +103,25 @@ function ServicesPage() {
             />
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
-                <Card key={service.title} className="border-border/60 bg-card transition-shadow hover:shadow-lg">
-                  <CardContent className="p-6">
+                <Card key={service.title} className="flex flex-col border-border/60 bg-card transition-shadow hover:shadow-lg">
+                  <CardContent className="flex flex-1 flex-col p-6">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-soft">
                       <service.icon className="h-6 w-6 text-primary" />
                     </div>
                     <h3 className="mt-5 font-heading text-xl font-semibold text-foreground">{service.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-                    <ul className="mt-4 space-y-1.5">
+                    <ul className="mt-4 mb-6 flex-1 space-y-1.5">
                       {service.details.map((detail) => (
                         <li key={detail} className="text-sm text-muted-foreground">&bull; {detail}</li>
                       ))}
                     </ul>
+                    {service.href && (
+                      <div className="mt-auto pt-4 border-t border-border/50">
+                        <Link to={service.href as any} className="inline-flex items-center text-sm font-medium text-primary hover:underline">
+                          Learn more about {service.title.toLowerCase()} <ArrowRight className="ml-1 h-3 w-3" />
+                        </Link>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}

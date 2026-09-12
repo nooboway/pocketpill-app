@@ -184,13 +184,12 @@ function HomePage() {
               <span className="hero-eyebrow">Nigeria e-pharmacy + telehealth</span>
               <h1 className="hero-title">
                 <span className="hero-title__line">Your health,</span>
-                <span className="hero-title__line hero-title__line--accent">handled.</span>
+                <span className="hero-title__line hero-title__line--accent">handled with care.</span>
               </h1>
             </div>
 
             <div className="hero-shell__bottom">
               <div className="hero-tagline">
-                <span>Order simply.</span>
                 <span>Feel looked after.</span>
               </div>
               <div className="hero-shell__actions">
@@ -207,7 +206,7 @@ function HomePage() {
                     </p>
                   </div>
                 </div>
-                <Link to="/book" className="pill-button pill-button--light">
+                <Link to="/app" className="pill-button pill-button--light">
                   Shop medicines <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -580,7 +579,7 @@ function HomePage() {
               Order trusted pharmacy products or speak to a pharmacist from the comfort of home.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link to="/shop" className="pill-button pill-button--mint">
+              <Link to="/app" className="pill-button pill-button--mint">
                 Shop medicines <ArrowUpRight className="h-4 w-4" />
               </Link>
               <a
