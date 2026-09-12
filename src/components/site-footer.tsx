@@ -6,10 +6,11 @@ const footerLinks = [
   {
     title: "Care",
     links: [
-      { label: "Urgent care", to: "/services" },
+      { label: "Oncology & specialty care", to: "/services" },
       { label: "Mental health", to: "/services" },
+      { label: "Clinical pharmacy", to: "/services" },
       { label: "Prescriptions", to: "/services" },
-      { label: "Chronic care", to: "/services" },
+      { label: "Virtual consultations", to: "/book" },
     ],
   },
   {

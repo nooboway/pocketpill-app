@@ -21,8 +21,8 @@ import catConsult from "@/assets/oh-cat-consult.jpg";
 import catIntimacy from "@/assets/oh-cat-intimacy.jpg";
 import catPerformance from "@/assets/oh-cat-performance.jpg";
 import catSupplements from "@/assets/oh-cat-supplements.jpg";
-import careTeam from "@/assets/oh-care-team.jpg";
 import heroPharmacist from "@/assets/oh-hero-2.jpg";
+import heroSmartphone from "@/assets/oh-hero-1.jpg";
 import pocketpillEditorial from "@/assets/pocketpill-editorial.png";
 import pocketpillPortrait from "@/assets/pocketpill-portrait.png";
 import staminaCover from "@/assets/stamina_cover.png";
@@ -55,55 +55,80 @@ export const Route = createFileRoute("/")({
 
 const careCategories = [
   {
-    image: catPerformance,
-    eyebrow: "Performance",
-    title: "Erections & performance",
-    description: "Private, pharmacist-led guidance for erectile difficulty.",
+    image: catPerformance, // We keep the image mapping but repurpose it for Oncology
+    eyebrow: "Specialty Care",
+    title: "Oncology & Therapeutics",
+    description: "Reliable sourcing, adherence support, and expert clinical guidance for oncology medications.",
     to: "/services" as const,
   },
   {
-    image: catIntimacy,
-    eyebrow: "Intimacy",
-    title: "Lasting longer",
-    description: "Actionable support for premature ejaculation and confidence.",
+    image: catIntimacy, // Repurposed for Mental Health
+    eyebrow: "Psychiatric Pharmacy",
+    title: "Mental Health Care",
+    description: "Discreet access and compassionate pharmacist support for mental health prescriptions.",
     to: "/services" as const,
   },
   {
     image: catSupplements,
     eyebrow: "Pharmacy",
-    title: "Medication & safety",
-    description: "Understand options, interactions, and the questions to ask.",
+    title: "Clinical Pharmacy",
+    description: "Comprehensive medication reviews, interaction checks, and safety profiling.",
     to: "/shop" as const,
   },
   {
     image: catConsult,
-    eyebrow: "Talk to someone",
-    title: "Private consultations",
-    description: "Text, voice, or deep-dive sessions on your schedule.",
+    eyebrow: "Telehealth",
+    title: "Virtual Consultations",
+    description: "Connect with licensed clinical pharmacists via voice or text on your schedule.",
     to: "/book" as const,
   },
 ];
 
 const faqs = [
   {
-    question: "Is this really private?",
+    question: "How do I order my medications?",
     answer:
-      "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, waiting room, or front-desk handover. Your conversations are treated confidentially.",
+      "You can shop directly on our website, ask our Enoré AI assistant, or message us on WhatsApp. Once confirmed, we process and dispatch your order swiftly and discreetly.",
   },
   {
-    question: "What happens after I reach out?",
+    question: "Are your medications genuine?",
+    answer:
+      "Yes. We source directly from trusted manufacturers and verified distributors. PocketPill is committed to delivering only safe and authentic medications.",
+  },
+  {
+    question: "Do I need a prescription to order?",
+    answer:
+      "Over-the-counter (OTC) medications can be ordered directly. For prescription-only medicines (POM), you will need to upload a valid prescription during checkout or share it with our pharmacists via WhatsApp.",
+  },
+  {
+    question: "How fast is delivery?",
+    answer:
+      "We offer fast, discreet delivery across Nigeria. Delivery availability and timing depend on your specific area and order, and our team will confirm the exact details before you pay.",
+  },
+  {
+    question: "Can I speak to a pharmacist before buying?",
+    answer:
+      "Absolutely. Our licensed pharmacists are available for private consultations via WhatsApp or voice call. We provide expert advice on dosage, side effects, and drug interactions.",
+  },
+  {
+    question: "Is my consultation really private?",
+    answer:
+      "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, waiting room, or front-desk handover. Your conversations and data are treated with strict confidentiality.",
+  },
+  {
+    question: "Do you offer specialized care for chronic conditions?",
+    answer:
+      "Yes. We specialize in sourcing and delivering medications for oncology, mental health, and other chronic conditions, ensuring you never run out of essential care and have the right guidance.",
+  },
+  {
+    question: "What happens after I reach out for a consultation?",
     answer:
       "A licensed pharmacist asks a few focused questions, listens to what is going on, and shares clear next steps. If you need a prescriber, we will tell you what to ask for and when to seek further care.",
   },
   {
     question: "Can the pharmacist prescribe medication?",
     answer:
-      "PocketPill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and help you prepare for a prescriber, but a licensed physician must issue any prescription.",
-  },
-  {
-    question: "Do you deliver across Nigeria?",
-    answer:
-      "PocketPill is built for people in Nigeria. Delivery availability and timing depend on your area and order, and our team can confirm the details before you pay.",
+      "PocketPill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and help you prepare for a prescriber, but a licensed physician must issue any new prescription.",
   },
   {
     question: "What if I am not sure where to start?",
@@ -112,29 +137,7 @@ const faqs = [
   },
 ];
 
-function IntroLoader() {
-  const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timeout = window.setTimeout(() => setVisible(false), reducedMotion ? 220 : 2100);
-    return () => window.clearTimeout(timeout);
-  }, []);
-
-  if (!visible) return null;
-
-  return (
-    <div className="intro-loader" role="status" aria-label="Loading PocketPill">
-      <div className="intro-loader__content">
-        <img src="/pocketpill-icon-512.png" alt="P" className="pocket-mark-img" />
-        <span className="intro-loader__wordmark">PocketPill</span>
-      </div>
-      <div className="intro-loader__track" aria-hidden="true">
-        <span />
-      </div>
-    </div>
-  );
-}
 
 function HomePage() {
   useEffect(() => {
@@ -164,8 +167,6 @@ function HomePage() {
 
   return (
     <div className="page-frame min-h-screen bg-white text-[#0b2119]">
-      <IntroLoader />
-
       <main className="overflow-x-clip">
         <section className="hero-shell">
           <div className="hero-shell__image">
@@ -253,27 +254,27 @@ function HomePage() {
               {[
                 {
                   number: "01",
-                  icon: Stethoscope,
-                  title: "I want to speak to someone",
-                  body: "Ask a pharmacist a private question or book a virtual consultation when you need more support.",
-                  cta: "Book a consultation",
-                  to: "/book" as const,
-                },
-                {
-                  number: "02",
                   icon: Pill,
-                  title: "I need my medicines",
-                  body: "Find trusted pharmacy products, upload a prescription, and get your order delivered in Nigeria.",
-                  cta: "Shop medicines",
+                  title: "Specialty & Oncology Sourcing",
+                  body: "Dedicated supply chains, protocol adherence support, and expert clinical guidance for oncology and rare condition medications.",
+                  cta: "Request specialty medication",
                   to: "/shop" as const,
                 },
                 {
+                  number: "02",
+                  icon: ShieldCheck,
+                  title: "Psychiatric Pharmacy Care",
+                  body: "Discreet access, regimen management, and compassionate continuous pharmacist support for mental health prescriptions.",
+                  cta: "Start a private consultation",
+                  to: "/book" as const,
+                },
+                {
                   number: "03",
-                  icon: Clock3,
-                  title: "I am not sure what to take",
-                  body: "Start with a conversation. We will help you understand your options and what to ask next.",
-                  cta: "Chat with a pharmacist",
-                  to: "/how-it-works" as const,
+                  icon: Stethoscope,
+                  title: "Comprehensive Clinical Telehealth",
+                  body: "1-on-1 virtual sessions with licensed pharmacists to review complex regimens, check interactions, and create actionable safety profiles.",
+                  cta: "Book a clinical review",
+                  to: "/book" as const,
                 },
               ].map((item, index) => (
                 <Link
@@ -422,7 +423,7 @@ function HomePage() {
                 data-reveal
                 style={{ "--reveal-delay": "220ms" } as CSSProperties}
               >
-                <img src={careTeam} alt="PocketPill care team" loading="lazy" />
+                <img src={heroSmartphone} alt="Always within reach" loading="lazy" />
                 <figcaption>
                   <strong>Always within reach</strong>
                   <span>Care that fits into real life.</span>
@@ -444,7 +445,7 @@ function HomePage() {
               {[
                 ["Rx", "prescription support when you need it"],
                 ["1:1", "human guidance from a pharmacist"],
-                ["NIGERIA", "delivery designed around your city"],
+                ["Nigeria", "delivery designed around your city"],
                 ["Care", "pharmacy and telehealth in one place"],
               ].map(([value, label], index) => (
                 <div
@@ -500,12 +501,7 @@ function HomePage() {
                     "Femi D.",
                     "Nigeria",
                   ],
-                  [
-                    "“",
-                    "The Stamina Blueprint was exactly what I needed. Everything is handled with so much respect and privacy.",
-                    "David M.",
-                    "Port Harcourt",
-                  ],
+
                 ], ...[
                   [
                     "“",
@@ -537,12 +533,7 @@ function HomePage() {
                     "Femi D.",
                     "Nigeria",
                   ],
-                  [
-                    "“",
-                    "The Stamina Blueprint was exactly what I needed. Everything is handled with so much respect and privacy.",
-                    "David M.",
-                    "Port Harcourt",
-                  ],
+
                 ]].map(([quote, body, name, role], index) => (
                   <figure
                     key={`${name}-${index}`}
@@ -561,25 +552,7 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="editorial-section pharmacy-section bg-[#fffefa]" id="pharmacy">
-          <div className="editorial-container pharmacy-grid">
-            <div className="pharmacy-cover" data-reveal>
-              <img src={staminaCover} alt="The Stamina Blueprint cover" loading="lazy" />
-            </div>
-            <div data-reveal>
-              <span className="eyebrow">Health guides</span>
-              <h2 className="section-title mt-5 max-w-xl">Useful answers, in plain language.</h2>
-              <p className="mt-5 max-w-xl text-base leading-8 text-[#6b7b73]">
-                The Stamina Blueprint is a practical, pharmacist-written guide for lasting longer
-                and rebuilding confidence. Instant access, clear language, and a private place to
-                start.
-              </p>
-              <Link to="/shop" className="pill-button pill-button--solid mt-8">
-                Explore the pharmacy <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
+
 
         <section className="editorial-section faq-section bg-[#f5f7f2]" id="faq">
           <div className="editorial-container faq-container">
