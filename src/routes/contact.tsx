@@ -55,7 +55,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Office",
-    value: "Denver, CO",
+    value: "Ikeja, Lagos, Nigeria",
     href: "#",
   },
 ];

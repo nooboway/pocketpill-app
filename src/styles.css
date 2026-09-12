@@ -1122,6 +1122,13 @@ a {
   font-weight: 700;
 }
 
+.pocket-mark-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
 .intro-loader__wordmark {
   font-family: var(--font-heading);
   font-size: 1.45rem;

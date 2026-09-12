@@ -46,11 +46,13 @@ export function SiteFooter() {
           <div className="lg:col-span-4">
             <Link
               to="/"
-              className="flex items-center gap-2 text-xl font-bold tracking-tight text-white"
+              className="flex items-center gap-2 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 text-sm font-extrabold">
-                P
-              </span>
+              <img 
+                src="/pocketpill-icon-512.png" 
+                alt="" 
+                className="h-8 w-8 brightness-0 invert" 
+              />
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
@@ -111,9 +113,14 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/15 pt-8 text-white/60 sm:flex-row">
-          <p className="text-xs">
-            &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center gap-1 sm:items-start">
+            <p className="text-xs">
+              &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
+            </p>
+            <p className="text-xs">
+              PocketPill, Ikeja, Lagos, Nigeria
+            </p>
+          </div>
           <p className="text-xs text-center sm:text-right">
             PocketPill is not a replacement for emergency care. If you are experiencing a medical
             emergency, call 112.

@@ -126,7 +126,7 @@ function IntroLoader() {
   return (
     <div className="intro-loader" role="status" aria-label="Loading PocketPill">
       <div className="intro-loader__content">
-        <span className="pocket-mark">P</span>
+        <img src="/pocketpill-icon-512.png" alt="P" className="pocket-mark-img" />
         <span className="intro-loader__wordmark">PocketPill</span>
       </div>
       <div className="intro-loader__track" aria-hidden="true">

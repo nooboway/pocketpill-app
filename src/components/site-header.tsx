@@ -36,13 +36,15 @@ export function SiteHeader({
         <Link
           to="/"
           className={cn(
-            "flex items-center gap-2.5 text-xl font-bold tracking-[-0.06em]",
+            "flex items-center gap-2 text-xl font-bold tracking-tight transition-opacity hover:opacity-80",
             overlay ? "text-white" : "text-foreground",
           )}
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-current text-lg font-extrabold">
-            P
-          </span>
+          <img 
+            src="/pocketpill-icon-512.png" 
+            alt="" 
+            className={cn("h-8 w-8", overlay && "brightness-0 invert")} 
+          />
           <span className="font-heading">PocketPill</span>
         </Link>
 
@@ -106,11 +108,13 @@ export function SiteHeader({
               <Link
                 to="/"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 text-xl font-bold"
+                className="flex items-center gap-2 text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-lg font-extrabold text-primary-foreground">
-                  P
-                </span>
+                <img 
+                  src="/pocketpill-icon-512.png" 
+                  alt="" 
+                  className="h-8 w-8" 
+                />
                 <span className="font-heading">PocketPill</span>
               </Link>
               <nav className="flex flex-col gap-4">
