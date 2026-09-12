@@ -21,7 +21,7 @@ import catConsult from "@/assets/oh-cat-consult.jpg";
 import catIntimacy from "@/assets/oh-cat-intimacy.jpg";
 import catPerformance from "@/assets/oh-cat-performance.jpg";
 import catSupplements from "@/assets/oh-cat-supplements.jpg";
-import heroPharmacist from "@/assets/oh-hero-2.jpg";
+import heroPharmacist from "@/assets/oh-hero-2-branded.jpg";
 import heroSmartphone from "@/assets/oh-hero-1.jpg";
 import pocketpillEditorial from "@/assets/pocketpill-editorial.png";
 import pocketpillPortrait from "@/assets/pocketpill-portrait.png";
