@@ -19,8 +19,8 @@ import { FAQAccordion } from "@/components/faq-accordion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import catConsult from "@/assets/oh-cat-consult.jpg";
-import catIntimacy from "@/assets/oh-cat-intimacy.jpg";
-import catPerformance from "@/assets/oh-cat-performance.jpg";
+import heroThree from "@/assets/oh-hero-3.jpg";
+import careTeam from "@/assets/oh-care-team.jpg";
 import catSupplements from "@/assets/oh-cat-supplements.jpg";
 import heroPharmacist from "@/assets/oh-hero-2-branded.jpg";
 import heroSmartphone from "@/assets/oh-hero-1.jpg";
@@ -56,14 +56,14 @@ export const Route = createFileRoute("/")({
 
 const careCategories = [
   {
-    image: catPerformance, // We keep the image mapping but repurpose it for Oncology
+    image: heroThree, // Oncology
     eyebrow: "Specialty Care",
     title: "Oncology & Therapeutics",
     description: "Reliable sourcing, adherence support, and expert clinical guidance for oncology medications.",
     to: "/services" as const,
   },
   {
-    image: catIntimacy, // Repurposed for Mental Health
+    image: careTeam, // Mental Health
     eyebrow: "Psychiatric Pharmacy",
     title: "Mental Health Care",
     description: "Discreet access and compassionate pharmacist support for mental health prescriptions.",
@@ -453,7 +453,7 @@ function HomePage() {
             </div>
             <dl className="stats-grid">
               {[
-                ["Rx", "prescription support when you need it"],
+                ["Meds", "prescription support when you need it"],
                 ["1:1", "human guidance from a pharmacist"],
                 ["Nigeria", "delivery designed around your city"],
                 ["Care", "pharmacy and telehealth in one place"],

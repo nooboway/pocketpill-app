@@ -42,9 +42,9 @@ const formSchema = z.object({
 const contactInfo = [
   {
     icon: Phone,
-    label: "Phone",
-    value: "1-800-POCKET-1",
-    href: "tel:1-800-POCKET-1",
+    label: "Phone / WhatsApp",
+    value: "+234 708 372 5382",
+    href: "https://wa.me/2347083725382",
   },
   {
     icon: Mail,
@@ -176,9 +176,9 @@ function ContactPage() {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone</FormLabel>
+                            <FormLabel>WhatsApp Number</FormLabel>
                             <FormControl>
-                              <Input type="tel" placeholder="(555) 123-4567" {...field} />
+                              <Input type="tel" placeholder="e.g. 08012345678" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

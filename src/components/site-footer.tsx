@@ -4,7 +4,7 @@ import ndpcBadge from "@/assets/ndpc-badge.png";
 
 const footerLinks = [
   {
-    title: "Care",
+    title: "Specialty Care",
     links: [
       { label: "Pharmacy", to: "/find" },
       { label: "Lineage", to: "/lineage" },

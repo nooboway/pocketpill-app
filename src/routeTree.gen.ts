@@ -22,9 +22,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SourceRouteImport } from './routes/source'
 import { Route as CareParentRouteImport } from './routes/care.parent'
-import { Route as CheckoutSlugRouteImport } from './routes/checkout.$slug'
 import { Route as LineageStartRouteImport } from './routes/lineage.start'
-import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as ServicesClinicalPharmacyRouteImport } from './routes/services.clinical-pharmacy'
 import { Route as ServicesMentalHealthRouteImport } from './routes/services.mental-health'
 import { Route as ServicesOncologyRouteImport } from './routes/services.oncology'
@@ -97,20 +95,10 @@ const CareParentRoute = CareParentRouteImport.update({
   path: '/care/parent',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutSlugRoute = CheckoutSlugRouteImport.update({
-  id: '/checkout/$slug',
-  path: '/checkout/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LineageStartRoute = LineageStartRouteImport.update({
   id: '/start',
   path: '/start',
   getParentRoute: () => LineageRoute,
-} as any)
-const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
-  id: '/payment/success',
-  path: '/payment/success',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesClinicalPharmacyRoute =
   ServicesClinicalPharmacyRouteImport.update({
@@ -160,9 +148,7 @@ export interface FileRoutesByFullPath {
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
   '/care/parent': typeof CareParentRoute
-  '/checkout/$slug': typeof CheckoutSlugRoute
   '/lineage/start': typeof LineageStartRoute
-  '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
   '/services/oncology': typeof ServicesOncologyRoute
@@ -184,9 +170,7 @@ export interface FileRoutesByTo {
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
   '/care/parent': typeof CareParentRoute
-  '/checkout/$slug': typeof CheckoutSlugRoute
   '/lineage/start': typeof LineageStartRoute
-  '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
   '/services/oncology': typeof ServicesOncologyRoute
@@ -209,9 +193,7 @@ export interface FileRoutesById {
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
   '/care/parent': typeof CareParentRoute
-  '/checkout/$slug': typeof CheckoutSlugRoute
   '/lineage/start': typeof LineageStartRoute
-  '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
   '/services/oncology': typeof ServicesOncologyRoute
@@ -235,9 +217,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/source'
     | '/care/parent'
-    | '/checkout/$slug'
     | '/lineage/start'
-    | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
     | '/services/oncology'
@@ -259,9 +239,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/source'
     | '/care/parent'
-    | '/checkout/$slug'
     | '/lineage/start'
-    | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
     | '/services/oncology'
@@ -283,9 +261,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/source'
     | '/care/parent'
-    | '/checkout/$slug'
     | '/lineage/start'
-    | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
     | '/services/oncology'
@@ -308,8 +284,6 @@ export interface RootRouteChildren {
   ShopRoute: typeof ShopRoute
   SourceRoute: typeof SourceRoute
   CareParentRoute: typeof CareParentRoute
-  CheckoutSlugRoute: typeof CheckoutSlugRoute
-  PaymentSuccessRoute: typeof PaymentSuccessRoute
   ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
   ApiPublicVerifyPaymentRoute: typeof ApiPublicVerifyPaymentRoute
   ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
@@ -408,26 +382,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareParentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/$slug': {
-      id: '/checkout/$slug'
-      path: '/checkout/$slug'
-      fullPath: '/checkout/$slug'
-      preLoaderRoute: typeof CheckoutSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lineage/start': {
       id: '/lineage/start'
       path: '/start'
       fullPath: '/lineage/start'
       preLoaderRoute: typeof LineageStartRouteImport
       parentRoute: typeof LineageRoute
-    }
-    '/payment/success': {
-      id: '/payment/success'
-      path: '/payment/success'
-      fullPath: '/payment/success'
-      preLoaderRoute: typeof PaymentSuccessRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/services/clinical-pharmacy': {
       id: '/services/clinical-pharmacy'
@@ -515,8 +475,6 @@ const rootRouteChildren: RootRouteChildren = {
   ShopRoute: ShopRoute,
   SourceRoute: SourceRoute,
   CareParentRoute: CareParentRoute,
-  CheckoutSlugRoute: CheckoutSlugRoute,
-  PaymentSuccessRoute: PaymentSuccessRoute,
   ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,
   ApiPublicVerifyPaymentRoute: ApiPublicVerifyPaymentRoute,
   ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,

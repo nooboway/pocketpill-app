@@ -7,9 +7,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Care", to: "/services" },
-  { label: "Lineage", to: "/lineage" },
   { label: "Pharmacy", to: "/find" },
+  { label: "Specialty Care", to: "/services" },
+  { label: "Lineage", to: "/lineage" },
   { label: "How it works", to: "/how-it-works" },
   { label: "About", to: "/about" },
 ];

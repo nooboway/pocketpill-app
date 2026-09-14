@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef } from "react";
-import { Camera, FileUp, X, CheckCircle2 } from "lucide-react";
+import { Camera, FileUp, X, CheckCircle2, Search, FileSignature, Truck } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
@@ -69,51 +69,99 @@ function FindMedicinePage() {
       return;
     }
     
-    // Simulate API call to save lead tagged `sourcing`
+    // Simulate API call
     console.log("Lead saved tagged 'sourcing'", { query, files, phone, city, name, duration });
     setSubmitted(true);
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-[#f3f7f1]">
       <SiteHeader />
-      <main className="flex-1 flex flex-col items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-2xl mx-auto">
-          {submitted ? (
-            <div className="text-center space-y-8 animate-in fade-in duration-500">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#d9f0df]">
-                <CheckCircle2 className="h-8 w-8 text-[#123d2d]" />
-              </div>
-              <div className="space-y-6">
-                <p className="text-xl font-medium text-foreground leading-relaxed">
-                  Looking for it. A pharmacist will text you on WhatsApp with whether we can get it, how long, and what it costs.
-                </p>
-                <p className="text-lg text-muted-foreground">
-                  Keep your phone on. You do not need to chase us.
-                </p>
-              </div>
-              <div className="pt-8 border-t border-border/50">
-                <p className="text-sm text-muted-foreground">
-                  If this is for someone else or a parent, they might not be able to use this site.
-                  <br />
-                  <Link to="/lineage" className="text-primary hover:underline font-medium mt-2 inline-block">
-                    Lineage is the loop that keeps the calendar. &rarr;
-                  </Link>
-                </p>
-              </div>
+      
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        {submitted ? (
+          <div className="max-w-2xl mx-auto bg-white rounded-3xl p-10 lg:p-16 shadow-card border border-border/40 text-center space-y-8 animate-in fade-in zoom-in-95 duration-500">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#d9f0df]">
+              <CheckCircle2 className="h-10 w-10 text-[#123d2d]" />
             </div>
-          ) : (
-            <div className="space-y-8">
-              <div className="text-center">
-                <h1 className="text-3xl font-heading font-semibold text-foreground mb-4">Find a medicine</h1>
-              </div>
+            <div className="space-y-6">
+              <h2 className="text-3xl font-heading font-semibold text-foreground">We are on it.</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                A pharmacist will text you on WhatsApp with availability, timeline, and cost. 
+                Keep your phone close. You do not need to chase us.
+              </p>
+            </div>
+            <div className="pt-8 mt-8 border-t border-border/50">
+              <p className="text-sm text-muted-foreground">
+                Ordering for a parent back home? 
+                <Link to="/lineage" className="text-[#2b8a62] hover:underline font-bold ml-2 inline-flex items-center">
+                  Explore Lineage &rarr;
+                </Link>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-start">
+            
+            {/* Left Column: The Promise */}
+            <div className="bg-[#123d2d] text-white rounded-3xl p-8 lg:p-12 shadow-card relative overflow-hidden flex flex-col justify-between min-h-[500px]">
+              <div className="relative z-10">
+                <span className="text-[#9fd9ae] font-bold tracking-widest text-xs uppercase mb-4 block">Concierge Sourcing</span>
+                <h1 className="text-4xl lg:text-5xl font-heading font-semibold mb-6 leading-tight">Stop driving from pharmacy to pharmacy.</h1>
+                <p className="text-[#dce7df] text-lg mb-12 max-w-md leading-relaxed">
+                  Tell us what you need. Our clinical pharmacists will source genuine medications and coordinate delivery directly to your door.
+                </p>
+                
+                <div className="space-y-8">
+                  <div className="flex gap-4">
+                    <div className="bg-[#1a523d] p-3 rounded-2xl h-fit flex-shrink-0">
+                      <Search className="text-[#b6e3c7] w-6 h-6"/>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">1. You request</h3>
+                      <p className="text-[#dce7df] text-sm mt-1 leading-relaxed">Send the name, a photo of the box, or your prescription.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="bg-[#1a523d] p-3 rounded-2xl h-fit flex-shrink-0">
+                      <FileSignature className="text-[#b6e3c7] w-6 h-6"/>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">2. Pharmacist review</h3>
+                      <p className="text-[#dce7df] text-sm mt-1 leading-relaxed">We verify the prescription, check interactions, and confirm availability via WhatsApp.</p>
+                    </div>
+                  </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <div className="bg-[#1a523d] p-3 rounded-2xl h-fit flex-shrink-0">
+                      <Truck className="text-[#b6e3c7] w-6 h-6"/>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">3. Direct delivery</h3>
+                      <p className="text-[#dce7df] text-sm mt-1 leading-relaxed">Secure payment and discreet delivery to your location in Nigeria.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Background gradient effects */}
+              <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#2b8a62] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+            </div>
+
+            {/* Right Column: The Form */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-card border border-border/40">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div>
+                  <h2 className="text-2xl font-heading font-semibold text-foreground mb-2">What do you need?</h2>
+                  <p className="text-sm text-muted-foreground">Type the name or upload a photo. One of the two is enough.</p>
+                </div>
+
+                <div className="space-y-6">
                   <Input 
                     autoFocus
-                    placeholder="What are you looking for?" 
-                    className="text-lg py-6 shadow-sm placeholder:text-muted-foreground/60"
+                    placeholder="e.g. Glucophage, Augmentin, Insulin..." 
+                    className="text-lg py-7 px-5 bg-[#f9faf7] border-border/60 shadow-inner rounded-xl placeholder:text-muted-foreground/50 focus-visible:ring-[#2b8a62]"
                     value={query}
                     onChange={(e) => {
                       setQuery(e.target.value);
@@ -123,31 +171,6 @@ function FindMedicinePage() {
                     onBlur={handleInitialInput}
                   />
                   
-                  {!showDetails && (
-                    <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-primary">
-                      <button 
-                        type="button" 
-                        onClick={() => fileInputRef.current?.click()}
-                        className="flex items-center hover:underline"
-                      >
-                        <Camera className="w-4 h-4 mr-2" /> Add a photo of the box
-                      </button>
-                      <button 
-                        type="button" 
-                        onClick={() => fileInputRef.current?.click()}
-                        className="flex items-center hover:underline"
-                      >
-                        <FileUp className="w-4 h-4 mr-2" /> Add a photo of the prescription
-                      </button>
-                    </div>
-                  )}
-
-                  {!showDetails && (
-                    <div className="text-center text-sm text-muted-foreground pt-4">
-                      <span className="font-medium text-foreground">Examples:</span> Glucophage &middot; Augmentin &middot; insulin
-                    </div>
-                  )}
-
                   <input 
                     type="file" 
                     ref={fileInputRef} 
@@ -157,93 +180,115 @@ function FindMedicinePage() {
                     accept="image/*,.pdf" 
                   />
 
-                  {files.length > 0 && (
-                    <div className="flex flex-wrap gap-4 pt-4">
+                  {files.length === 0 ? (
+                    <div className="grid grid-cols-2 gap-4">
+                      <button 
+                        type="button" 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-border/60 rounded-xl hover:border-[#2b8a62] hover:bg-[#d9f0df]/30 transition-colors text-[#2b8a62] group"
+                      >
+                        <Camera className="w-6 h-6 mb-2 group-hover:scale-110 transition-transform" /> 
+                        <span className="text-sm font-medium">Photo of box</span>
+                      </button>
+                      <button 
+                        type="button" 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-border/60 rounded-xl hover:border-[#2b8a62] hover:bg-[#d9f0df]/30 transition-colors text-[#2b8a62] group"
+                      >
+                        <FileUp className="w-6 h-6 mb-2 group-hover:scale-110 transition-transform" /> 
+                        <span className="text-sm font-medium">Prescription</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-4 bg-[#f9faf7] p-4 rounded-xl border border-border/40">
                       {files.map((file, idx) => (
-                        <div key={idx} className="relative group rounded-lg overflow-hidden border border-border/50 bg-cream h-24 w-24 flex items-center justify-center">
+                        <div key={idx} className="relative group rounded-lg overflow-hidden border border-border/50 bg-white h-20 w-20 flex items-center justify-center shadow-sm">
                           {file.type.startsWith('image/') ? (
-                            <img src={URL.createObjectURL(file)} alt="upload preview" className="object-cover h-full w-full" />
+                            <img src={URL.createObjectURL(file)} alt="preview" className="object-cover h-full w-full" />
                           ) : (
-                            <span className="text-xs text-center p-2 truncate w-full">{file.name}</span>
+                            <span className="text-xs text-center p-1 truncate w-full">{file.name}</span>
                           )}
                           <button 
                             type="button" 
                             onClick={() => removeFile(idx)}
-                            className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute -top-1 -right-1 bg-black/70 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity scale-75"
                           >
-                            <X className="w-3 h-3" />
+                            <X className="w-4 h-4" />
                           </button>
                         </div>
                       ))}
                       <button 
                         type="button" 
                         onClick={() => fileInputRef.current?.click()}
-                        className="h-24 w-24 rounded-lg border border-dashed border-primary/40 flex flex-col items-center justify-center text-primary hover:bg-primary/5 transition-colors"
+                        className="h-20 w-20 rounded-lg border-2 border-dashed border-[#2b8a62]/40 flex flex-col items-center justify-center text-[#2b8a62] hover:bg-[#2b8a62]/5 transition-colors bg-white"
                       >
                         <Camera className="w-5 h-5 mb-1" />
-                        <span className="text-xs">Add more</span>
+                        <span className="text-[10px] font-medium uppercase tracking-wider">Add More</span>
                       </button>
                     </div>
-                  )}
-                  {files.length > 0 && (
-                    <p className="text-xs text-muted-foreground mt-2">We’ll read the pack and come back.</p>
                   )}
                 </div>
 
                 {showDetails && (
-                  <div className="animate-in slide-in-from-top-4 fade-in duration-300 space-y-5 bg-cream/30 p-6 rounded-2xl border border-border/40">
+                  <div className="animate-in slide-in-from-top-4 fade-in duration-300 space-y-6 pt-6 border-t border-border/50">
+                    <h3 className="font-medium text-foreground">Where should we reach you?</h3>
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">WhatsApp number *</label>
+                        <label className="text-sm font-medium text-muted-foreground">WhatsApp number *</label>
                         <Input 
                           placeholder="e.g. 08012345678" 
                           value={phone} 
                           onChange={(e) => setPhone(e.target.value)} 
+                          className="bg-[#f9faf7]"
                           required
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">City / area in Nigeria</label>
+                        <label className="text-sm font-medium text-muted-foreground">City / area in Nigeria</label>
                         <Input 
                           placeholder="e.g. Ikeja, Lagos" 
                           value={city} 
                           onChange={(e) => setCity(e.target.value)} 
+                          className="bg-[#f9faf7]"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Your name (optional)</label>
+                        <label className="text-sm font-medium text-muted-foreground">Your name (optional)</label>
                         <Input 
                           placeholder="Jane" 
                           value={name} 
                           onChange={(e) => setName(e.target.value)} 
+                          className="bg-[#f9faf7]"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">How much / how long (optional)</label>
+                        <label className="text-sm font-medium text-muted-foreground">Quantity (optional)</label>
                         <Input 
                           placeholder="e.g. 1 month supply" 
                           value={duration} 
                           onChange={(e) => setDuration(e.target.value)} 
+                          className="bg-[#f9faf7]"
                         />
                       </div>
                     </div>
 
-                    {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+                    {error && <p className="text-sm font-medium text-destructive bg-destructive/10 p-3 rounded-md">{error}</p>}
 
-                    <div className="pt-4 text-center">
-                      <Button type="submit" size="lg" className="w-full sm:w-auto bg-[#123d2d] text-white hover:bg-[#123d2d]/90 rounded-full px-12 h-14 text-lg">
-                        Help me find this
+                    <div className="pt-2">
+                      <Button type="submit" size="lg" className="w-full bg-[#123d2d] text-white hover:bg-[#1a523d] rounded-xl h-14 text-lg font-semibold shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5">
+                        Send Request
                       </Button>
-                      <p className="text-sm text-muted-foreground mt-4">
-                        A pharmacist will revert on WhatsApp. You are not placing an order yet.
+                      <p className="text-xs text-center text-muted-foreground mt-4">
+                        By submitting, you agree to a pharmacist contacting you via WhatsApp. No payment is required yet.
                       </p>
                     </div>
                   </div>
                 )}
               </form>
             </div>
-          )}
-        </div>
+            
+          </div>
+        )}
       </main>
       <SiteFooter />
     </div>

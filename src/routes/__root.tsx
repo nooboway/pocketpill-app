@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "PocketPill connects you with certified pharmacists and healthcare professionals for urgent care, mental health, prescriptions, and more. From your phone, same day.",
+          "PocketPill connects you with certified pharmacists and healthcare professionals for specialty care, mental health, prescriptions, and continuous support. From your phone, same day.",
       },
       { name: "author", content: "PocketPill" },
       { property: "og:site_name", content: "PocketPill" },
@@ -91,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "PocketPill connects you with certified pharmacists and healthcare professionals for urgent care, mental health, prescriptions, and more. From your phone, same day.",
+          "PocketPill connects you with certified pharmacists and healthcare professionals for specialty care, mental health, prescriptions, and continuous support. From your phone, same day.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
