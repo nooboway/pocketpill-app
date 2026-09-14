@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/services/clinical-pharmacy')({
+export const Route = createFileRoute('/care/parent')({
   beforeLoad: () => {
     throw redirect({
-      to: '/services',
+      to: '/lineage',
     })
   },
 })

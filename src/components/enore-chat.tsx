@@ -8,10 +8,10 @@ interface Message {
 }
 
 const QUICK_PROMPTS = [
-  "I need help finding a medicine",
+  "Find a medicine",
+  "Cover my parent",
+  "I'm abroad and they are in Nigeria",
   "Talk to a pharmacist",
-  "Mental health support",
-  "Oncology medication sourcing",
 ];
 
 const WHATSAPP = "https://wa.me/2347083725382";
@@ -19,14 +19,17 @@ const WHATSAPP = "https://wa.me/2347083725382";
 function getEnoreResponse(input: string): string {
   const lower = input.toLowerCase();
 
-  if (lower.includes("medicine") || lower.includes("drug") || lower.includes("medication")) {
-    return "I can help you find the right medicine! You can browse our pharmacy shop, or I can connect you directly with a pharmacist who will guide you. Would you like to visit our shop or chat with a pharmacist on WhatsApp?";
+  if (lower.includes("medicine") || lower.includes("drug") || lower.includes("medication") || lower.includes("find")) {
+    return "I can help you find the right medicine! Head over to /find so you can attach a photo or give me the name. I don't check stock directly here.";
+  }
+  if (lower.includes("parent") || lower.includes("abroad") || lower.includes("lineage") || lower.includes("cover")) {
+    return "Lineage is for a parent who will not use this website. You set it up. We call them. Want to start a parent plan? Visit /lineage to start.";
   }
   if (lower.includes("pharmacist") || lower.includes("talk") || lower.includes("speak")) {
-    return `Absolutely! Our pharmacists are available for private, confidential consultations. You can reach one directly on WhatsApp — just tap here: ${WHATSAPP} — or book a scheduled consultation through our booking page.`;
+    return `Absolutely! Our pharmacists are available for private, confidential consultations. You can reach one directly on WhatsApp — just tap here: ${WHATSAPP}`;
   }
   if (lower.includes("mental health") || lower.includes("anxiety") || lower.includes("depression") || lower.includes("stress")) {
-    return "Mental health matters deeply to us. PocketPill offers accessible mental health support — from medication guidance to connecting you with the right professionals. Everything is handled privately and with care. Would you like to speak to a pharmacist about mental health support?";
+    return "Mental health matters deeply to us. We can help you find what you need. Visit /find to request sourcing, or tap the WhatsApp link to chat with a pharmacist.";
   }
   if (lower.includes("oncology") || lower.includes("cancer") || lower.includes("chemo")) {
     return "PocketPill provides expert oncology medication sourcing across Nigeria. We help with finding, verifying, and delivering cancer treatment medications. Our team can guide you through availability, pricing, and safe handling. Would you like to connect with our oncology support team?";
@@ -35,7 +38,7 @@ function getEnoreResponse(input: string): string {
     return "We deliver discreetly across Nigeria! Delivery availability and timing depend on your area and order. Our team can confirm the details before you pay. Would you like to place an order?";
   }
   if (lower.includes("price") || lower.includes("cost") || lower.includes("how much")) {
-    return "Our pricing depends on the service — consultations start at affordable rates, and medicine prices vary. You can check our pricing page or chat with a pharmacist for specific costs. No surprises, no hidden fees.";
+    return "Medicine prices are quoted after we see the prescription. You can chat with a pharmacist on WhatsApp for specific costs.";
   }
   if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("good")) {
     return "Hello! 👋 I'm Enoré, PocketPill's health assistant. I can help you find medicines, connect with a pharmacist, or answer questions about our mental health and oncology services. What do you need today?";
@@ -44,7 +47,7 @@ function getEnoreResponse(input: string): string {
     return "You're welcome! If you need anything else, I'm right here. Take care of yourself! 💚";
   }
 
-  return "I'd love to help with that! For the most accurate guidance, I'd recommend connecting directly with one of our licensed pharmacists. You can reach them on WhatsApp or book a private consultation. Is there anything specific I can help clarify?";
+  return "I'd love to help with that! For the most accurate guidance, I'd recommend connecting directly with one of our licensed pharmacists. You can reach them on WhatsApp. Is there anything specific I can help clarify?";
 }
 
 export function EnoreChat() {
@@ -129,7 +132,11 @@ export function EnoreChat() {
             >
               {msg.content.split("\n").map((line, i) => (
                 <span key={i}>
-                  {line}
+                  {line.split(/(https?:\/\/[^\s]+|\/[a-z/]+)/g).map((part, j) => {
+                    if (part.startsWith('http')) return <a key={j} href={part} target="_blank" rel="noreferrer" className="underline font-medium hover:text-primary">{part}</a>;
+                    if (part.startsWith('/')) return <a key={j} href={part} className="underline font-medium hover:text-primary">{part}</a>;
+                    return <span key={j}>{part}</span>;
+                  })}
                   {i < msg.content.split("\n").length - 1 && <br />}
                 </span>
               ))}

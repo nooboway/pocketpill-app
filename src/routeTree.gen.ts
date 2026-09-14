@@ -14,11 +14,16 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FindRouteImport } from './routes/find'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LineageRouteImport } from './routes/lineage'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as SourceRouteImport } from './routes/source'
+import { Route as CareParentRouteImport } from './routes/care.parent'
 import { Route as CheckoutSlugRouteImport } from './routes/checkout.$slug'
+import { Route as LineageStartRouteImport } from './routes/lineage.start'
 import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as ServicesClinicalPharmacyRouteImport } from './routes/services.clinical-pharmacy'
 import { Route as ServicesMentalHealthRouteImport } from './routes/services.mental-health'
@@ -52,9 +57,19 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FindRoute = FindRouteImport.update({
+  id: '/find',
+  path: '/find',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LineageRoute = LineageRouteImport.update({
+  id: '/lineage',
+  path: '/lineage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -72,10 +87,25 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SourceRoute = SourceRouteImport.update({
+  id: '/source',
+  path: '/source',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareParentRoute = CareParentRouteImport.update({
+  id: '/care/parent',
+  path: '/care/parent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutSlugRoute = CheckoutSlugRouteImport.update({
   id: '/checkout/$slug',
   path: '/checkout/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LineageStartRoute = LineageStartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => LineageRoute,
 } as any)
 const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
   id: '/payment/success',
@@ -122,11 +152,16 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/lineage': typeof LineageRouteWithChildren
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
+  '/source': typeof SourceRoute
+  '/care/parent': typeof CareParentRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/lineage/start': typeof LineageStartRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
@@ -141,11 +176,16 @@ export interface FileRoutesByTo {
   '/app': typeof AppRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/lineage': typeof LineageRouteWithChildren
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
+  '/source': typeof SourceRoute
+  '/care/parent': typeof CareParentRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/lineage/start': typeof LineageStartRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
@@ -161,11 +201,16 @@ export interface FileRoutesById {
   '/app': typeof AppRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/lineage': typeof LineageRouteWithChildren
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
+  '/source': typeof SourceRoute
+  '/care/parent': typeof CareParentRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/lineage/start': typeof LineageStartRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
   '/services/mental-health': typeof ServicesMentalHealthRoute
@@ -182,11 +227,16 @@ export interface FileRouteTypes {
     | '/app'
     | '/book'
     | '/contact'
+    | '/find'
     | '/how-it-works'
+    | '/lineage'
     | '/pricing'
     | '/services'
     | '/shop'
+    | '/source'
+    | '/care/parent'
     | '/checkout/$slug'
+    | '/lineage/start'
     | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
@@ -201,11 +251,16 @@ export interface FileRouteTypes {
     | '/app'
     | '/book'
     | '/contact'
+    | '/find'
     | '/how-it-works'
+    | '/lineage'
     | '/pricing'
     | '/services'
     | '/shop'
+    | '/source'
+    | '/care/parent'
     | '/checkout/$slug'
+    | '/lineage/start'
     | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
@@ -220,11 +275,16 @@ export interface FileRouteTypes {
     | '/app'
     | '/book'
     | '/contact'
+    | '/find'
     | '/how-it-works'
+    | '/lineage'
     | '/pricing'
     | '/services'
     | '/shop'
+    | '/source'
+    | '/care/parent'
     | '/checkout/$slug'
+    | '/lineage/start'
     | '/payment/success'
     | '/services/clinical-pharmacy'
     | '/services/mental-health'
@@ -240,10 +300,14 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRoute
   BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
+  FindRoute: typeof FindRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  LineageRoute: typeof LineageRouteWithChildren
   PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   ShopRoute: typeof ShopRoute
+  SourceRoute: typeof SourceRoute
+  CareParentRoute: typeof CareParentRoute
   CheckoutSlugRoute: typeof CheckoutSlugRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
@@ -288,11 +352,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/find': {
+      id: '/find'
+      path: '/find'
+      fullPath: '/find'
+      preLoaderRoute: typeof FindRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lineage': {
+      id: '/lineage'
+      path: '/lineage'
+      fullPath: '/lineage'
+      preLoaderRoute: typeof LineageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -316,12 +394,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/source': {
+      id: '/source'
+      path: '/source'
+      fullPath: '/source'
+      preLoaderRoute: typeof SourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/care/parent': {
+      id: '/care/parent'
+      path: '/care/parent'
+      fullPath: '/care/parent'
+      preLoaderRoute: typeof CareParentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/$slug': {
       id: '/checkout/$slug'
       path: '/checkout/$slug'
       fullPath: '/checkout/$slug'
       preLoaderRoute: typeof CheckoutSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/lineage/start': {
+      id: '/lineage/start'
+      path: '/start'
+      fullPath: '/lineage/start'
+      preLoaderRoute: typeof LineageStartRouteImport
+      parentRoute: typeof LineageRoute
     }
     '/payment/success': {
       id: '/payment/success'
@@ -375,6 +474,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LineageRouteChildren {
+  LineageStartRoute: typeof LineageStartRoute
+}
+
+const LineageRouteChildren: LineageRouteChildren = {
+  LineageStartRoute: LineageStartRoute,
+}
+
+const LineageRouteWithChildren =
+  LineageRoute._addFileChildren(LineageRouteChildren)
+
 interface ServicesRouteChildren {
   ServicesClinicalPharmacyRoute: typeof ServicesClinicalPharmacyRoute
   ServicesMentalHealthRoute: typeof ServicesMentalHealthRoute
@@ -397,10 +507,14 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRoute,
   BookRoute: BookRoute,
   ContactRoute: ContactRoute,
+  FindRoute: FindRoute,
   HowItWorksRoute: HowItWorksRoute,
+  LineageRoute: LineageRouteWithChildren,
   PricingRoute: PricingRoute,
   ServicesRoute: ServicesRouteWithChildren,
   ShopRoute: ShopRoute,
+  SourceRoute: SourceRoute,
+  CareParentRoute: CareParentRoute,
   CheckoutSlugRoute: CheckoutSlugRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
   ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,

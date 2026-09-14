@@ -6,28 +6,19 @@ const footerLinks = [
   {
     title: "Care",
     links: [
+      { label: "Pharmacy", to: "/find" },
+      { label: "Lineage", to: "/lineage" },
       { label: "Oncology & specialty care", to: "/services/oncology" },
       { label: "Mental health", to: "/services/mental-health" },
       { label: "Clinical pharmacy", to: "/services/clinical-pharmacy" },
-      { label: "Prescriptions", to: "/services" },
-      { label: "Virtual consultations", to: "/book" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Pricing", to: "/pricing" },
       { label: "How it works", to: "/how-it-works" },
       { label: "Contact", to: "/contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy policy", to: "/contact" },
-      { label: "Terms of service", to: "/contact" },
-      { label: "NDPR notice", to: "/contact" },
     ],
   },
 ];

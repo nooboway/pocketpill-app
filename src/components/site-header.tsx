@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Care", to: "/services" },
-  { label: "Pharmacy", to: "/shop" },
+  { label: "Lineage", to: "/lineage" },
+  { label: "Pharmacy", to: "/find" },
   { label: "How it works", to: "/how-it-works" },
-  { label: "Pricing", to: "/pricing" },
+  { label: "About", to: "/about" },
 ];
 
 export function SiteHeader({
@@ -67,28 +68,19 @@ export function SiteHeader({
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            to="/contact"
-            className={cn(
-              "hidden text-[13px] font-semibold transition-colors hover:text-primary sm:inline-flex",
-              overlay ? "text-white/75 hover:text-white" : "text-muted-foreground",
-            )}
-          >
-            Talk to us
-          </Link>
           <Button
             size="sm"
             className={cn(
               "rounded-full px-5 shadow-none",
               overlay
                 ? "bg-white text-[#123d2d] hover:bg-[#d9f0df]"
-                : "bg-primary text-primary-foreground hover:bg-primary/90",
+                : "bg-[#123d2d] text-white hover:bg-[#123d2d]/90",
             )}
             asChild
           >
-            <Link to="/app">
-              Start care <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
-            </Link>
+            <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">
+              Talk to a pharmacist <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
+            </a>
           </Button>
         </div>
 
@@ -130,18 +122,13 @@ export function SiteHeader({
                 ))}
               </nav>
               <div className="flex flex-col gap-3">
-                <Button variant="outline" asChild>
-                  <Link to="/contact" onClick={() => setOpen(false)}>
-                    Talk to us
-                  </Link>
-                </Button>
                 <Button
-                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                  className="rounded-full bg-[#123d2d] text-white hover:bg-[#123d2d]/90"
                   asChild
                 >
-                  <Link to="/app" onClick={() => setOpen(false)}>
-                    Start care <ArrowUpRight className="ml-1.5 h-4 w-4" />
-                  </Link>
+                  <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
+                    Talk to a pharmacist <ArrowUpRight className="ml-1.5 h-4 w-4" />
+                  </a>
                 </Button>
               </div>
             </div>

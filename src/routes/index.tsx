@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Stethoscope,
   Truck,
+  Heart,
 } from "lucide-react";
 
 import { FAQAccordion } from "@/components/faq-accordion";
@@ -80,7 +81,7 @@ const careCategories = [
     eyebrow: "Telehealth",
     title: "Virtual Consultations",
     description: "Connect with licensed clinical pharmacists via voice or text on your schedule.",
-    to: "/book" as const,
+    to: "/contact" as const,
   },
 ];
 
@@ -121,9 +122,9 @@ const faqs = [
       "Yes. We specialize in sourcing and delivering medications for oncology, mental health, and other chronic conditions, ensuring you never run out of essential care and have the right guidance.",
   },
   {
-    question: "What happens after I reach out for a consultation?",
+    question: "What happens after I reach out?",
     answer:
-      "A licensed pharmacist asks a few focused questions, listens to what is going on, and shares clear next steps. If you need a prescriber, we will tell you what to ask for and when to seek further care.",
+      "You will chat with a licensed pharmacist who will review your needs, source your medication, and arrange for discreet delivery to your home.",
   },
   {
     question: "Can the pharmacist prescribe medication?",
@@ -134,6 +135,11 @@ const faqs = [
     question: "What if I am not sure where to start?",
     answer:
       "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right route. There is no pressure to book.",
+  },
+  {
+    question: "Can I use PocketPill for my parent in Nigeria if I live abroad?",
+    answer:
+      "Yes. That product is Lineage. You set it up. They do not need the app. A pharmacist calls them.",
   },
 ];
 
@@ -181,7 +187,7 @@ function HomePage() {
 
           <div className="hero-shell__body">
             <div className="hero-shell__heading">
-              <span className="hero-eyebrow">Nigeria e-pharmacy + telehealth</span>
+              <span className="hero-eyebrow">telepharmacy</span>
               <h1 className="hero-title">
                 <span className="hero-title__line">Your health,</span>
                 <span className="hero-title__line hero-title__line--accent">handled with care.</span>
@@ -189,10 +195,8 @@ function HomePage() {
             </div>
 
             <div className="hero-shell__bottom">
-              <div className="hero-tagline">
-                <span>Feel looked after.</span>
-              </div>
-              <div className="hero-shell__actions">
+
+              <div className="hero-shell__actions ml-auto">
                 <div className="hero-glass-card hidden md:flex">
                   <div className="hero-glass-card__icon">
                     <ShieldCheck className="h-5 w-5" />
@@ -206,7 +210,7 @@ function HomePage() {
                     </p>
                   </div>
                 </div>
-                <Link to="/app" className="pill-button pill-button--light">
+                <Link to="/find" className="pill-button pill-button--light">
                   Shop medicines <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -264,16 +268,24 @@ function HomePage() {
                   icon: ShieldCheck,
                   title: "Psychiatric Pharmacy Care",
                   body: "Discreet access, regimen management, and compassionate continuous pharmacist support for mental health prescriptions.",
-                  cta: "Start a private consultation",
-                  to: "/book" as const,
+                  cta: "Chat with a pharmacist",
+                  to: "/contact" as const,
                 },
                 {
                   number: "03",
                   icon: Stethoscope,
                   title: "Comprehensive Clinical Telehealth",
                   body: "1-on-1 virtual sessions with licensed pharmacists to review complex regimens, check interactions, and create actionable safety profiles.",
-                  cta: "Book a clinical review",
-                  to: "/book" as const,
+                  cta: "Request clinical review",
+                  to: "/contact" as const,
+                },
+                {
+                  number: "04",
+                  icon: Heart,
+                  title: "Lineage — Parent care",
+                  body: "You are abroad. They are at home. A pharmacist calls before the medicine finishes. The next pack only goes if that call is fine.",
+                  cta: "Set up care for a parent",
+                  to: "/lineage" as const,
                 },
               ].map((item, index) => (
                 <Link
@@ -579,7 +591,7 @@ function HomePage() {
               Order trusted pharmacy products or speak to a pharmacist from the comfort of home.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link to="/app" className="pill-button pill-button--mint">
+              <Link to="/find" className="pill-button pill-button--mint">
                 Shop medicines <ArrowUpRight className="h-4 w-4" />
               </Link>
               <a

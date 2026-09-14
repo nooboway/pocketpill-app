@@ -91,8 +91,8 @@ function ContactPage() {
                 <SectionHeader
                   align="left"
                   eyebrow="Contact"
-                  title="Book a visit or get in touch"
-                  description="Fill out the form and our care team will reach out within one business day to confirm your appointment."
+                  title="Get in touch"
+                  description="Fill out the form and a pharmacist will reach out within one business day."
                 />
                 <div className="mt-8 space-y-6">
                   {contactInfo.map((item) => (
@@ -121,7 +121,7 @@ function ContactPage() {
                     </div>
                     <h3 className="mt-6 font-heading text-2xl font-semibold text-foreground">Request received</h3>
                     <p className="mt-2 max-w-sm text-muted-foreground">
-                      Thank you for reaching out. Our care team will contact you within one business day to confirm your appointment.
+                      Thank you for reaching out. A pharmacist will contact you within one business day.
                     </p>
                     <Button className="mt-6 bg-black text-white hover:bg-black/90" onClick={() => setSubmitted(false)}>
                       Send another message
@@ -189,7 +189,7 @@ function ContactPage() {
                         name="reason"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Reason for visit</FormLabel>
+                            <FormLabel>Reason</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
@@ -197,12 +197,10 @@ function ContactPage() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="urgent-care">Urgent care</SelectItem>
-                                <SelectItem value="mental-health">Mental health</SelectItem>
-                                <SelectItem value="prescription">Prescription refill</SelectItem>
-                                <SelectItem value="chronic-care">Chronic care</SelectItem>
-                                <SelectItem value="dermatology">Dermatology</SelectItem>
-                                <SelectItem value="other">Other</SelectItem>
+                                <SelectItem value="find-medicine">Find a medicine</SelectItem>
+                                <SelectItem value="specialty">Specialty sourcing</SelectItem>
+                                <SelectItem value="mental-health">Mental health pharmacy</SelectItem>
+                                <SelectItem value="pharmacist-question">Pharmacist question</SelectItem>
                               </SelectContent>
                             </Select>
                             <FormMessage />
@@ -223,7 +221,7 @@ function ContactPage() {
                         )}
                       />
                       <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
-                        Book appointment <Send className="ml-2 h-4 w-4" />
+                        Send request <Send className="ml-2 h-4 w-4" />
                       </Button>
                       <p className="text-xs text-muted-foreground">
                         By submitting, you agree to our privacy policy. This form is for appointment requests only. For emergencies, call 112.
