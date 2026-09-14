@@ -45,9 +45,12 @@ function AboutPage() {
               </p>
               
               <div className="pt-8 flex flex-col items-start">
+                <style>
+                  {`@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');`}
+                </style>
                 <span 
-                  className="text-4xl text-foreground/80 mb-1 -rotate-2 origin-left italic" 
-                  style={{ fontFamily: "'Dancing Script', 'Caveat', 'Brush Script MT', cursive" }}
+                  className="text-6xl text-foreground/80 mb-2 -rotate-6 origin-left" 
+                  style={{ fontFamily: "'Mrs Saint Delafield', cursive" }}
                 >
                   J. Onile
                 </span>
