@@ -13,21 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AppRouteImport } from './routes/app'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LineageRouteImport } from './routes/lineage'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as ShopRouteImport } from './routes/shop'
-import { Route as SourceRouteImport } from './routes/source'
+import { Route as SpecialtyRouteImport } from './routes/specialty'
+import { Route as TelepharmacyRouteImport } from './routes/telepharmacy'
 import { Route as TrustRouteImport } from './routes/trust'
-import { Route as CareParentRouteImport } from './routes/care.parent'
 import { Route as LineageStartRouteImport } from './routes/lineage.start'
-import { Route as ServicesClinicalPharmacyRouteImport } from './routes/services.clinical-pharmacy'
-import { Route as ServicesMentalHealthRouteImport } from './routes/services.mental-health'
-import { Route as ServicesOncologyRouteImport } from './routes/services.oncology'
 import { Route as ApiPublicInitializePaymentRouteImport } from './routes/api/public/initialize-payment'
 import { Route as ApiPublicVerifyPaymentRouteImport } from './routes/api/public/verify-payment'
 import { Route as ApiPublicWebhooksPaystackRouteImport } from './routes/api/public/webhooks/paystack'
@@ -52,16 +44,6 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FindRoute = FindRouteImport.update({
   id: '/find',
   path: '/find',
@@ -77,24 +59,14 @@ const LineageRoute = LineageRouteImport.update({
   path: '/lineage',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
+const SpecialtyRoute = SpecialtyRouteImport.update({
+  id: '/specialty',
+  path: '/specialty',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SourceRoute = SourceRouteImport.update({
-  id: '/source',
-  path: '/source',
+const TelepharmacyRoute = TelepharmacyRouteImport.update({
+  id: '/telepharmacy',
+  path: '/telepharmacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrustRoute = TrustRouteImport.update({
@@ -102,31 +74,10 @@ const TrustRoute = TrustRouteImport.update({
   path: '/trust',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareParentRoute = CareParentRouteImport.update({
-  id: '/care/parent',
-  path: '/care/parent',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LineageStartRoute = LineageStartRouteImport.update({
   id: '/start',
   path: '/start',
   getParentRoute: () => LineageRoute,
-} as any)
-const ServicesClinicalPharmacyRoute =
-  ServicesClinicalPharmacyRouteImport.update({
-    id: '/clinical-pharmacy',
-    path: '/clinical-pharmacy',
-    getParentRoute: () => ServicesRoute,
-  } as any)
-const ServicesMentalHealthRoute = ServicesMentalHealthRouteImport.update({
-  id: '/mental-health',
-  path: '/mental-health',
-  getParentRoute: () => ServicesRoute,
-} as any)
-const ServicesOncologyRoute = ServicesOncologyRouteImport.update({
-  id: '/oncology',
-  path: '/oncology',
-  getParentRoute: () => ServicesRoute,
 } as any)
 const ApiPublicInitializePaymentRoute =
   ApiPublicInitializePaymentRouteImport.update({
@@ -151,21 +102,13 @@ export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
   '/app': typeof AppRoute
-  '/book': typeof BookRoute
-  '/contact': typeof ContactRoute
   '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
   '/lineage': typeof LineageRouteWithChildren
-  '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRouteWithChildren
-  '/shop': typeof ShopRoute
-  '/source': typeof SourceRoute
+  '/specialty': typeof SpecialtyRoute
+  '/telepharmacy': typeof TelepharmacyRoute
   '/trust': typeof TrustRoute
-  '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
-  '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
-  '/services/mental-health': typeof ServicesMentalHealthRoute
-  '/services/oncology': typeof ServicesOncologyRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
@@ -175,21 +118,13 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
   '/app': typeof AppRoute
-  '/book': typeof BookRoute
-  '/contact': typeof ContactRoute
   '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
   '/lineage': typeof LineageRouteWithChildren
-  '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRouteWithChildren
-  '/shop': typeof ShopRoute
-  '/source': typeof SourceRoute
+  '/specialty': typeof SpecialtyRoute
+  '/telepharmacy': typeof TelepharmacyRoute
   '/trust': typeof TrustRoute
-  '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
-  '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
-  '/services/mental-health': typeof ServicesMentalHealthRoute
-  '/services/oncology': typeof ServicesOncologyRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
@@ -200,21 +135,13 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/about': typeof AboutRoute
   '/app': typeof AppRoute
-  '/book': typeof BookRoute
-  '/contact': typeof ContactRoute
   '/find': typeof FindRoute
   '/how-it-works': typeof HowItWorksRoute
   '/lineage': typeof LineageRouteWithChildren
-  '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRouteWithChildren
-  '/shop': typeof ShopRoute
-  '/source': typeof SourceRoute
+  '/specialty': typeof SpecialtyRoute
+  '/telepharmacy': typeof TelepharmacyRoute
   '/trust': typeof TrustRoute
-  '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
-  '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
-  '/services/mental-health': typeof ServicesMentalHealthRoute
-  '/services/oncology': typeof ServicesOncologyRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
@@ -226,21 +153,13 @@ export interface FileRouteTypes {
     | '/$'
     | '/about'
     | '/app'
-    | '/book'
-    | '/contact'
     | '/find'
     | '/how-it-works'
     | '/lineage'
-    | '/pricing'
-    | '/services'
-    | '/shop'
-    | '/source'
+    | '/specialty'
+    | '/telepharmacy'
     | '/trust'
-    | '/care/parent'
     | '/lineage/start'
-    | '/services/clinical-pharmacy'
-    | '/services/mental-health'
-    | '/services/oncology'
     | '/api/public/initialize-payment'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
@@ -250,21 +169,13 @@ export interface FileRouteTypes {
     | '/$'
     | '/about'
     | '/app'
-    | '/book'
-    | '/contact'
     | '/find'
     | '/how-it-works'
     | '/lineage'
-    | '/pricing'
-    | '/services'
-    | '/shop'
-    | '/source'
+    | '/specialty'
+    | '/telepharmacy'
     | '/trust'
-    | '/care/parent'
     | '/lineage/start'
-    | '/services/clinical-pharmacy'
-    | '/services/mental-health'
-    | '/services/oncology'
     | '/api/public/initialize-payment'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
@@ -274,21 +185,13 @@ export interface FileRouteTypes {
     | '/$'
     | '/about'
     | '/app'
-    | '/book'
-    | '/contact'
     | '/find'
     | '/how-it-works'
     | '/lineage'
-    | '/pricing'
-    | '/services'
-    | '/shop'
-    | '/source'
+    | '/specialty'
+    | '/telepharmacy'
     | '/trust'
-    | '/care/parent'
     | '/lineage/start'
-    | '/services/clinical-pharmacy'
-    | '/services/mental-health'
-    | '/services/oncology'
     | '/api/public/initialize-payment'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
@@ -299,17 +202,12 @@ export interface RootRouteChildren {
   SplatRoute: typeof SplatRoute
   AboutRoute: typeof AboutRoute
   AppRoute: typeof AppRoute
-  BookRoute: typeof BookRoute
-  ContactRoute: typeof ContactRoute
   FindRoute: typeof FindRoute
   HowItWorksRoute: typeof HowItWorksRoute
   LineageRoute: typeof LineageRouteWithChildren
-  PricingRoute: typeof PricingRoute
-  ServicesRoute: typeof ServicesRouteWithChildren
-  ShopRoute: typeof ShopRoute
-  SourceRoute: typeof SourceRoute
+  SpecialtyRoute: typeof SpecialtyRoute
+  TelepharmacyRoute: typeof TelepharmacyRoute
   TrustRoute: typeof TrustRoute
-  CareParentRoute: typeof CareParentRoute
   ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
   ApiPublicVerifyPaymentRoute: typeof ApiPublicVerifyPaymentRoute
   ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
@@ -345,20 +243,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/find': {
       id: '/find'
       path: '/find'
@@ -380,32 +264,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LineageRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
+    '/specialty': {
+      id: '/specialty'
+      path: '/specialty'
+      fullPath: '/specialty'
+      preLoaderRoute: typeof SpecialtyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/source': {
-      id: '/source'
-      path: '/source'
-      fullPath: '/source'
-      preLoaderRoute: typeof SourceRouteImport
+    '/telepharmacy': {
+      id: '/telepharmacy'
+      path: '/telepharmacy'
+      fullPath: '/telepharmacy'
+      preLoaderRoute: typeof TelepharmacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trust': {
@@ -415,40 +285,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/care/parent': {
-      id: '/care/parent'
-      path: '/care/parent'
-      fullPath: '/care/parent'
-      preLoaderRoute: typeof CareParentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lineage/start': {
       id: '/lineage/start'
       path: '/start'
       fullPath: '/lineage/start'
       preLoaderRoute: typeof LineageStartRouteImport
       parentRoute: typeof LineageRoute
-    }
-    '/services/clinical-pharmacy': {
-      id: '/services/clinical-pharmacy'
-      path: '/clinical-pharmacy'
-      fullPath: '/services/clinical-pharmacy'
-      preLoaderRoute: typeof ServicesClinicalPharmacyRouteImport
-      parentRoute: typeof ServicesRoute
-    }
-    '/services/mental-health': {
-      id: '/services/mental-health'
-      path: '/mental-health'
-      fullPath: '/services/mental-health'
-      preLoaderRoute: typeof ServicesMentalHealthRouteImport
-      parentRoute: typeof ServicesRoute
-    }
-    '/services/oncology': {
-      id: '/services/oncology'
-      path: '/oncology'
-      fullPath: '/services/oncology'
-      preLoaderRoute: typeof ServicesOncologyRouteImport
-      parentRoute: typeof ServicesRoute
     }
     '/api/public/initialize-payment': {
       id: '/api/public/initialize-payment'
@@ -485,38 +327,17 @@ const LineageRouteChildren: LineageRouteChildren = {
 const LineageRouteWithChildren =
   LineageRoute._addFileChildren(LineageRouteChildren)
 
-interface ServicesRouteChildren {
-  ServicesClinicalPharmacyRoute: typeof ServicesClinicalPharmacyRoute
-  ServicesMentalHealthRoute: typeof ServicesMentalHealthRoute
-  ServicesOncologyRoute: typeof ServicesOncologyRoute
-}
-
-const ServicesRouteChildren: ServicesRouteChildren = {
-  ServicesClinicalPharmacyRoute: ServicesClinicalPharmacyRoute,
-  ServicesMentalHealthRoute: ServicesMentalHealthRoute,
-  ServicesOncologyRoute: ServicesOncologyRoute,
-}
-
-const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
-  ServicesRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   AboutRoute: AboutRoute,
   AppRoute: AppRoute,
-  BookRoute: BookRoute,
-  ContactRoute: ContactRoute,
   FindRoute: FindRoute,
   HowItWorksRoute: HowItWorksRoute,
   LineageRoute: LineageRouteWithChildren,
-  PricingRoute: PricingRoute,
-  ServicesRoute: ServicesRouteWithChildren,
-  ShopRoute: ShopRoute,
-  SourceRoute: SourceRoute,
+  SpecialtyRoute: SpecialtyRoute,
+  TelepharmacyRoute: TelepharmacyRoute,
   TrustRoute: TrustRoute,
-  CareParentRoute: CareParentRoute,
   ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,
   ApiPublicVerifyPaymentRoute: ApiPublicVerifyPaymentRoute,
   ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,

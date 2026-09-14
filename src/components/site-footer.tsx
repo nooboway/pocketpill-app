@@ -4,13 +4,13 @@ import ndpcBadge from "@/assets/ndpc-badge.png";
 
 const footerLinks = [
   {
-    title: "Specialty Care",
+    title: "Care",
     links: [
-      { label: "Pharmacy", to: "/find" },
+      { label: "Find a Medicine", to: "/find" },
+      { label: "Talk to a Pharmacist", to: "/telepharmacy" },
+      { label: "Specialty Care", to: "/specialty" },
+      { label: "Mental Health Pharmacy", to: "/mental-health" },
       { label: "Lineage", to: "/lineage" },
-      { label: "Oncology & specialty care", to: "/services/oncology" },
-      { label: "Mental health", to: "/services/mental-health" },
-      { label: "Clinical pharmacy", to: "/services/clinical-pharmacy" },
     ],
   },
   {
@@ -18,8 +18,8 @@ const footerLinks = [
     links: [
       { label: "About", to: "/about" },
       { label: "How it works", to: "/how-it-works" },
+      { label: "Partners", to: "/partners" },
       { label: "Trust & Compliance", to: "/trust" },
-      { label: "Contact", to: "/contact" },
     ],
   },
 ];
@@ -49,8 +49,7 @@ export function SiteFooter() {
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
-              A calmer way to access trusted pharmacy care. Talk with a licensed pharmacist, shop
-              confidently, and get support that meets you where you are.
+              <strong>Care beyond the prescription.</strong> Find medicines, access pharmacist support, source difficult treatments and stay on track with ongoing medication care.
             </p>
             <div className="mt-6 flex items-center gap-4">
               {socialLinks.map((social) => (

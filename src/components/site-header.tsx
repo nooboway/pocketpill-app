@@ -7,10 +7,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Pharmacy", to: "/find" },
-  { label: "Specialty Care", to: "/services" },
+  { label: "Find a Medicine", to: "/find" },
+  { label: "Talk to a Pharmacist", to: "/telepharmacy" },
+  { label: "Specialty Care", to: "/specialty" },
   { label: "Lineage", to: "/lineage" },
-  { label: "How it works", to: "/how-it-works" },
+  { label: "How It Works", to: "/how-it-works" },
   { label: "About", to: "/about" },
 ];
 
@@ -78,9 +79,9 @@ export function SiteHeader({
             )}
             asChild
           >
-            <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">
-              Talk to a pharmacist <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
-            </a>
+            <Link to="/find">
+              Find a medicine <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
+            </Link>
           </Button>
         </div>
 
@@ -126,9 +127,9 @@ export function SiteHeader({
                   className="rounded-full bg-[#123d2d] text-white hover:bg-[#123d2d]/90"
                   asChild
                 >
-                  <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-                    Talk to a pharmacist <ArrowUpRight className="ml-1.5 h-4 w-4" />
-                  </a>
+                  <Link to="/find" onClick={() => setOpen(false)}>
+                    Find a medicine <ArrowUpRight className="ml-1.5 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>

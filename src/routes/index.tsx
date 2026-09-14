@@ -1,32 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, type CSSProperties } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
-  Check,
-  ChevronRight,
   Clock3,
-  LockKeyhole,
   MessageCircle,
-  Pill,
-  ShieldCheck,
-  Stethoscope,
-  Truck,
-  Heart,
+  Search,
 } from "lucide-react";
 
 import { FAQAccordion } from "@/components/faq-accordion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import catConsult from "@/assets/oh-cat-consult.jpg";
-import heroThree from "@/assets/oh-hero-3.jpg";
-import careTeam from "@/assets/oh-care-team.jpg";
-import catSupplements from "@/assets/oh-cat-supplements.jpg";
-import heroPharmacist from "@/assets/oh-hero-2-branded.jpg";
-import heroSmartphone from "@/assets/oh-hero-1.jpg";
-import pocketpillEditorial from "@/assets/pocketpill-editorial.png";
 import pocketpillPortrait from "@/assets/pocketpill-portrait.png";
-import staminaCover from "@/assets/stamina_cover.png";
 
 const WHATSAPP = "https://wa.me/2347083725382";
 
@@ -34,17 +19,17 @@ export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "PocketPill | Medicines and care, made simple" },
+      { title: "PocketPill | Care beyond the prescription" },
       {
         name: "description",
         content:
-          "Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
+          "Find medicines, access pharmacist support, source difficult treatments and stay on track with ongoing medication care.",
       },
-      { property: "og:title", content: "PocketPill | Medicines and care, made simple" },
+      { property: "og:title", content: "PocketPill | Care beyond the prescription" },
       {
         property: "og:description",
         content:
-          "Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
+          "Find medicines, access pharmacist support, source difficult treatments and stay on track with ongoing medication care.",
       },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
@@ -54,36 +39,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const careCategories = [
-  {
-    image: heroThree, // Oncology
-    eyebrow: "Specialty Care",
-    title: "Oncology & Therapeutics",
-    description: "Reliable sourcing, adherence support, and expert clinical guidance for oncology medications.",
-    to: "/services" as const,
-  },
-  {
-    image: careTeam, // Mental Health
-    eyebrow: "Psychiatric Pharmacy",
-    title: "Mental Health Care",
-    description: "Discreet access and compassionate pharmacist support for mental health prescriptions.",
-    to: "/services" as const,
-  },
-  {
-    image: catSupplements,
-    eyebrow: "Pharmacy",
-    title: "Clinical Pharmacy",
-    description: "Comprehensive medication reviews, interaction checks, and safety profiling.",
-    to: "/shop" as const,
-  },
-  {
-    image: catConsult,
-    eyebrow: "Telehealth",
-    title: "Virtual Consultations",
-    description: "Connect with licensed clinical pharmacists via voice or text on your schedule.",
-    to: "/contact" as const,
-  },
-];
+
 
 const faqs = [
   {
@@ -188,29 +144,29 @@ function HomePage() {
           <div className="hero-shell__body">
             <div className="hero-shell__heading">
               <h1 className="hero-title">
-                <span className="hero-title__line">Your health,</span>
-                <span className="hero-title__line hero-title__line--accent">handled with care.</span>
+                <span className="hero-title__line">Care beyond</span>
+                <span className="hero-title__line hero-title__line--accent">the prescription.</span>
               </h1>
+              <p className="mt-6 max-w-lg text-base sm:text-lg text-white/90 font-medium">
+                Find medicines, speak with a pharmacist, source hard-to-find treatments and stay on track with ongoing medication care.
+              </p>
             </div>
 
             <div className="hero-shell__bottom">
-
+              <p className="hidden md:block max-w-sm text-sm text-[#c4d8cc] font-medium leading-relaxed">
+                Have a prescription? Upload it and let our pharmacy team review the next step.
+              </p>
               <div className="hero-shell__actions ml-auto">
-                <div className="hero-glass-card hidden md:flex">
-                  <div className="hero-glass-card__icon">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#b6e3c7]">
-                      Pharmacist support
-                    </p>
-                    <p className="mt-1 text-sm font-medium text-white">
-                      A real person when you need help.
-                    </p>
-                  </div>
-                </div>
+                <a
+                  href={WHATSAPP}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="pill-button pill-button--outline-light hidden sm:flex"
+                >
+                  Talk to a pharmacist
+                </a>
                 <Link to="/find" className="pill-button pill-button--light">
-                  Shop medicines <ArrowUpRight className="h-4 w-4" />
+                  Find a medicine <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -221,342 +177,121 @@ function HomePage() {
           </div>
         </section>
 
-        <section className="trust-band">
-          {[
-            ["01", "Trusted medicines", "Order pharmacy essentials without the guesswork."],
-            ["02", "Talk to a pharmacist", "Get practical guidance before you choose."],
-            ["03", "Virtual consultations", "Connect with care from wherever you are in Nigeria."],
-            ["04", "Discreet delivery", "Your health information and order stay private."],
-          ].map(([number, title, description]) => (
-            <div key={number} className="trust-band__item" data-reveal>
-              <span className="trust-band__number">{number}</span>
-              <div>
-                <p className="font-heading text-sm font-bold text-[#133c2c]">{title}</p>
-                <p className="mt-1 text-xs leading-5 text-[#718078]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <section className="editorial-section bg-white" id="care">
-          <div className="editorial-container">
-            <div className="editorial-heading-row" data-reveal>
-              <div>
-                <span className="eyebrow">Pharmacy + telehealth</span>
-                <h2 className="section-title mt-5 max-w-3xl">
-                  Everything you need to take the next step.
-                </h2>
-              </div>
-              <Link to="/services" className="text-link">
-                Explore all care <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="program-list">
+        <section className="bg-[#f5f7f2] py-16 sm:py-24">
+          <div className="container-tight">
+            <h2 className="text-center font-heading text-2xl font-bold sm:text-3xl" data-reveal>
+              What do you need today?
+            </h2>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 {
-                  number: "01",
-                  icon: Pill,
-                  title: "Specialty & Oncology Sourcing",
-                  body: "Dedicated supply chains, protocol adherence support, and expert clinical guidance for oncology and rare condition medications.",
-                  cta: "Request specialty medication",
-                  to: "/shop" as const,
+                  title: "I need a medicine",
+                  desc: "Search for a medicine or upload a prescription.",
+                  cta: "Find a medicine",
+                  to: "/find",
                 },
                 {
-                  number: "02",
-                  icon: ShieldCheck,
-                  title: "Psychiatric Pharmacy Care",
-                  body: "Discreet access, regimen management, and compassionate continuous pharmacist support for mental health prescriptions.",
-                  cta: "Chat with a pharmacist",
-                  to: "/contact" as const,
+                  title: "I can't find my medicine",
+                  desc: "Ask the pharmacy team to investigate sourcing options.",
+                  cta: "Help me find it",
+                  to: "/specialty",
                 },
                 {
-                  number: "03",
-                  icon: Stethoscope,
-                  title: "Comprehensive Clinical Telehealth",
-                  body: "1-on-1 virtual sessions with licensed pharmacists to review complex regimens, check interactions, and create actionable safety profiles.",
-                  cta: "Request clinical review",
-                  to: "/contact" as const,
+                  title: "I need pharmacist advice",
+                  desc: "Access telepharmacy and medication support.",
+                  cta: "Talk to a pharmacist",
+                  to: "/telepharmacy",
                 },
                 {
-                  number: "04",
-                  icon: Heart,
-                  title: "Lineage: Parent care",
-                  body: "You are abroad. They are at home. A pharmacist calls before the medicine finishes. The next pack only goes if that call is fine.",
-                  cta: "Set up care for a parent",
-                  to: "/lineage" as const,
+                  title: "I'm managing medication for someone else",
+                  desc: "Coordinate medication care for a parent or loved one.",
+                  cta: "Explore Lineage",
+                  to: "/lineage",
                 },
-              ].map((item, index) => (
-                <Link
-                  key={item.number}
-                  to={item.to}
-                  className="program-row"
-                  data-reveal
-                  style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
-                >
-                  <span className="program-row__number">{item.number}</span>
-                  <span className="program-row__icon">
-                    <item.icon className="h-5 w-5" strokeWidth={1.6} />
-                  </span>
-                  <span className="program-row__copy">
-                    <strong>{item.title}</strong>
-                    <span>{item.body}</span>
-                  </span>
-                  <span className="program-row__cta">
-                    {item.cta} <ChevronRight className="h-4 w-4" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="story-section" id="about">
-          <div className="story-section__ghost" aria-hidden="true">
-            <span>Human</span>
-            <span>Care</span>
-          </div>
-          <div className="editorial-container story-section__grid">
-            <div className="story-section__visual" data-reveal>
-              <img
-                src={pocketpillEditorial}
-                alt="PocketPill editorial campaign"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div className="story-section__caption">
-                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#b6e3c7]">
-                  From shelf to doorstep
-                </p>
-                <p className="mt-2 max-w-xs font-heading text-xl font-semibold leading-tight text-white">
-                  Your medicines and care, in one calmer place.
-                </p>
-              </div>
-            </div>
-            <div className="story-section__copy" data-reveal>
-              <span className="eyebrow eyebrow--light">Care that fits Nigerian life</span>
-              <h2 className="section-title section-title--light mt-6">
-                Healthcare should feel easier to access.
-              </h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-[#c4d8cc]">
-                Whether you need a trusted medicine, a quick pharmacist answer, or a virtual consultation,
-                PocketPill gives you a clear place to begin. No long queues. No confusing language. No
-                awkward handover.
-              </p>
-              <div className="story-checks">
-                {[
-                  "Licensed pharmacist guidance",
-                  "Prescription support",
-                  "Discreet ordering and delivery",
-                  "Telehealth from home",
-                ].map((item) => (
-                  <span key={item}>
-                    <Check className="h-4 w-4 text-[#b6e3c7]" /> {item}
-                  </span>
-                ))}
-              </div>
-              <a
-                href={WHATSAPP}
-                target="_blank"
-                rel="noreferrer"
-                className="pill-button pill-button--mint mt-10"
-              >
-                Chat with a pharmacist <MessageCircle className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="editorial-section facilities-section bg-[#f5f7f2]">
-          <div className="editorial-container facilities-grid">
-            <div className="facilities-copy" data-reveal>
-              <div className="facilities-mark">
-                <LockKeyhole className="h-5 w-5" />
-              </div>
-              <span className="eyebrow mt-6">Your care, your pace</span>
-              <h2 className="section-title mt-5 max-w-xl">
-                Your pharmacy, with a human on the other end.
-              </h2>
-              <p className="mt-6 max-w-md text-base leading-8 text-[#6b7b73]">
-                Good care is more than a product in a basket. Get help finding the right option,
-                understand how to use it, and know when to speak to a doctor.
-              </p>
-              <div className="difference-list">
-                {[
-                  {
-                    icon: ShieldCheck,
-                    title: "Quality pharmacy care",
-                    body: "Straightforward explanations from a licensed pharmacist.",
-                  },
-                  {
-                    icon: LockKeyhole,
-                    title: "Discreet by design",
-                    body: "Private support and delivery that respect your time and your story.",
-                  },
-                  {
-                    icon: Truck,
-                    title: "Delivered in Nigeria",
-                    body: "Order from home and let our team help with the next step.",
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="difference-list__item">
-                    <span>
-                      <item.icon className="h-5 w-5" />
-                    </span>
-                    <div>
-                      <h3>{item.title}</h3>
-                      <p>{item.body}</p>
-                    </div>
+              ].map((path, index) => (
+                <div key={path.title} className="flex flex-col justify-between rounded-2xl bg-white p-6 shadow-sm border border-border/40" data-reveal style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}>
+                  <div>
+                    <h3 className="font-heading text-lg font-bold text-[#133c2c]">{path.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#6b7b73]">{path.desc}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="facilities-photos">
-              <figure
-                className="photo-card photo-card--tall"
-                data-reveal
-                style={{ "--reveal-delay": "80ms" } as CSSProperties}
-              >
-                <img
-                  src={heroPharmacist}
-                  alt="Pharmacist ready to answer questions"
-                  loading="lazy"
-                />
-                <figcaption>
-                  <strong>Human-first</strong>
-                  <span>Clear answers, without the clinical distance.</span>
-                </figcaption>
-              </figure>
-              <figure
-                className="photo-card photo-card--short"
-                data-reveal
-                style={{ "--reveal-delay": "220ms" } as CSSProperties}
-              >
-                <img src={heroSmartphone} alt="Always within reach" loading="lazy" />
-                <figcaption>
-                  <strong>Always within reach</strong>
-                  <span>Care that fits into real life.</span>
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
-
-        <section className="dark-band" id="numbers">
-          <div className="editorial-container">
-            <div data-reveal>
-              <span className="eyebrow eyebrow--light">The PocketPill promise</span>
-              <h2 className="section-title section-title--light mt-5 max-w-2xl">
-                The essentials, without the runaround.
-              </h2>
-            </div>
-            <dl className="stats-grid">
-              {[
-                ["Meds", "prescription support when you need it"],
-                ["1:1", "human guidance from a pharmacist"],
-                ["Nigeria", "delivery designed around your city"],
-                ["Care", "pharmacy and telehealth in one place"],
-              ].map(([value, label], index) => (
-                <div
-                  key={value}
-                  className="stat-cell"
-                  data-reveal
-                  style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
-                >
-                  <dd>{value}</dd>
-                  <dt>{label}</dt>
+                  <Link to={path.to} className="mt-6 inline-flex items-center text-sm font-semibold text-[#123d2d] hover:underline">
+                    {path.cta} <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
                 </div>
               ))}
-            </dl>
+            </div>
           </div>
         </section>
 
-        <section className="editorial-section testimonials-section bg-white" id="testimonials">
-          <div className="editorial-container">
-            <div data-reveal>
-              <span className="eyebrow">Why people choose PocketPill</span>
-              <h2 className="section-title mt-5 max-w-2xl">Private, calm, and practical.</h2>
+        <section className="bg-white py-16 sm:py-24" id="problem">
+          <div className="container-tight">
+            <div className="mx-auto max-w-4xl text-center" data-reveal>
+              <h2 className="font-heading text-3xl font-bold sm:text-4xl text-[#123d2d]">
+                Getting the medicine shouldn't be the hardest part of treatment.
+              </h2>
+              <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#6b7b73]">
+                A prescription may only be the beginning. Patients can still spend time searching for medicines, confirming availability, finding specialist treatments, asking medication questions and repeating the same process when a refill is due.
+              </p>
+              <p className="mt-4 font-semibold text-[#123d2d] text-lg">
+                PocketPill brings these steps into one coordinated pharmacy experience.
+              </p>
             </div>
-            <div className="testimonials-marquee-wrapper" data-reveal>
-              <div className="testimonials-marquee">
-                {[...[
-                  [
-                    "“",
-                    "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
-                    "Tunde A.",
-                    "Nigeria",
-                  ],
-                  [
-                    "“",
-                    "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
-                    "Emeka C.",
-                    "Lekki",
-                  ],
-                  [
-                    "“",
-                    "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
-                    "Kelechi O.",
-                    "Ikeja",
-                  ],
-                  [
-                    "“",
-                    "A total game-changer. They guided me through the treatment plan and checked in on me. Very professional.",
-                    "Chima U.",
-                    "Abuja",
-                  ],
-                  [
-                    "“",
-                    "I was skeptical at first, but the quality of care and how quickly they deliver is unmatched.",
-                    "Femi D.",
-                    "Nigeria",
-                  ],
+          </div>
+        </section>
 
-                ], ...[
-                  [
-                    "“",
-                    "I did not know what to ask for at the pharmacy. The pharmacist explained my options clearly and helped me choose the next step.",
-                    "Tunde A.",
-                    "Nigeria",
-                  ],
-                  [
-                    "“",
-                    "Ordering was discreet and straightforward. I got the support I needed without spending the day in traffic or a queue.",
-                    "Emeka C.",
-                    "Lekki",
-                  ],
-                  [
-                    "“",
-                    "It felt like talking to someone who understood the question, not just the symptom. I would absolutely recommend PocketPill.",
-                    "Kelechi O.",
-                    "Ikeja",
-                  ],
-                  [
-                    "“",
-                    "A total game-changer. They guided me through the treatment plan and checked in on me. Very professional.",
-                    "Chima U.",
-                    "Abuja",
-                  ],
-                  [
-                    "“",
-                    "I was skeptical at first, but the quality of care and how quickly they deliver is unmatched.",
-                    "Femi D.",
-                    "Nigeria",
-                  ],
+        <section className="bg-[#f5f7f2] py-16 sm:py-24" id="core-model">
+          <div className="container-tight">
+            <div className="text-center" data-reveal>
+              <h2 className="font-heading text-3xl font-bold sm:text-4xl text-[#123d2d]">
+                Find it. Understand it. Stay on it.
+              </h2>
+            </div>
+            <div className="mt-16 grid gap-12 lg:grid-cols-3">
+              {[
+                {
+                  title: "Find it.",
+                  desc: "Search for everyday medicines, upload a prescription or ask PocketPill to investigate difficult-to-source medication.",
+                  icon: Search
+                },
+                {
+                  title: "Understand it.",
+                  desc: "Speak with a pharmacist about medication use, interactions, side effects, storage, adherence and medication reviews.",
+                  icon: MessageCircle
+                },
+                {
+                  title: "Stay on it.",
+                  desc: "Make repeat treatment easier with refill support and ongoing medication care.",
+                  icon: Clock3
+                }
+              ].map((item, index) => (
+                <div key={item.title} className="flex flex-col items-center text-center" data-reveal style={{ "--reveal-delay": `${index * 100}ms` } as CSSProperties}>
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e6eee9] text-[#123d2d]">
+                    <item.icon className="h-8 w-8" />
+                  </div>
+                  <h3 className="mt-6 font-heading text-xl font-bold text-[#133c2c]">{item.title}</h3>
+                  <p className="mt-4 text-base leading-relaxed text-[#6b7b73]">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                ]].map(([quote, body, name, role], index) => (
-                  <figure
-                    key={`${name}-${index}`}
-                    className="testimonial-card"
-                  >
-                    <span className="testimonial-card__quote">{quote}</span>
-                    <blockquote>{body}</blockquote>
-                    <figcaption>
-                      <strong>{name}</strong>
-                      <span>{role}</span>
-                    </figcaption>
-                  </figure>
-                ))}
+        <section className="bg-[#123d2d] py-16 sm:py-24 text-white" id="hard-to-find">
+          <div className="container-tight">
+            <div className="mx-auto max-w-3xl text-center" data-reveal>
+              <h2 className="font-heading text-3xl font-bold sm:text-4xl">
+                Can't find your medicine?
+              </h2>
+              <p className="mt-6 text-base sm:text-lg leading-relaxed text-white/80">
+                Send us the medicine name, your prescription or a photo of the pack. Our pharmacy team can review the request and investigate appropriate sourcing options.
+              </p>
+              <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+                <Link to="/specialty" className="pill-button pill-button--mint">
+                  Request a medicine
+                </Link>
+                <Link to="/find" className="pill-button pill-button--outline-light">
+                  Upload prescription
+                </Link>
               </div>
             </div>
           </div>
