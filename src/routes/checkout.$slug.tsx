@@ -5,9 +5,9 @@ import staminaCover from "@/assets/stamina_cover.png";
 export const Route = createFileRoute("/checkout/$slug")({
   head: () => ({
     meta: [
-      { title: "Secure Checkout — PocketPill" },
+      { title: "Secure Checkout | PocketPill" },
       { name: "description", content: "Complete your PocketPill purchase securely with Paystack and get instant digital delivery to your email." },
-      { property: "og:title", content: "Secure Checkout — PocketPill" },
+      { property: "og:title", content: "Secure Checkout | PocketPill" },
       { property: "og:description", content: "Complete your PocketPill purchase securely with Paystack and get instant digital delivery to your email." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

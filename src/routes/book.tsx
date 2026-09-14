@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/book")({
   head: () => ({
     meta: [
-      { title: "Talk to a Pharmacist — PocketPill" },
+      { title: "Talk to a Pharmacist | PocketPill" },
       { name: "description", content: "Chat with a licensed pharmacist directly on WhatsApp." },
     ],
   }),

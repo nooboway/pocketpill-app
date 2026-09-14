@@ -57,7 +57,7 @@ function FindMedicinePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!hasContent) {
-      setError("Name or photo — one of the two is enough.");
+      setError("Name or photo, one of the two is enough.");
       return;
     }
     if (!showDetails) {
@@ -86,7 +86,7 @@ function FindMedicinePage() {
               </div>
               <div className="space-y-6">
                 <p className="text-xl font-medium text-foreground leading-relaxed">
-                  Looking for it. A pharmacist will text you on WhatsApp — whether we can get it, how long, and what it costs.
+                  Looking for it. A pharmacist will text you on WhatsApp with whether we can get it, how long, and what it costs.
                 </p>
                 <p className="text-lg text-muted-foreground">
                   Keep your phone on. You do not need to chase us.

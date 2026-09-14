@@ -18,9 +18,9 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
   head: () => ({
     meta: [
-      { title: "Contact — PocketPill" },
+      { title: "Contact | PocketPill" },
       { name: "description", content: "Book a visit or get in touch with the PocketPill care team. We're here to help." },
-      { property: "og:title", content: "Contact — PocketPill" },
+      { property: "og:title", content: "Contact | PocketPill" },
       { property: "og:description", content: "Book a visit or get in touch with the PocketPill care team. We're here to help." },
       { property: "og:url", content: "/contact" },
       { property: "og:type", content: "website" },

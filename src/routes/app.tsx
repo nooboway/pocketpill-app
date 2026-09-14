@@ -9,7 +9,7 @@ export const Route = createFileRoute("/app")({
   component: AppComingSoonPage,
   head: () => ({
     meta: [
-      { title: "App Coming Soon — PocketPill" },
+      { title: "App Coming Soon | PocketPill" },
       { name: "description", content: "The PocketPill mobile app is currently being built. Join the waitlist today." },
     ],
   }),

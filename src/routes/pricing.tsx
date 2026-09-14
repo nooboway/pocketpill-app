@@ -10,9 +10,9 @@ export const Route = createFileRoute("/pricing")({
   component: PricingPage,
   head: () => ({
     meta: [
-      { title: "Pricing — PocketPill" },
+      { title: "Pricing | PocketPill" },
       { name: "description", content: "Medicine pricing at PocketPill." },
-      { property: "og:title", content: "Pricing — PocketPill" },
+      { property: "og:title", content: "Pricing | PocketPill" },
       { property: "og:description", content: "Medicine pricing at PocketPill." },
       { property: "og:url", content: "/pricing" },
       { property: "og:type", content: "website" },

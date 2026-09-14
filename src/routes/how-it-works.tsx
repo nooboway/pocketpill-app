@@ -10,9 +10,9 @@ export const Route = createFileRoute("/how-it-works")({
   component: HowItWorksPage,
   head: () => ({
     meta: [
-      { title: "How It Works — PocketPill" },
+      { title: "How It Works | PocketPill" },
       { name: "description", content: "See how easy it is to get care with PocketPill: request medicine, pharmacist review, and discreet delivery." },
-      { property: "og:title", content: "How It Works — PocketPill" },
+      { property: "og:title", content: "How It Works | PocketPill" },
       { property: "og:description", content: "See how easy it is to get care with PocketPill: request medicine, pharmacist review, and discreet delivery." },
       { property: "og:url", content: "/how-it-works" },
       { property: "og:type", content: "website" },
@@ -49,7 +49,7 @@ const steps = [
   },
   {
     icon: Truck,
-    title: "If it is for a parent who cannot use the site — Lineage",
+    title: "If it is for a parent who cannot use the site, that is Lineage",
     description: "You set it up, you fund it from abroad, and a pharmacist calls them before they run out. They never have to log in.",
     features: ["Parent care", "Continuous support"],
   },

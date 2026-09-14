@@ -26,7 +26,7 @@ function getEnoreResponse(input: string): string {
     return "Lineage is for a parent who will not use this website. You set it up. We call them. Want to start a parent plan? Visit /lineage to start.";
   }
   if (lower.includes("pharmacist") || lower.includes("talk") || lower.includes("speak")) {
-    return `Absolutely! Our pharmacists are available for private, confidential consultations. You can reach one directly on WhatsApp — just tap here: ${WHATSAPP}`;
+    return `Absolutely! Our pharmacists are available for private, confidential consultations. You can reach one directly on WhatsApp. Just tap here: ${WHATSAPP}`;
   }
   if (lower.includes("mental health") || lower.includes("anxiety") || lower.includes("depression") || lower.includes("stress")) {
     return "Mental health matters deeply to us. We can help you find what you need. Visit /find to request sourcing, or tap the WhatsApp link to chat with a pharmacist.";

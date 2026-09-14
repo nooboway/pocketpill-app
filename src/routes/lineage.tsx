@@ -26,7 +26,7 @@ function LineagePage() {
           <div className="container-tight max-w-4xl text-center">
             <span className="text-[#123d2d] font-bold tracking-widest text-sm uppercase mb-6 block">LINEAGE</span>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-8">
-              Their health, handled &mdash; even when they never go online.
+              Their health, cared for. Even when they can't go online.
             </h1>
             <div className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto space-y-6">
               <p>
@@ -53,22 +53,19 @@ function LineagePage() {
         <section className="py-16 bg-background">
           <div className="container-tight max-w-2xl text-lg leading-relaxed text-foreground space-y-8">
             <p>
-              You left home to build a future. But building a future often means leaving the people who built you.
+              You are abroad. Your mum is in Lagos or Onitsha. She is not going to download anything, remember a refill date, or argue with a chemist about a missing drug. You also do not want to keep sending money on WhatsApp and hoping it became the right tablets.
             </p>
             <p>
-              You are in London, or Dallas, or Toronto. They are in Lagos, or Onitsha. Between you are thousands of miles, time zones, and the quiet, nagging fear of a missed phone call. When they need their medicine &mdash; for their heart, for their blood sugar, for the quiet aches of growing older &mdash; you cannot be there to drive them to the pharmacy. You cannot read the label. You cannot hand them the glass of water.
+              So Lineage does the remembering for both of you.
             </p>
             <p>
-              So, you do what you can. You send money. You make calls. You hope the money becomes the right tablets, at the right time, from a genuine shelf. But money isn't care. Money is just a transaction.
+              You set up her name, her caregiver's phone, and her prescription. You put money in a wallet that can only be used for her treatment. Not for cash. Not for "I will buy it when I pass the shop." The system checks that the prescription is real and has not already been used somewhere else. Then it watches the calendar.
             </p>
             <p>
-              Lineage is the invisible thread across the ocean. You tell us what they need, and you fund their care. We take it from there.
+              Before the pack in the house runs out, a pharmacist calls. The next pack is already arranged. If something is wrong (fake script, missed call, drug that never showed up) the next payment stops and you get told. If everything is fine, it just happens again.
             </p>
             <p>
-              They do not need to download an app. They do not need to remember a password. We do not ask them to navigate the future you live in; we meet them exactly where they are. Before their medicine runs out, a pharmacist calls their phone. A real, human voice checking in. The prescription is verified. The next pack is prepared.
-            </p>
-            <p>
-              If a call goes unanswered, or if a medicine doesn't arrive, the system stops. The money is protected, and you are alerted immediately. But when everything is fine, the quiet rhythm of care simply continues.
+              She never logs in. She hears a phone call and someone she trusts collects the medicine from a place she already knows.
             </p>
           </div>
         </section>
@@ -76,13 +73,13 @@ function LineagePage() {
         {/* Pull Quote */}
         <section className="py-24 bg-[#123d2d] text-white">
           <div className="container-tight max-w-4xl text-center">
-            <p className="text-green-200/80 uppercase tracking-widest text-sm font-semibold mb-8">If anyone asks you what Lineage is, tell them this:</p>
+            <p className="text-green-200/80 uppercase tracking-widest text-sm font-semibold mb-8">So if a relative asks &ldquo;what is this thing?&rdquo;</p>
             <blockquote className="font-heading text-2xl sm:text-3xl leading-snug font-medium italic space-y-6">
               <p>
-                It is not a delivery service. It is not another app.
+                It is not a delivery app and it is not another pharmacy.
               </p>
               <p>
-                It is the peace of mind that when you cannot be there, someone accountable is. It is the guarantee that the people who gave you the world will never have to face their health alone.
+                It is the automatic loop that pays for my parent&rsquo;s drugs, checks the prescription, calls them before they run out, and will not spend the next kobo if something is off.
               </p>
             </blockquote>
           </div>
@@ -92,7 +89,7 @@ function LineagePage() {
         <section className="py-16 bg-background">
           <div className="container-tight max-w-2xl text-lg leading-relaxed text-muted-foreground">
             <p>
-              For the small pharmacy on their street, Lineage is a lifeline. It allows them to safely hold the expensive, life-saving drugs they could never afford to keep on a gamble. The medicine waits patiently for the patient it belongs to.
+              For the small pharmacy down the road, Lineage is also how they get expensive drugs they cannot afford to keep on the shelf. They do not gamble their capital. The system holds the stock and releases it only for a real patient with a real prescription.
             </p>
           </div>
         </section>

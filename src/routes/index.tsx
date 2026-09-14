@@ -34,13 +34,13 @@ export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "PocketPill — Medicines and care, made simple" },
+      { title: "PocketPill | Medicines and care, made simple" },
       {
         name: "description",
         content:
           "Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
       },
-      { property: "og:title", content: "PocketPill — Medicines and care, made simple" },
+      { property: "og:title", content: "PocketPill | Medicines and care, made simple" },
       {
         property: "og:description",
         content:
@@ -282,7 +282,7 @@ function HomePage() {
                 {
                   number: "04",
                   icon: Heart,
-                  title: "Lineage — Parent care",
+                  title: "Lineage: Parent care",
                   body: "You are abroad. They are at home. A pharmacist calls before the medicine finishes. The next pack only goes if that call is fine.",
                   cta: "Set up care for a parent",
                   to: "/lineage" as const,

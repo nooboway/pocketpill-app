@@ -35,7 +35,7 @@ function AboutPage() {
             
             <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
               <p>
-                That is the work. Not a slogan on a deck &mdash; the reason someone can reach a pharmacist at all when the counter is empty, or when what they need is for their head, not just their bag.
+                That is the work. Not a slogan on a deck. The reason someone can reach a pharmacist at all when the counter is empty, or when what they need is for their head, not just their bag.
               </p>
               <p>
                 PocketPill is a Nigerian e-pharmacy. If the medicine is for you, ask us to find it. If it is for a parent who will never open this site, that is Lineage.
@@ -56,7 +56,7 @@ function AboutPage() {
 
             <div className="mt-16 text-center sm:text-left">
               <p className="text-sm text-muted-foreground mb-4">
-                If you want to talk to a person before anything else &mdash; talk to a pharmacist.
+                If you want to talk to a person before anything else, talk to a pharmacist.
               </p>
               <Button size="lg" className="bg-[#123d2d] text-white hover:bg-[#123d2d]/90 rounded-full px-8 w-full sm:w-auto" asChild>
                 <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">

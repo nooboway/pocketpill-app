@@ -79,19 +79,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PocketPill — Online Doctor Visits, Prescriptions & Care" },
+      { title: "PocketPill | Online Pharmacy and Care" },
       {
         name: "description",
         content:
-          "PocketPill connects you with certified doctors, pharmacists and team of healthcare professionals for urgent care, mental health, prescriptions, and more — from your phone, same day.",
+          "PocketPill connects you with certified pharmacists and healthcare professionals for urgent care, mental health, prescriptions, and more. From your phone, same day.",
       },
       { name: "author", content: "PocketPill" },
       { property: "og:site_name", content: "PocketPill" },
-      { property: "og:title", content: "PocketPill — Your Virtual Health Clinic" },
+      { property: "og:title", content: "PocketPill | Your Telepharmacy" },
       {
         property: "og:description",
         content:
-          "PocketPill connects you with certified doctors, pharmacists and team of healthcare professionals for urgent care, mental health, prescriptions, and more — from your phone, same day.",
+          "PocketPill connects you with certified pharmacists and healthcare professionals for urgent care, mental health, prescriptions, and more. From your phone, same day.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

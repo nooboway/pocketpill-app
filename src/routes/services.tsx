@@ -11,9 +11,9 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
   head: () => ({
     meta: [
-      { title: "Care — PocketPill" },
+      { title: "Care | PocketPill" },
       { name: "description", content: "Explore specialized pharmacy care from PocketPill: oncology, mental health, and clinical pharmacy." },
-      { property: "og:title", content: "Care — PocketPill" },
+      { property: "og:title", content: "Care | PocketPill" },
       { property: "og:description", content: "Explore specialized pharmacy care from PocketPill: oncology, mental health, and clinical pharmacy." },
       { property: "og:url", content: "/services" },
       { property: "og:type", content: "website" },

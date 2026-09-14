@@ -10,9 +10,9 @@ type Search = { reference?: string | undefined; trxref?: string | undefined };
 export const Route = createFileRoute("/payment/success")({
   head: () => ({
     meta: [
-      { title: "Payment confirmation — PocketPill" },
+      { title: "Payment confirmation | PocketPill" },
       { name: "description", content: "Confirm your PocketPill payment and see the next steps for your private consultation." },
-      { property: "og:title", content: "Payment confirmation — PocketPill" },
+      { property: "og:title", content: "Payment confirmation | PocketPill" },
       { property: "og:description", content: "Confirm your PocketPill payment and see the next steps for your private consultation." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
