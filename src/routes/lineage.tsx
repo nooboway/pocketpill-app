@@ -89,7 +89,7 @@ function LineagePage() {
         <section className="py-16 bg-background">
           <div className="container-tight max-w-2xl text-lg leading-relaxed text-muted-foreground">
             <p>
-              For the small pharmacy down the road, Lineage is also how they get expensive drugs they cannot afford to keep on the shelf. They do not gamble their capital. The system holds the stock and releases it only for a real patient with a real prescription.
+              For the small pharmacy down the road, Lineage is also how they get expensive cold drugs they cannot afford to keep on the shelf. They do not gamble their capital. The system holds the stock and releases it only for a patient with a validated prescription.
             </p>
           </div>
         </section>
