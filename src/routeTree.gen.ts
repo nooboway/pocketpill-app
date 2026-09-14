@@ -22,6 +22,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SourceRouteImport } from './routes/source'
+import { Route as TrustRouteImport } from './routes/trust'
 import { Route as CareParentRouteImport } from './routes/care.parent'
 import { Route as LineageStartRouteImport } from './routes/lineage.start'
 import { Route as ServicesClinicalPharmacyRouteImport } from './routes/services.clinical-pharmacy'
@@ -96,6 +97,11 @@ const SourceRoute = SourceRouteImport.update({
   path: '/source',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrustRoute = TrustRouteImport.update({
+  id: '/trust',
+  path: '/trust',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareParentRoute = CareParentRouteImport.update({
   id: '/care/parent',
   path: '/care/parent',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
+  '/trust': typeof TrustRoute
   '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
+  '/trust': typeof TrustRoute
   '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRouteWithChildren
   '/shop': typeof ShopRoute
   '/source': typeof SourceRoute
+  '/trust': typeof TrustRoute
   '/care/parent': typeof CareParentRoute
   '/lineage/start': typeof LineageStartRoute
   '/services/clinical-pharmacy': typeof ServicesClinicalPharmacyRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/source'
+    | '/trust'
     | '/care/parent'
     | '/lineage/start'
     | '/services/clinical-pharmacy'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/source'
+    | '/trust'
     | '/care/parent'
     | '/lineage/start'
     | '/services/clinical-pharmacy'
@@ -272,6 +283,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/shop'
     | '/source'
+    | '/trust'
     | '/care/parent'
     | '/lineage/start'
     | '/services/clinical-pharmacy'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRouteWithChildren
   ShopRoute: typeof ShopRoute
   SourceRoute: typeof SourceRoute
+  TrustRoute: typeof TrustRoute
   CareParentRoute: typeof CareParentRoute
   ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
   ApiPublicVerifyPaymentRoute: typeof ApiPublicVerifyPaymentRoute
@@ -393,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/source'
       fullPath: '/source'
       preLoaderRoute: typeof SourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trust': {
+      id: '/trust'
+      path: '/trust'
+      fullPath: '/trust'
+      preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/care/parent': {
@@ -495,6 +515,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRouteWithChildren,
   ShopRoute: ShopRoute,
   SourceRoute: SourceRoute,
+  TrustRoute: TrustRoute,
   CareParentRoute: CareParentRoute,
   ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,
   ApiPublicVerifyPaymentRoute: ApiPublicVerifyPaymentRoute,

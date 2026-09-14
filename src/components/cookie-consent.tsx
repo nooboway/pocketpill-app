@@ -23,8 +23,8 @@ export function CookieConsent() {
       <div className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-4 rounded-xl border border-border/50 bg-background/95 p-6 shadow-2xl backdrop-blur-lg sm:flex-row sm:items-center">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-lg font-bold">Cookie Preferences</h3>
-          <p className="text-sm text-muted-foreground max-w-2xl text-balance">
-            We use cookies to improve your experience, personalize content, and analyze site traffic. By clicking "Accept All", you consent to our use of cookies in accordance with NDPC guidelines.
+          <p className="text-sm text-muted-foreground max-w-2xl text-balance leading-relaxed">
+            PocketPill respects your privacy. We use essential cookies to provide our core telepharmacy services, and non-essential cookies to analyze site traffic. By clicking "Accept All", you consent to our use of cookies in compliance with the Nigeria Data Protection Act (NDPA) 2023 and GAID 2025.
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">

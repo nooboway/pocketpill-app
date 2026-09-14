@@ -18,6 +18,7 @@ const footerLinks = [
     links: [
       { label: "About", to: "/about" },
       { label: "How it works", to: "/how-it-works" },
+      { label: "Trust & Compliance", to: "/trust" },
       { label: "Contact", to: "/contact" },
     ],
   },
