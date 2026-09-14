@@ -52,9 +52,8 @@ function AboutPage() {
                   className="text-6xl text-foreground/80 mb-2 -rotate-6 origin-left" 
                   style={{ fontFamily: "'Mrs Saint Delafield', cursive" }}
                 >
-                  J. Onile
+                  Dr. J Onile
                 </span>
-                <p className="font-heading font-medium text-foreground">Dr. J. Onile</p>
                 <p className="text-sm">Bpharm, PharmD, MPSN</p>
               </div>
             </div>
