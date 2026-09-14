@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, PhoneCall, ShieldCheck, UserMinus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
@@ -70,32 +70,6 @@ function LineagePage() {
             <p>
               If a call goes unanswered, or if a medicine doesn't arrive, the system stops. The money is protected, and you are alerted immediately. But when everything is fine, the quiet rhythm of care simply continues.
             </p>
-          </div>
-        </section>
-
-        {/* Three Lines */}
-        <section className="py-16 bg-cream/40">
-          <div className="container-tight max-w-5xl">
-            <div className="grid sm:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-2xl border border-border/50 text-center shadow-sm">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-[#d9f0df] text-[#123d2d] mb-6">
-                  <UserMinus className="h-6 w-6" />
-                </div>
-                <h3 className="font-heading text-xl font-semibold mb-3">They never log in.</h3>
-              </div>
-              <div className="bg-white p-8 rounded-2xl border border-border/50 text-center shadow-sm">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-[#d9f0df] text-[#123d2d] mb-6">
-                  <PhoneCall className="h-6 w-6" />
-                </div>
-                <h3 className="font-heading text-xl font-semibold mb-3">They hear a human voice.</h3>
-              </div>
-              <div className="bg-white p-8 rounded-2xl border border-border/50 text-center shadow-sm">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-[#d9f0df] text-[#123d2d] mb-6">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-                <h3 className="font-heading text-xl font-semibold mb-3">Someone they trust collects it.</h3>
-              </div>
-            </div>
           </div>
         </section>
 
