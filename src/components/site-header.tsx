@@ -7,7 +7,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Find a Medicine", to: "/find" },
   { label: "Talk to a Pharmacist", to: "/telepharmacy" },
   { label: "Specialty Care", to: "/specialty" },
   { label: "Lineage", to: "/lineage" },
