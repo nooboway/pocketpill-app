@@ -35,14 +35,19 @@ function AboutPage() {
             
             <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
               <p>
-                That is the work. Not a tagline. Not something we wrote to raise money. It is the reason someone can actually reach a pharmacist when the counter is empty, or when what they need is for their head, not just their bag.
+                That is the whole story. It is why we started. So anyone can reach a pharmacist, and get medicines they can trust, when they need to.
               </p>
               <p>
-                PocketPill is a Nigerian e-pharmacy. If the medicine is for you, tell us what you need and we will go find it. If it is for a parent back home who will never open this website, that is what Lineage is for.
+                PocketPill is a Nigerian telepharmacy. If the medicine is for you, tell us what you need and we will go find it. If it is for a parent back home who will never open this website, that is what Lineage is for.
               </p>
               <p>
-                We are not a hospital. We are not a warehouse. We are the people who make sure the next pack is real, that somebody accountable picks up the phone, and that you do not have to figure it out alone.
+                We work hard to be who you think of when you want proper care and medicines you can be sure of.
               </p>
+              
+              <div className="pt-8">
+                <p className="font-heading font-medium text-foreground">Dr. J. Onile</p>
+                <p className="text-sm">Bpharm, PharmD, Mpsn</p>
+              </div>
             </div>
 
             <div className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t border-border/50 pt-8">
