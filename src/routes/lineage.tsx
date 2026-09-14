@@ -53,7 +53,7 @@ function LineagePage() {
         <section className="py-16 bg-background">
           <div className="container-tight max-w-2xl text-lg leading-relaxed text-foreground space-y-8">
             <p>
-              You are abroad. Your mum is in Lagos or Onitsha. She is not going to download anything, remember a refill date, or argue with a chemist about a missing drug. You also do not want to keep sending money on WhatsApp and hoping it became the right tablets.
+              You are abroad. Your mum is in Lagos or Onitsha. She is not going to download anything, remember a refill date, or argue with a caregiver about a missing drug. You also do not want to keep sending money on WhatsApp and hoping it became the right tablets.
             </p>
             <p>
               So Lineage does the remembering for both of you.

@@ -35,13 +35,13 @@ function AboutPage() {
             
             <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
               <p>
-                That is the work. Not a slogan on a deck. The reason someone can reach a pharmacist at all when the counter is empty, or when what they need is for their head, not just their bag.
+                That is the work. Not a tagline. Not something we wrote to raise money. It is the reason someone can actually reach a pharmacist when the counter is empty, or when what they need is for their head, not just their bag.
               </p>
               <p>
-                PocketPill is a Nigerian e-pharmacy. If the medicine is for you, ask us to find it. If it is for a parent who will never open this site, that is Lineage.
+                PocketPill is a Nigerian e-pharmacy. If the medicine is for you, tell us what you need and we will go find it. If it is for a parent back home who will never open this website, that is what Lineage is for.
               </p>
               <p>
-                We are not a hospital. We are the people who make sure the next pack is real, and that somebody accountable is on the other end of the phone.
+                We are not a hospital. We are not a warehouse. We are the people who make sure the next pack is real, that somebody accountable picks up the phone, and that you do not have to figure it out alone.
               </p>
             </div>
 
