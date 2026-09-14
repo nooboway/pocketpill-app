@@ -19,16 +19,31 @@ const WHATSAPP = "https://wa.me/2347083725382";
 function getEnoreResponse(input: string): string {
   const lower = input.toLowerCase();
 
-  if (lower.includes("medicine") || lower.includes("drug") || lower.includes("medication") || lower.includes("find")) {
+  if (
+    lower.includes("medicine") ||
+    lower.includes("drug") ||
+    lower.includes("medication") ||
+    lower.includes("find")
+  ) {
     return "I can help you find the right medicine! Head over to /find so you can attach a photo or give me the name. I don't check stock directly here.";
   }
-  if (lower.includes("parent") || lower.includes("abroad") || lower.includes("lineage") || lower.includes("cover")) {
+  if (
+    lower.includes("parent") ||
+    lower.includes("abroad") ||
+    lower.includes("lineage") ||
+    lower.includes("cover")
+  ) {
     return "Lineage is for a parent who will not use this website. You set it up. We call them. Want to start a parent plan? Visit /lineage to start.";
   }
   if (lower.includes("pharmacist") || lower.includes("talk") || lower.includes("speak")) {
     return `Absolutely! Our pharmacists are available for private, confidential consultations. You can reach one directly on WhatsApp. Just tap here: ${WHATSAPP}`;
   }
-  if (lower.includes("mental health") || lower.includes("anxiety") || lower.includes("depression") || lower.includes("stress")) {
+  if (
+    lower.includes("mental health") ||
+    lower.includes("anxiety") ||
+    lower.includes("depression") ||
+    lower.includes("stress")
+  ) {
     return "Mental health matters deeply to us. We can help you find what you need. Visit /find to request sourcing, or tap the WhatsApp link to chat with a pharmacist.";
   }
   if (lower.includes("oncology") || lower.includes("cancer") || lower.includes("chemo")) {
@@ -40,7 +55,12 @@ function getEnoreResponse(input: string): string {
   if (lower.includes("price") || lower.includes("cost") || lower.includes("how much")) {
     return "Medicine prices are quoted after we see the prescription. You can chat with a pharmacist on WhatsApp for specific costs.";
   }
-  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("good")) {
+  if (
+    lower.includes("hello") ||
+    lower.includes("hi") ||
+    lower.includes("hey") ||
+    lower.includes("good")
+  ) {
     return "Hello! 👋 I'm Enoré, PocketPill's health assistant. I can help you find medicines, connect with a pharmacist, or answer questions about our mental health and oncology services. What do you need today?";
   }
   if (lower.includes("thank")) {
@@ -133,8 +153,24 @@ export function EnoreChat() {
               {msg.content.split("\n").map((line, i) => (
                 <span key={i}>
                   {line.split(/(https?:\/\/[^\s]+|\/[a-z/]+)/g).map((part, j) => {
-                    if (part.startsWith('http')) return <a key={j} href={part} target="_blank" rel="noreferrer" className="underline font-medium hover:text-primary">{part}</a>;
-                    if (part.startsWith('/')) return <a key={j} href={part} className="underline font-medium hover:text-primary">{part}</a>;
+                    if (part.startsWith("http"))
+                      return (
+                        <a
+                          key={j}
+                          href={part}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline font-medium hover:text-primary"
+                        >
+                          {part}
+                        </a>
+                      );
+                    if (part.startsWith("/"))
+                      return (
+                        <a key={j} href={part} className="underline font-medium hover:text-primary">
+                          {part}
+                        </a>
+                      );
                     return <span key={j}>{part}</span>;
                   })}
                   {i < msg.content.split("\n").length - 1 && <br />}
@@ -148,11 +184,7 @@ export function EnoreChat() {
         {messages.length <= 1 && (
           <div className="enore-panel__prompts">
             {QUICK_PROMPTS.map((prompt) => (
-              <button
-                key={prompt}
-                className="enore-prompt"
-                onClick={() => handleSend(prompt)}
-              >
+              <button key={prompt} className="enore-prompt" onClick={() => handleSend(prompt)}>
                 {prompt} <ChevronRight className="h-3.5 w-3.5" />
               </button>
             ))}

@@ -24,14 +24,26 @@ export function CookieConsent() {
         <div className="flex flex-col gap-1">
           <h3 className="font-heading text-sm font-bold">Cookie Preferences</h3>
           <p className="text-xs text-muted-foreground max-w-3xl text-balance leading-relaxed">
-            PocketPill respects your privacy. We use essential cookies to provide our core telepharmacy services, and non-essential cookies to analyze site traffic. By clicking "Accept All", you consent to our use of cookies in compliance with the Nigeria Data Protection Act (NDPA) 2023 and GAID 2025.
+            PocketPill respects your privacy. We use essential cookies to provide our core
+            telepharmacy services, and non-essential cookies to analyze site traffic. By clicking
+            "Accept All", you consent to our use of cookies in compliance with the Nigeria Data
+            Protection Act (NDPA) 2023 and GAID 2025.
           </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
-          <Button variant="outline" size="sm" onClick={() => handleConsent("essential")} className="whitespace-nowrap rounded-full">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleConsent("essential")}
+            className="whitespace-nowrap rounded-full"
+          >
             Reject Non-Essential
           </Button>
-          <Button size="sm" onClick={() => handleConsent("all")} className="whitespace-nowrap rounded-full bg-[#123d2d] text-white hover:bg-[#123d2d]/90">
+          <Button
+            size="sm"
+            onClick={() => handleConsent("all")}
+            className="whitespace-nowrap rounded-full bg-[#123d2d] text-white hover:bg-[#123d2d]/90"
+          >
             Accept All
           </Button>
         </div>

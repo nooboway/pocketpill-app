@@ -41,15 +41,12 @@ export function SiteFooter() {
               to="/"
               className="flex items-center gap-2 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
             >
-              <img 
-                src="/pocketpill-icon-512.png" 
-                alt="" 
-                className="h-8 w-8 brightness-0 invert" 
-              />
+              <img src="/pocketpill-icon-512.png" alt="" className="h-8 w-8 brightness-0 invert" />
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
-              <strong>Care beyond the prescription.</strong> Find medicines, access pharmacist support, source difficult treatments and stay on track with ongoing medication care.
+              <strong>Care beyond the prescription.</strong> Find medicines, access pharmacist
+              support, source difficult treatments and stay on track with ongoing medication care.
             </p>
             <div className="mt-6 flex items-center gap-4">
               {socialLinks.map((social) => (
@@ -63,18 +60,18 @@ export function SiteFooter() {
                 </a>
               ))}
             </div>
-            
+
             <div className="mt-8">
-              <a 
-                href="/ndpc-certificate.pdf" 
-                target="_blank" 
+              <a
+                href="/ndpc-certificate.pdf"
+                target="_blank"
                 rel="noreferrer"
                 className="inline-block transition-opacity hover:opacity-80"
               >
-                <img 
-                  src={ndpcBadge} 
-                  alt="NDPC Certified Badge" 
-                  className="h-20 w-auto rounded-md shadow-sm" 
+                <img
+                  src={ndpcBadge}
+                  alt="NDPC Certified Badge"
+                  className="h-20 w-auto rounded-md shadow-sm"
                   loading="lazy"
                 />
               </a>
@@ -109,9 +106,7 @@ export function SiteFooter() {
             <p className="text-xs">
               &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
             </p>
-            <p className="text-xs">
-              PocketPill, Ikeja, Lagos, Nigeria
-            </p>
+            <p className="text-xs">PocketPill, Ikeja, Lagos, Nigeria</p>
           </div>
           <p className="text-xs text-center sm:text-right">
             PocketPill is not a replacement for emergency care. If you are experiencing a medical

@@ -10,9 +10,15 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About PocketPill" },
-      { name: "description", content: "A Nigerian e-pharmacy. Pharmacists you can reach. Medicines we will go and find." },
+      {
+        name: "description",
+        content: "A Nigerian e-pharmacy. Pharmacists you can reach. Medicines we will go and find.",
+      },
       { property: "og:title", content: "About PocketPill" },
-      { property: "og:description", content: "A Nigerian e-pharmacy. Pharmacists you can reach. Medicines we will go and find." },
+      {
+        property: "og:description",
+        content: "A Nigerian e-pharmacy. Pharmacists you can reach. Medicines we will go and find.",
+      },
       { property: "og:url", content: "/about" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,28 +34,35 @@ function AboutPage() {
       <main className="flex-1">
         <section className="section-padding bg-background">
           <div className="container-tight max-w-3xl pt-12 sm:pt-24 pb-12">
-            <span className="text-[#123d2d] font-bold tracking-widest text-sm uppercase mb-6 block">ABOUT</span>
+            <span className="text-[#123d2d] font-bold tracking-widest text-sm uppercase mb-6 block">
+              ABOUT
+            </span>
             <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground leading-tight mb-12">
-              We are fostering trusted access to emergency medicines, clinical pharmacists, and specialized mental healthcare.
+              We are fostering trusted access to emergency medicines, clinical pharmacists, and
+              specialized mental healthcare.
             </h1>
-            
+
             <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
               <p>
-                That is the whole story. It is why we started. So anyone can reach a pharmacist, and get medicines they can trust, when they need to.
+                That is the whole story. It is why we started. So anyone can reach a pharmacist, and
+                get medicines they can trust, when they need to.
               </p>
               <p>
-                PocketPill is a Nigerian telepharmacy. If the medicine is for you, tell us what you need and we will go find it. If it is for a parent back home who will never open this website, that is what Lineage is for.
+                PocketPill is a Nigerian telepharmacy. If the medicine is for you, tell us what you
+                need and we will go find it. If it is for a parent back home who will never open
+                this website, that is what Lineage is for.
               </p>
               <p>
-                We work hard to be who you think of when you want proper care and medicines you can be sure of.
+                We work hard to be who you think of when you want proper care and medicines you can
+                be sure of.
               </p>
-              
+
               <div className="pt-8 flex items-end gap-4">
                 <style>
                   {`@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');`}
                 </style>
-                <span 
-                  className="text-6xl text-foreground/80 -rotate-6 origin-left" 
+                <span
+                  className="text-6xl text-foreground/80 -rotate-6 origin-left"
                   style={{ fontFamily: "'Mrs Saint Delafield', cursive" }}
                 >
                   Dr. J Onile
@@ -59,10 +72,16 @@ function AboutPage() {
             </div>
 
             <div className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t border-border/50 pt-8">
-              <Link to="/find" className="text-primary font-medium hover:underline flex items-center">
+              <Link
+                to="/find"
+                className="text-primary font-medium hover:underline flex items-center"
+              >
                 Find a medicine <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
-              <Link to="/lineage" className="text-primary font-medium hover:underline flex items-center">
+              <Link
+                to="/lineage"
+                className="text-primary font-medium hover:underline flex items-center"
+              >
                 Lineage <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
@@ -71,7 +90,11 @@ function AboutPage() {
               <p className="text-sm text-muted-foreground mb-4">
                 If you want to talk to a person before anything else, talk to a pharmacist.
               </p>
-              <Button size="lg" className="bg-[#123d2d] text-white hover:bg-[#123d2d]/90 rounded-full px-8 w-full sm:w-auto" asChild>
+              <Button
+                size="lg"
+                className="bg-[#123d2d] text-white hover:bg-[#123d2d]/90 rounded-full px-8 w-full sm:w-auto"
+                asChild
+              >
                 <a href="https://wa.me/2347083725382" target="_blank" rel="noreferrer">
                   Talk to a pharmacist <ArrowUpRight className="ml-2 h-4 w-4" />
                 </a>

@@ -11,7 +11,13 @@ function Arrow({ direction = "up" }: { direction?: "up" | "down" }) {
       viewBox="0 0 18 18"
       fill="none"
     >
-      <path d="M4.5 13.5 13.5 4.5M6 4.5h7.5V12" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M4.5 13.5 13.5 4.5M6 4.5h7.5V12"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -19,7 +25,13 @@ function Arrow({ direction = "up" }: { direction?: "up" | "down" }) {
 function Check() {
   return (
     <svg aria-hidden="true" viewBox="0 0 18 18" fill="none" className="pcv-check">
-      <path d="m4.2 9.2 3.1 3.1 6.6-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="m4.2 9.2 3.1 3.1 6.6-7"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -27,8 +39,18 @@ function Check() {
 function Shield() {
   return (
     <svg aria-hidden="true" viewBox="0 0 28 28" fill="none" className="pcv-shield">
-      <path d="M14 3.5 23 7v6.25c0 5.65-3.74 9.67-9 11.25-5.26-1.58-9-5.6-9-11.25V7l9-3.5Z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="m9.1 13.8 3.1 3.1 6.8-6.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M14 3.5 23 7v6.25c0 5.65-3.74 9.67-9 11.25-5.26-1.58-9-5.6-9-11.25V7l9-3.5Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="m9.1 13.8 3.1 3.1 6.8-6.8"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -40,7 +62,11 @@ export function TrustedCare() {
   const [consultState, setConsultState] = useState<ConsultState>("idle");
   const [safetyOpen, setSafetyOpen] = useState(false);
   const [questionOpen, setQuestionOpen] = useState<number | null>(0);
-  const [form, setForm] = useState({ name: "", contact: "", concern: "I have a question about my symptoms" });
+  const [form, setForm] = useState({
+    name: "",
+    contact: "",
+    concern: "I have a question about my symptoms",
+  });
 
   const openConsult = (concern = form.concern) => {
     setForm((current) => ({ ...current, concern }));
@@ -59,9 +85,18 @@ export function TrustedCare() {
   };
 
   const questions = [
-    ["Will I speak to a real pharmacist?", "Yes. Your first conversation is with a registered pharmacist who takes time to understand your health, current medicines, and what you want help with."],
-    ["Is my information kept private?", "Your conversation is private by design. We only collect what is needed to advise safely, and we never sell your health information."],
-    ["Do I need a prescription?", "Sometimes. If a prescription-only treatment is appropriate, we explain why and guide you to the right prescriber. We do not skip safety checks."],
+    [
+      "Will I speak to a real pharmacist?",
+      "Yes. Your first conversation is with a registered pharmacist who takes time to understand your health, current medicines, and what you want help with.",
+    ],
+    [
+      "Is my information kept private?",
+      "Your conversation is private by design. We only collect what is needed to advise safely, and we never sell your health information.",
+    ],
+    [
+      "Do I need a prescription?",
+      "Sometimes. If a prescription-only treatment is appropriate, we explain why and guide you to the right prescriber. We do not skip safety checks.",
+    ],
   ];
 
   return (
@@ -239,50 +274,113 @@ export function TrustedCare() {
           <a href="#pharmacists">Pharmacists</a>
           <a href="#options">Care options</a>
         </nav>
-        <button className="pcv-header-cta" onClick={() => openConsult()}>Talk to a pharmacist</button>
+        <button className="pcv-header-cta" onClick={() => openConsult()}>
+          Talk to a pharmacist
+        </button>
       </header>
 
       <main id="top">
         <section className="pcv-hero" aria-labelledby="hero-title">
           <div className="pcv-hero-copy">
             <div className="pcv-eyebrow">Care before capsules</div>
-            <h1 id="hero-title">A pharmacist who <em>listens</em> first.</h1>
-            <p className="pcv-hero-lede">Private men&apos;s health support that starts with a proper conversation — your symptoms, your medicines, your peace of mind.</p>
+            <h1 id="hero-title">
+              A pharmacist who <em>listens</em> first.
+            </h1>
+            <p className="pcv-hero-lede">
+              Private men&apos;s health support that starts with a proper conversation — your
+              symptoms, your medicines, your peace of mind.
+            </p>
             <div className="pcv-actions">
-              <button className="pcv-primary" onClick={() => openConsult("I would like a private pharmacist consultation")}>Start a private consultation <Arrow /></button>
-              <a className="pcv-secondary" href="#care">See how care works <Arrow direction="down" /></a>
+              <button
+                className="pcv-primary"
+                onClick={() => openConsult("I would like a private pharmacist consultation")}
+              >
+                Start a private consultation <Arrow />
+              </button>
+              <a className="pcv-secondary" href="#care">
+                See how care works <Arrow direction="down" />
+              </a>
             </div>
             <div className="pcv-credentials" aria-label="PocketPill commitments">
-              <span className="pcv-credential"><Check /> Registered pharmacists</span>
-              <span className="pcv-credential"><Check /> Private by design</span>
+              <span className="pcv-credential">
+                <Check /> Registered pharmacists
+              </span>
+              <span className="pcv-credential">
+                <Check /> Private by design
+              </span>
             </div>
           </div>
           <div className="pcv-hero-art" aria-label="Pharmacist care at PocketPill">
-            <img className="pcv-hero-photo" src={image("care-team.jpg")} alt="Pharmacist speaking with a patient in a bright consultation room" />
+            <img
+              className="pcv-hero-photo"
+              src={image("care-team.jpg")}
+              alt="Pharmacist speaking with a patient in a bright consultation room"
+            />
             <div className="pcv-art-side">
-              <img className="pcv-side-photo" src={image("pharmacist.jpg")} alt="PocketPill pharmacist reviewing a patient's answers" />
-              <img className="pcv-side-photo" src={image("hero.jpg")} alt="Patient using a phone for a private health conversation" />
+              <img
+                className="pcv-side-photo"
+                src={image("pharmacist.jpg")}
+                alt="PocketPill pharmacist reviewing a patient's answers"
+              />
+              <img
+                className="pcv-side-photo"
+                src={image("hero.jpg")}
+                alt="Patient using a phone for a private health conversation"
+              />
             </div>
-            <div className="pcv-trust-stamp"><div><span>01:01</span>average first reply from our care team</div></div>
+            <div className="pcv-trust-stamp">
+              <div>
+                <span>01:01</span>average first reply from our care team
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="pcv-proof" id="safety" aria-labelledby="proof-title">
           <div>
-            <h2 id="proof-title">Good treatment starts with <span>good questions.</span></h2>
-            <p className="pcv-proof-copy">We do more than match a symptom to a product. We check the context around it, explain your options plainly, and know when another clinician should be involved.</p>
-            <button className="pcv-safety-link" onClick={() => setSafetyOpen((open) => !open)}><Shield /> {safetyOpen ? "Hide our safety promise" : "Read our safety promise"} <Arrow direction="down" /></button>
-            {safetyOpen && <div className="pcv-safety-panel">Every consultation includes a medicines and health check. We will never recommend a treatment if the information you share suggests it may be unsafe, and we will tell you exactly what to do next.</div>}
+            <h2 id="proof-title">
+              Good treatment starts with <span>good questions.</span>
+            </h2>
+            <p className="pcv-proof-copy">
+              We do more than match a symptom to a product. We check the context around it, explain
+              your options plainly, and know when another clinician should be involved.
+            </p>
+            <button className="pcv-safety-link" onClick={() => setSafetyOpen((open) => !open)}>
+              <Shield /> {safetyOpen ? "Hide our safety promise" : "Read our safety promise"}{" "}
+              <Arrow direction="down" />
+            </button>
+            {safetyOpen && (
+              <div className="pcv-safety-panel">
+                Every consultation includes a medicines and health check. We will never recommend a
+                treatment if the information you share suggests it may be unsafe, and we will tell
+                you exactly what to do next.
+              </div>
+            )}
           </div>
           <div className="pcv-proof-list">
             {[
-              ["01", "A real clinical conversation", "Tell us what is happening in your own words. No rushed tick-box diagnosis."],
-              ["02", "A safety check that means something", "We consider blood pressure, heart health, current medication, and the details that change the advice."],
-              ["03", "Confidence in your next step", "You leave knowing what you are taking, why it may help, and when to speak to a doctor."],
+              [
+                "01",
+                "A real clinical conversation",
+                "Tell us what is happening in your own words. No rushed tick-box diagnosis.",
+              ],
+              [
+                "02",
+                "A safety check that means something",
+                "We consider blood pressure, heart health, current medication, and the details that change the advice.",
+              ],
+              [
+                "03",
+                "Confidence in your next step",
+                "You leave knowing what you are taking, why it may help, and when to speak to a doctor.",
+              ],
             ].map(([number, title, body]) => (
               <article className="pcv-proof-item" key={number}>
                 <div className="pcv-proof-number">{number}</div>
-                <div><h3>{title}</h3><p>{body}</p></div>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </div>
               </article>
             ))}
           </div>
@@ -290,12 +388,26 @@ export function TrustedCare() {
 
         <section className="pcv-pathway" id="care" aria-labelledby="path-title">
           <div className="pcv-section-kicker">The PocketPill pathway</div>
-          <h2 id="path-title" className="pcv-section-heading">Care that keeps you in the conversation.</h2>
+          <h2 id="path-title" className="pcv-section-heading">
+            Care that keeps you in the conversation.
+          </h2>
           <div className="pcv-path-grid">
             {[
-              ["01", "Tell us what is going on", "Start in a private chat at a time that suits you. There is no waiting room and no awkward handover."],
-              ["02", "Get considered advice", "A pharmacist reviews your answers, asks the useful follow-ups, and talks through treatment honestly."],
-              ["03", "Keep your confidence", "If treatment is suitable, we arrange the next step discreetly — with support after, not silence."],
+              [
+                "01",
+                "Tell us what is going on",
+                "Start in a private chat at a time that suits you. There is no waiting room and no awkward handover.",
+              ],
+              [
+                "02",
+                "Get considered advice",
+                "A pharmacist reviews your answers, asks the useful follow-ups, and talks through treatment honestly.",
+              ],
+              [
+                "03",
+                "Keep your confidence",
+                "If treatment is suitable, we arrange the next step discreetly — with support after, not silence.",
+              ],
             ].map(([number, title, body]) => (
               <article className="pcv-path-card" key={number}>
                 <div className="pcv-path-index">{number}</div>
@@ -307,42 +419,87 @@ export function TrustedCare() {
         </section>
 
         <section className="pcv-team" id="pharmacists" aria-labelledby="team-title">
-          <img className="pcv-team-img" src={image("performance.jpg")} alt="Friendly PocketPill pharmacist ready for a private consultation" />
+          <img
+            className="pcv-team-img"
+            src={image("performance.jpg")}
+            alt="Friendly PocketPill pharmacist ready for a private consultation"
+          />
           <div className="pcv-team-copy">
             <div className="pcv-section-kicker">People, not algorithms</div>
             <h2 id="team-title">The calm voice on the other side of the chat.</h2>
-            <p>Our pharmacists are trained to talk about sensitive health concerns without judgement or jargon. They will be direct when something needs attention, and patient when you need a moment.</p>
-            <blockquote className="pcv-quote">&quot;I finally understood what was safe for me — not just what was available.&quot;<cite>— PocketPill patient, anonymous by choice</cite></blockquote>
-            <div className="pcv-actions"><button className="pcv-primary" onClick={() => openConsult("I want to speak with the care team")}>Meet the care team <Arrow /></button></div>
+            <p>
+              Our pharmacists are trained to talk about sensitive health concerns without judgement
+              or jargon. They will be direct when something needs attention, and patient when you
+              need a moment.
+            </p>
+            <blockquote className="pcv-quote">
+              &quot;I finally understood what was safe for me — not just what was available.&quot;
+              <cite>— PocketPill patient, anonymous by choice</cite>
+            </blockquote>
+            <div className="pcv-actions">
+              <button
+                className="pcv-primary"
+                onClick={() => openConsult("I want to speak with the care team")}
+              >
+                Meet the care team <Arrow />
+              </button>
+            </div>
           </div>
         </section>
 
         <section className="pcv-options" id="options" aria-labelledby="options-title">
           <div className="pcv-options-head">
-            <div><div className="pcv-section-kicker">When you are ready</div><h2 id="options-title" className="pcv-section-heading">Treatment, explained without the hard sell.</h2></div>
-            <p>Start with care. Explore options only after you know what makes sense for your health.</p>
+            <div>
+              <div className="pcv-section-kicker">When you are ready</div>
+              <h2 id="options-title" className="pcv-section-heading">
+                Treatment, explained without the hard sell.
+              </h2>
+            </div>
+            <p>
+              Start with care. Explore options only after you know what makes sense for your health.
+            </p>
           </div>
           <div className="pcv-option-grid">
             <article className="pcv-option">
               <h3>Private pharmacist consultation</h3>
-              <p>A considered review for erectile dysfunction, premature ejaculation, and the questions you have been putting off.</p>
-              <button onClick={() => openConsult("I would like to book a pharmacist consultation")}>Book a consultation <Arrow /></button>
+              <p>
+                A considered review for erectile dysfunction, premature ejaculation, and the
+                questions you have been putting off.
+              </p>
+              <button onClick={() => openConsult("I would like to book a pharmacist consultation")}>
+                Book a consultation <Arrow />
+              </button>
             </article>
             <article className="pcv-option">
               <h3>Explore treatment options</h3>
-              <p>See what may be suitable after your safety check. Clear prices, no bundles you do not need.</p>
-              <button onClick={() => openConsult("I would like to understand my treatment options")}>Ask what fits <Arrow /></button>
+              <p>
+                See what may be suitable after your safety check. Clear prices, no bundles you do
+                not need.
+              </p>
+              <button
+                onClick={() => openConsult("I would like to understand my treatment options")}
+              >
+                Ask what fits <Arrow />
+              </button>
             </article>
           </div>
         </section>
 
         <section className="pcv-faq" aria-labelledby="faq-title">
-          <div><div className="pcv-section-kicker">Still wondering?</div><h2 id="faq-title">Straight answers for a sensitive subject.</h2></div>
+          <div>
+            <div className="pcv-section-kicker">Still wondering?</div>
+            <h2 id="faq-title">Straight answers for a sensitive subject.</h2>
+          </div>
           <div className="pcv-faq-list">
             {questions.map(([question, answer], index) => (
               <article className="pcv-faq-item" key={question}>
-                <button className="pcv-faq-q" onClick={() => setQuestionOpen(questionOpen === index ? null : index)} aria-expanded={questionOpen === index}>
-                  <span>{question}</span><span>{questionOpen === index ? "−" : "+"}</span>
+                <button
+                  className="pcv-faq-q"
+                  onClick={() => setQuestionOpen(questionOpen === index ? null : index)}
+                  aria-expanded={questionOpen === index}
+                >
+                  <span>{question}</span>
+                  <span>{questionOpen === index ? "−" : "+"}</span>
                 </button>
                 {questionOpen === index && <p className="pcv-faq-a">{answer}</p>}
               </article>
@@ -351,30 +508,99 @@ export function TrustedCare() {
         </section>
       </main>
 
-      <footer className="pcv-footer"><strong>PocketPill</strong><span>Private care for the questions that matter.</span><span>© 2024 PocketPill Health</span></footer>
+      <footer className="pcv-footer">
+        <strong>PocketPill</strong>
+        <span>Private care for the questions that matter.</span>
+        <span>© 2024 PocketPill Health</span>
+      </footer>
 
       {modalOpen && (
-        <div className="pcv-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setModalOpen(false); }}>
-          <section className="pcv-modal" role="dialog" aria-modal="true" aria-labelledby="consult-title">
-            <button className="pcv-modal-close" onClick={() => setModalOpen(false)} aria-label="Close consultation form">×</button>
+        <div
+          className="pcv-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setModalOpen(false);
+          }}
+        >
+          <section
+            className="pcv-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="consult-title"
+          >
+            <button
+              className="pcv-modal-close"
+              onClick={() => setModalOpen(false)}
+              aria-label="Close consultation form"
+            >
+              ×
+            </button>
             {consultState === "success" ? (
               <div className="pcv-success">
-                <div className="pcv-success-mark"><Check /></div>
+                <div className="pcv-success-mark">
+                  <Check />
+                </div>
                 <h3>We&apos;ll take it from here.</h3>
-                <p>Thanks, {form.name}. A member of the PocketPill care team will reach you privately at {form.contact} to arrange a good time.</p>
-                <button className="pcv-primary" onClick={() => setModalOpen(false)}>Close</button>
+                <p>
+                  Thanks, {form.name}. A member of the PocketPill care team will reach you privately
+                  at {form.contact} to arrange a good time.
+                </p>
+                <button className="pcv-primary" onClick={() => setModalOpen(false)}>
+                  Close
+                </button>
               </div>
             ) : (
               <>
                 <div className="pcv-section-kicker">A private first step</div>
                 <h2 id="consult-title">Talk to a pharmacist.</h2>
-                <p className="pcv-modal-lede">Leave a few details and our care team will reply privately. No payment is taken here.</p>
+                <p className="pcv-modal-lede">
+                  Leave a few details and our care team will reply privately. No payment is taken
+                  here.
+                </p>
                 <form className="pcv-form" onSubmit={submitConsult}>
-                  <label>Your name<input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="What should we call you?" autoComplete="name" /></label>
-                  <label>WhatsApp number or email<input value={form.contact} onChange={(event) => setForm({ ...form, contact: event.target.value })} placeholder="Where should we reach you?" autoComplete="email" /></label>
-                  <label>What would you like help with?<select value={form.concern} onChange={(event) => setForm({ ...form, concern: event.target.value })}><option>I have a question about my symptoms</option><option>I would like a private pharmacist consultation</option><option>I would like to understand my treatment options</option><option>I want to speak with the care team</option></select></label>
-                  {consultState === "error" && <p className="pcv-form-error">Please add your name and a WhatsApp number or email so we can reply.</p>}
-                  <button className="pcv-primary" type="submit" disabled={consultState === "sending"}>{consultState === "sending" ? "Sending securely…" : "Request a private reply"} <Arrow /></button>
+                  <label>
+                    Your name
+                    <input
+                      value={form.name}
+                      onChange={(event) => setForm({ ...form, name: event.target.value })}
+                      placeholder="What should we call you?"
+                      autoComplete="name"
+                    />
+                  </label>
+                  <label>
+                    WhatsApp number or email
+                    <input
+                      value={form.contact}
+                      onChange={(event) => setForm({ ...form, contact: event.target.value })}
+                      placeholder="Where should we reach you?"
+                      autoComplete="email"
+                    />
+                  </label>
+                  <label>
+                    What would you like help with?
+                    <select
+                      value={form.concern}
+                      onChange={(event) => setForm({ ...form, concern: event.target.value })}
+                    >
+                      <option>I have a question about my symptoms</option>
+                      <option>I would like a private pharmacist consultation</option>
+                      <option>I would like to understand my treatment options</option>
+                      <option>I want to speak with the care team</option>
+                    </select>
+                  </label>
+                  {consultState === "error" && (
+                    <p className="pcv-form-error">
+                      Please add your name and a WhatsApp number or email so we can reply.
+                    </p>
+                  )}
+                  <button
+                    className="pcv-primary"
+                    type="submit"
+                    disabled={consultState === "sending"}
+                  >
+                    {consultState === "sending" ? "Sending securely…" : "Request a private reply"}{" "}
+                    <Arrow />
+                  </button>
                 </form>
               </>
             )}

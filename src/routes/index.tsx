@@ -1,12 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, type CSSProperties } from "react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Clock3,
-  MessageCircle,
-  Search,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Clock3, MessageCircle, Search } from "lucide-react";
 
 import { FAQAccordion } from "@/components/faq-accordion";
 import { SiteFooter } from "@/components/site-footer";
@@ -38,8 +32,6 @@ export const Route = createFileRoute("/")({
     links: [{ rel: "canonical", href: "/" }],
   }),
 });
-
-
 
 const faqs = [
   {
@@ -99,8 +91,6 @@ const faqs = [
   },
 ];
 
-
-
 function HomePage() {
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -148,7 +138,8 @@ function HomePage() {
                 <span className="hero-title__line hero-title__line--accent">the prescription.</span>
               </h1>
               <p className="mt-6 max-w-lg text-base sm:text-lg text-white/90 font-medium">
-                Find medicines, speak with a pharmacist, source hard-to-find treatments and stay on track with ongoing medication care.
+                Find medicines, speak with a pharmacist, source hard-to-find treatments and stay on
+                track with ongoing medication care.
               </p>
             </div>
 
@@ -209,12 +200,20 @@ function HomePage() {
                   to: "/lineage",
                 },
               ].map((path, index) => (
-                <div key={path.title} className="flex flex-col justify-between rounded-2xl bg-white p-6 shadow-sm border border-border/40" data-reveal style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}>
+                <div
+                  key={path.title}
+                  className="flex flex-col justify-between rounded-2xl bg-white p-6 shadow-sm border border-border/40"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
+                >
                   <div>
                     <h3 className="font-heading text-lg font-bold text-[#133c2c]">{path.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-[#6b7b73]">{path.desc}</p>
                   </div>
-                  <Link to={path.to} className="mt-6 inline-flex items-center text-sm font-semibold text-[#123d2d] hover:underline">
+                  <Link
+                    to={path.to}
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-[#123d2d] hover:underline"
+                  >
                     {path.cta} <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
@@ -230,7 +229,9 @@ function HomePage() {
                 Getting the medicine shouldn't be the hardest part of treatment.
               </h2>
               <p className="mt-6 text-base sm:text-lg leading-relaxed text-[#6b7b73]">
-                A prescription may only be the beginning. Patients can still spend time searching for medicines, confirming availability, finding specialist treatments, asking medication questions and repeating the same process when a refill is due.
+                A prescription may only be the beginning. Patients can still spend time searching
+                for medicines, confirming availability, finding specialist treatments, asking
+                medication questions and repeating the same process when a refill is due.
               </p>
               <p className="mt-4 font-semibold text-[#123d2d] text-lg">
                 PocketPill brings these steps into one coordinated pharmacy experience.
@@ -251,24 +252,31 @@ function HomePage() {
                 {
                   title: "Find it.",
                   desc: "Search for everyday medicines, upload a prescription or ask PocketPill to investigate difficult-to-source medication.",
-                  icon: Search
+                  icon: Search,
                 },
                 {
                   title: "Understand it.",
                   desc: "Speak with a pharmacist about medication use, interactions, side effects, storage, adherence and medication reviews.",
-                  icon: MessageCircle
+                  icon: MessageCircle,
                 },
                 {
                   title: "Stay on it.",
                   desc: "Make repeat treatment easier with refill support and ongoing medication care.",
-                  icon: Clock3
-                }
+                  icon: Clock3,
+                },
               ].map((item, index) => (
-                <div key={item.title} className="flex flex-col items-center text-center" data-reveal style={{ "--reveal-delay": `${index * 100}ms` } as CSSProperties}>
+                <div
+                  key={item.title}
+                  className="flex flex-col items-center text-center"
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 100}ms` } as CSSProperties}
+                >
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e6eee9] text-[#123d2d]">
                     <item.icon className="h-8 w-8" />
                   </div>
-                  <h3 className="mt-6 font-heading text-xl font-bold text-[#133c2c]">{item.title}</h3>
+                  <h3 className="mt-6 font-heading text-xl font-bold text-[#133c2c]">
+                    {item.title}
+                  </h3>
                   <p className="mt-4 text-base leading-relaxed text-[#6b7b73]">{item.desc}</p>
                 </div>
               ))}
@@ -283,7 +291,8 @@ function HomePage() {
                 Can't find your medicine?
               </h2>
               <p className="mt-6 text-base sm:text-lg leading-relaxed text-white/80">
-                Send us the medicine name, your prescription or a photo of the pack. Our pharmacy team can review the request and investigate appropriate sourcing options.
+                Send us the medicine name, your prescription or a photo of the pack. Our pharmacy
+                team can review the request and investigate appropriate sourcing options.
               </p>
               <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
                 <Link to="/specialty" className="pill-button pill-button--mint">
@@ -297,16 +306,14 @@ function HomePage() {
           </div>
         </section>
 
-
-
         <section className="editorial-section faq-section bg-[#f5f7f2]" id="faq">
           <div className="editorial-container faq-container">
             <div className="text-center" data-reveal>
               <span className="eyebrow">Questions, answered</span>
               <h2 className="section-title mt-5">Good care starts with a question.</h2>
               <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-[#6b7b73]">
-                Not sure whether to shop, chat, or book? Send us a private message before you pay. We
-                will help you find the right route.
+                Not sure whether to shop, chat, or book? Send us a private message before you pay.
+                We will help you find the right route.
               </p>
             </div>
             <div className="faq-card" data-reveal>

@@ -41,10 +41,10 @@ export function SiteHeader({
             overlay ? "text-white" : "text-foreground",
           )}
         >
-          <img 
-            src="/pocketpill-icon-512.png" 
-            alt="" 
-            className={cn("h-8 w-8", overlay && "brightness-0 invert")} 
+          <img
+            src="/pocketpill-icon-512.png"
+            alt=""
+            className={cn("h-8 w-8", overlay && "brightness-0 invert")}
           />
           <span className="font-heading">PocketPill</span>
         </Link>
@@ -102,11 +102,7 @@ export function SiteHeader({
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
               >
-                <img 
-                  src="/pocketpill-icon-512.png" 
-                  alt="" 
-                  className="h-8 w-8" 
-                />
+                <img src="/pocketpill-icon-512.png" alt="" className="h-8 w-8" />
                 <span className="font-heading">PocketPill</span>
               </Link>
               <nav className="flex flex-col gap-4">

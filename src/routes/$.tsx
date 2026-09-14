@@ -3,9 +3,7 @@ import { NotFoundComponent } from "./__root";
 
 export const Route = createFileRoute("/$")({
   head: () => ({
-    meta: [
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
   }),
   component: NotFoundComponent,
 });
