@@ -44,17 +44,17 @@ function AboutPage() {
                 We work hard to be who you think of when you want proper care and medicines you can be sure of.
               </p>
               
-              <div className="pt-8 flex flex-col items-start">
+              <div className="pt-8 flex items-end gap-4">
                 <style>
                   {`@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');`}
                 </style>
                 <span 
-                  className="text-6xl text-foreground/80 mb-2 -rotate-6 origin-left" 
+                  className="text-6xl text-foreground/80 -rotate-6 origin-left" 
                   style={{ fontFamily: "'Mrs Saint Delafield', cursive" }}
                 >
                   Dr. J Onile
                 </span>
-                <p className="text-sm">Bpharm, PharmD, MPSN</p>
+                <span className="text-sm text-muted-foreground pb-1">Bpharm, PharmD, MPSN</span>
               </div>
             </div>
 

@@ -187,7 +187,6 @@ function HomePage() {
 
           <div className="hero-shell__body">
             <div className="hero-shell__heading">
-              <span className="hero-eyebrow">telepharmacy</span>
               <h1 className="hero-title">
                 <span className="hero-title__line">Your health,</span>
                 <span className="hero-title__line hero-title__line--accent">handled with care.</span>
