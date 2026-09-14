@@ -53,19 +53,19 @@ function LineagePage() {
         <section className="py-16 bg-background">
           <div className="container-tight max-w-2xl text-lg leading-relaxed text-foreground space-y-8">
             <p>
-              You are abroad. Your mum is in Lagos or Onitsha. She is not going to download anything, remember a refill date, or argue with a caregiver about a missing drug. You also do not want to keep sending money on WhatsApp and hoping it became the right tablets.
+              You are abroad. Your parent is in Lagos or Onitsha. They are not going to download anything, remember a refill date, or argue with a caregiver about a missing drug. You also do not want to keep sending money on WhatsApp and hoping it became the right tablets.
             </p>
             <p>
               So Lineage does the remembering for both of you.
             </p>
             <p>
-              You set up her name, her caregiver's phone, and her prescription. You put money in a wallet that can only be used for her treatment. Not for cash. Not for "I will buy it when I pass the shop." The system checks that the prescription is real and has not already been used somewhere else. Then it watches the calendar.
+              You set up their name, their caregiver's phone, and their prescription. You put money in a wallet that can only be used for their treatment. Not for cash. Not for "I will buy it when I pass the shop." The system checks that the prescription is real and has not already been used somewhere else. Then it watches the calendar.
             </p>
             <p>
               Before the pack in the house runs out, a pharmacist calls. The next pack is already arranged. If something is wrong (fake script, missed call, drug that never showed up) the next payment stops and you get told. If everything is fine, it just happens again.
             </p>
             <p>
-              She never logs in. She hears a phone call and someone she trusts collects the medicine from a place she already knows.
+              They never log in. They hear a phone call and someone they trust collects the medicine from a place they already know.
             </p>
           </div>
         </section>
@@ -104,7 +104,7 @@ function LineagePage() {
             />
             <div className="mt-12 space-y-6">
               {[
-                "You send her name, the caregiver's number, and a photo of the prescription.",
+                "You send their name, the caregiver's number, and a photo of the prescription.",
                 "A pharmacist checks the paper.",
                 "You fund the wallet.",
                 "We take it from there."

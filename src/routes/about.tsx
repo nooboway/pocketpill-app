@@ -44,9 +44,15 @@ function AboutPage() {
                 We work hard to be who you think of when you want proper care and medicines you can be sure of.
               </p>
               
-              <div className="pt-8">
+              <div className="pt-8 flex flex-col items-start">
+                <span 
+                  className="text-4xl text-foreground/80 mb-1 -rotate-2 origin-left italic" 
+                  style={{ fontFamily: "'Dancing Script', 'Caveat', 'Brush Script MT', cursive" }}
+                >
+                  J. Onile
+                </span>
                 <p className="font-heading font-medium text-foreground">Dr. J. Onile</p>
-                <p className="text-sm">Bpharm, PharmD, Mpsn</p>
+                <p className="text-sm">Bpharm, PharmD, MPSN</p>
               </div>
             </div>
 
