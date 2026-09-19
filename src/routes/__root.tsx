@@ -14,7 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CookieConsent } from "../components/cookie-consent";
 import { EnoreChat } from "../components/enore-chat";
 
-export function NotFoundComponent() {
+function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -79,19 +79,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PocketPill | Online Pharmacy and Care" },
+      { title: "PocketPill — Online Doctor Visits, Prescriptions & Care" },
       {
         name: "description",
         content:
-          "PocketPill connects you with certified pharmacists and healthcare professionals for specialty care, mental health, prescriptions, and continuous support. From your phone, same day.",
+          "PocketPill connects you with certified doctors, pharmacists and team of healthcare professionals for urgent care, mental health, prescriptions, and more — from your phone, same day.",
       },
       { name: "author", content: "PocketPill" },
       { property: "og:site_name", content: "PocketPill" },
-      { property: "og:title", content: "PocketPill | Your Telepharmacy" },
+      { property: "og:title", content: "PocketPill — Your Virtual Health Clinic" },
       {
         property: "og:description",
         content:
-          "PocketPill connects you with certified pharmacists and healthcare professionals for specialty care, mental health, prescriptions, and continuous support. From your phone, same day.",
+          "PocketPill connects you with certified doctors, pharmacists and team of healthcare professionals for urgent care, mental health, prescriptions, and more — from your phone, same day.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -109,9 +109,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap",
       },
 
-      { rel: "icon", href: "/favicon.ico?v=2", type: "image/x-icon" },
-      { rel: "icon", href: "/favicon-32.png?v=2", type: "image/png", sizes: "32x32" },
-      { rel: "apple-touch-icon", href: "/pocketpill-icon-512.png?v=2", sizes: "512x512" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -125,179 +123,178 @@ function RootShell({ children }: { children: ReactNode }) {
     pharmacy: {
       "@context": "https://schema.org",
       "@type": "Pharmacy",
-      name: "PocketPill",
-      alternateName: "PocketPill Nigeria",
-      url: "https://pocketpill.co",
+      "name": "PocketPill",
+      "alternateName": "PocketPill Nigeria",
+      "url": "https://pocketpill.co",
       "@id": "https://pocketpill.co/#pharmacy",
-      telephone: "+234-708-372-5382",
-      description:
-        "Medicines and care, made simple. Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
-      address: {
+      "telephone": "+234-708-372-5382",
+      "description": "Medicines and care, made simple. Shop trusted medicines in Nigeria, talk to a pharmacist, and book private telehealth support from home.",
+      "address": {
         "@type": "PostalAddress",
-        addressLocality: "Ikeja",
-        addressRegion: "Lagos",
-        addressCountry: "NG",
+        "addressLocality": "Ikeja",
+        "addressRegion": "Lagos",
+        "addressCountry": "NG"
       },
-      areaServed: {
+      "areaServed": {
         "@type": "Country",
-        name: "Nigeria",
+        "name": "Nigeria"
       },
-      currenciesAccepted: "NGN",
-      paymentAccepted: "Cash, Bank Transfer, Card Payment",
-      sameAs: ["https://wa.me/2347083725382"],
+      "currenciesAccepted": "NGN",
+      "paymentAccepted": "Cash, Bank Transfer, Card Payment",
+      "sameAs": [
+        "https://wa.me/2347083725382"
+      ]
     },
     website: {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "@id": "https://pocketpill.co/#website",
-      url: "https://pocketpill.co",
-      name: "PocketPill",
-      description: "Medicines and care, made simple",
-      publisher: {
+      "url": "https://pocketpill.co",
+      "name": "PocketPill",
+      "description": "Medicines and care, made simple",
+      "publisher": {
         "@type": "Organization",
-        name: "PocketPill",
-        "@id": "https://pocketpill.co/#organization",
-      },
+        "name": "PocketPill",
+        "@id": "https://pocketpill.co/#organization"
+      }
     },
     services: {
       "@context": "https://schema.org",
       "@type": "Service",
-      serviceType: "Telehealth & Pharmacy Services",
-      provider: {
+      "serviceType": "Telehealth & Pharmacy Services",
+      "provider": {
         "@type": "Pharmacy",
-        "@id": "https://pocketpill.co/#pharmacy",
+        "@id": "https://pocketpill.co/#pharmacy"
       },
-      areaServed: {
+      "areaServed": {
         "@type": "Country",
-        name: "Nigeria",
+        "name": "Nigeria"
       },
-      hasOfferCatalog: {
+      "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        name: "PocketPill Services",
-        itemListElement: [
+        "name": "PocketPill Services",
+        "itemListElement": [
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Service",
-              name: "Private Pharmacist Consultations",
-              description:
-                "One-on-one consultations with a licensed pharmacist via WhatsApp or virtual sessions",
-            },
+              "name": "Private Pharmacist Consultations",
+              "description": "One-on-one consultations with a licensed pharmacist via WhatsApp or virtual sessions"
+            }
           },
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Service",
-              name: "Medicine Delivery",
-              description: "Trusted pharmacy products delivered discreetly across Nigeria",
-            },
+              "name": "Medicine Delivery",
+              "description": "Trusted pharmacy products delivered discreetly across Nigeria"
+            }
           },
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Service",
-              name: "Mental Health Support",
-              description: "Accessible mental health care, guidance, and medication support",
-            },
+              "name": "Mental Health Support",
+              "description": "Accessible mental health care, guidance, and medication support"
+            }
           },
           {
             "@type": "Offer",
-            itemOffered: {
+            "itemOffered": {
               "@type": "Service",
-              name: "Oncology Medication Sourcing",
-              description:
-                "Expert sourcing, delivery, and guidance for oncology medications in Nigeria",
-            },
-          },
-        ],
-      },
+              "name": "Oncology Medication Sourcing",
+              "description": "Expert sourcing, delivery, and guidance for oncology medications in Nigeria"
+            }
+          }
+        ]
+      }
     },
     faq: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
+      "mainEntity": [
         {
           "@type": "Question",
-          name: "How do I order my medications?",
-          acceptedAnswer: {
+          "name": "How do I order my medications?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "You can shop directly on our website, ask our Enoré AI assistant, or message us on WhatsApp. Once confirmed, we process and dispatch your order swiftly and discreetly.",
-          },
+            "text": "You can shop directly on our website, ask our Enoré AI assistant, or message us on WhatsApp. Once confirmed, we process and dispatch your order swiftly and discreetly."
+          }
         },
         {
           "@type": "Question",
-          name: "Are your medications genuine?",
-          acceptedAnswer: {
+          "name": "Are your medications genuine?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Yes. We source directly from trusted manufacturers and verified distributors. PocketPill is committed to delivering only safe and authentic medications.",
-          },
+            "text": "Yes. We source directly from trusted manufacturers and verified distributors. PocketPill is committed to delivering only safe and authentic medications."
+          }
         },
         {
           "@type": "Question",
-          name: "Do I need a prescription to order?",
-          acceptedAnswer: {
+          "name": "Do I need a prescription to order?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Over-the-counter (OTC) medications can be ordered directly. For prescription-only medicines (POM), you will need to upload a valid prescription during checkout or share it with our pharmacists via WhatsApp.",
-          },
+            "text": "Over-the-counter (OTC) medications can be ordered directly. For prescription-only medicines (POM), you will need to upload a valid prescription during checkout or share it with our pharmacists via WhatsApp."
+          }
         },
         {
           "@type": "Question",
-          name: "How fast is delivery?",
-          acceptedAnswer: {
+          "name": "How fast is delivery?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "We offer fast, discreet delivery across Nigeria. Delivery availability and timing depend on your specific area and order, and our team will confirm the exact details before you pay.",
-          },
+            "text": "We offer fast, discreet delivery across Nigeria. Delivery availability and timing depend on your specific area and order, and our team will confirm the exact details before you pay."
+          }
         },
         {
           "@type": "Question",
-          name: "Can I speak to a pharmacist before buying?",
-          acceptedAnswer: {
+          "name": "Can I speak to a pharmacist before buying?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Absolutely. Our licensed pharmacists are available for private consultations via WhatsApp or voice call. We provide expert advice on dosage, side effects, and drug interactions.",
-          },
+            "text": "Absolutely. Our licensed pharmacists are available for private consultations via WhatsApp or voice call. We provide expert advice on dosage, side effects, and drug interactions."
+          }
         },
         {
           "@type": "Question",
-          name: "Is my consultation really private?",
-          acceptedAnswer: {
+          "name": "Is my consultation really private?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, waiting room, or front-desk handover. Your conversations and data are treated with strict confidentiality.",
-          },
+            "text": "Yes. Consultations happen on your personal WhatsApp thread with the pharmacist. There is no public profile, waiting room, or front-desk handover. Your conversations and data are treated with strict confidentiality."
+          }
         },
         {
           "@type": "Question",
-          name: "Do you offer specialized care for chronic conditions?",
-          acceptedAnswer: {
+          "name": "Do you offer specialized care for chronic conditions?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Yes. We specialize in sourcing and delivering medications for oncology, mental health, and other chronic conditions, ensuring you never run out of essential care and have the right guidance.",
-          },
+            "text": "Yes. We specialize in sourcing and delivering medications for oncology, mental health, and other chronic conditions, ensuring you never run out of essential care and have the right guidance."
+          }
         },
         {
           "@type": "Question",
-          name: "What happens after I reach out for a consultation?",
-          acceptedAnswer: {
+          "name": "What happens after I reach out for a consultation?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "A licensed pharmacist asks a few focused questions, listens to what is going on, and shares clear next steps. If you need a prescriber, we will tell you what to ask for and when to seek further care.",
-          },
+            "text": "A licensed pharmacist asks a few focused questions, listens to what is going on, and shares clear next steps. If you need a prescriber, we will tell you what to ask for and when to seek further care."
+          }
         },
         {
           "@type": "Question",
-          name: "Can the pharmacist prescribe medication?",
-          acceptedAnswer: {
+          "name": "Can the pharmacist prescribe medication?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "PocketPill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and help you prepare for a prescriber, but a licensed physician must issue any new prescription.",
-          },
+            "text": "PocketPill is a pharmacist consultation and education service. We can explain treatment options, flag interactions, and help you prepare for a prescriber, but a licensed physician must issue any new prescription."
+          }
         },
         {
           "@type": "Question",
-          name: "What if I am not sure where to start?",
-          acceptedAnswer: {
+          "name": "What if I am not sure where to start?",
+          "acceptedAnswer": {
             "@type": "Answer",
-            text: "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right route. There is no pressure to book.",
-          },
-        },
-      ],
-    },
+            "text": "Start a message on WhatsApp before paying. A short back-and-forth is enough to point you toward the right route. There is no pressure to book."
+          }
+        }
+      ]
+    }
   };
 
   return (

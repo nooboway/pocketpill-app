@@ -7,11 +7,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Talk to a Pharmacist", to: "/telepharmacy" },
-  { label: "Specialty Care", to: "/specialty" },
-  { label: "Lineage", to: "/lineage" },
-  { label: "How It Works", to: "/how-it-works" },
-  { label: "About", to: "/about" },
+  { label: "Care", to: "/services" },
+  { label: "Pharmacy", to: "/shop" },
+  { label: "How it works", to: "/how-it-works" },
+  { label: "Pricing", to: "/pricing" },
 ];
 
 export function SiteHeader({
@@ -41,10 +40,10 @@ export function SiteHeader({
             overlay ? "text-white" : "text-foreground",
           )}
         >
-          <img
-            src="/pocketpill-icon-512.png"
-            alt=""
-            className={cn("h-8 w-8", overlay && "brightness-0 invert")}
+          <img 
+            src="/pocketpill-icon-512.png" 
+            alt="" 
+            className={cn("h-8 w-8", overlay && "brightness-0 invert")} 
           />
           <span className="font-heading">PocketPill</span>
         </Link>
@@ -68,18 +67,27 @@ export function SiteHeader({
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <Link
+            to="/contact"
+            className={cn(
+              "hidden text-[13px] font-semibold transition-colors hover:text-primary sm:inline-flex",
+              overlay ? "text-white/75 hover:text-white" : "text-muted-foreground",
+            )}
+          >
+            Talk to us
+          </Link>
           <Button
             size="sm"
             className={cn(
               "rounded-full px-5 shadow-none",
               overlay
                 ? "bg-white text-[#123d2d] hover:bg-[#d9f0df]"
-                : "bg-[#123d2d] text-white hover:bg-[#123d2d]/90",
+                : "bg-primary text-primary-foreground hover:bg-primary/90",
             )}
             asChild
           >
-            <Link to="/find">
-              Find a medicine <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
+            <Link to="/app">
+              Start care <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
             </Link>
           </Button>
         </div>
@@ -102,7 +110,11 @@ export function SiteHeader({
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
               >
-                <img src="/pocketpill-icon-512.png" alt="" className="h-8 w-8" />
+                <img 
+                  src="/pocketpill-icon-512.png" 
+                  alt="" 
+                  className="h-8 w-8" 
+                />
                 <span className="font-heading">PocketPill</span>
               </Link>
               <nav className="flex flex-col gap-4">
@@ -118,12 +130,17 @@ export function SiteHeader({
                 ))}
               </nav>
               <div className="flex flex-col gap-3">
+                <Button variant="outline" asChild>
+                  <Link to="/contact" onClick={() => setOpen(false)}>
+                    Talk to us
+                  </Link>
+                </Button>
                 <Button
-                  className="rounded-full bg-[#123d2d] text-white hover:bg-[#123d2d]/90"
+                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
                   asChild
                 >
-                  <Link to="/find" onClick={() => setOpen(false)}>
-                    Find a medicine <ArrowUpRight className="ml-1.5 h-4 w-4" />
+                  <Link to="/app" onClick={() => setOpen(false)}>
+                    Start care <ArrowUpRight className="ml-1.5 h-4 w-4" />
                   </Link>
                 </Button>
               </div>

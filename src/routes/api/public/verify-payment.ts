@@ -59,10 +59,7 @@ export const Route = createFileRoute("/api/public/verify-payment")({
           });
         } catch (error) {
           console.error("Error verifying payment:", error);
-          return Response.json(
-            { error: "An error occurred during verification." },
-            { status: 500 },
-          );
+          return Response.json({ error: "An error occurred during verification." }, { status: 500 });
         }
       },
     },
