@@ -27,9 +27,6 @@ function PrivacyPolicyPage() {
           <h1 className="mt-3 font-heading text-4xl sm:text-5xl font-semibold leading-tight text-[#123d2d]">
             Privacy Policy
           </h1>
-          <p className="mt-5 rounded-lg bg-[#f3f7f1] px-4 py-3 text-sm text-[#123d2d]">
-            Draft for review — proposed policy wording, not yet published.
-          </p>
           <p className="mt-4 text-sm text-[#4c6256]">{"Effective date: 1 September 2026"}</p>
           <p className="mt-6 text-lg leading-8 text-[#4c6256]">
             {

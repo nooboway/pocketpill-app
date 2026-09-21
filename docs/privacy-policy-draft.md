@@ -1,7 +1,5 @@
 # PocketPill Privacy Policy
 
-**Draft for review — proposed policy wording, not yet published**
-
 Effective date: 1 September 2026
 
 Your health information is personal. This policy explains how PocketPill Limited handles information when you use our website, request medicines, speak with a pharmacist, or arrange family care through Lineage.
