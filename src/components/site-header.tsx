@@ -45,7 +45,7 @@ export function SiteHeader({
             src="/pocketpill-icon-512.png"
             alt=""
             className={cn(
-              "h-[1cap] w-auto shrink-0 pocketpill-wordmark",
+              "h-[1.2cap] w-auto shrink-0 pocketpill-wordmark",
               overlay && "brightness-0 invert",
             )}
           />
@@ -113,7 +113,7 @@ export function SiteHeader({
                 <img
                   src="/pocketpill-icon-512.png"
                   alt=""
-                  className="h-[1cap] w-auto shrink-0 pocketpill-wordmark"
+                  className="h-[1.2cap] w-auto shrink-0 pocketpill-wordmark"
                 />
                 <span className="pocketpill-wordmark">PocketPill</span>
               </Link>

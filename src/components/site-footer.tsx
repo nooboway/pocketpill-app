@@ -45,7 +45,7 @@ export function SiteFooter() {
               <img
                 src="/pocketpill-icon-512.png"
                 alt=""
-                className="h-[1cap] w-auto shrink-0 pocketpill-wordmark brightness-0 invert"
+                className="h-[1.2cap] w-auto shrink-0 pocketpill-wordmark brightness-0 invert"
               />
               <span className="pocketpill-wordmark">PocketPill</span>
             </Link>
