@@ -36,7 +36,7 @@ const pillars = [
     icon: LockKeyhole,
     title: "Data Privacy & Security",
     description:
-      "Our request forms prepare a draft on your device. You choose what to send in WhatsApp, including any prescription. Read our privacy policy or contact privacy@pocketpill.co about how your information is handled.",
+      "Review medicine requests before sending them in WhatsApp, or submit Lineage details to our pharmacists by email. Within PocketPill, patient care information is restricted to pharmacists who need it for their work. Contact privacy@pocketpill.co about your information.",
   },
   {
     icon: FileText,
@@ -91,7 +91,7 @@ function TrustCompliancePage() {
                   <ul className="mt-6 space-y-3">
                     {[
                       "Review your request before sharing",
-                      "Attach prescriptions directly in WhatsApp",
+                      "Prescription follow-up with a pharmacist",
                       "Privacy enquiries: privacy@pocketpill.co",
                     ].map((item) => (
                       <li

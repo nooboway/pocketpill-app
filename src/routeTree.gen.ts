@@ -24,6 +24,7 @@ import { Route as TelepharmacyRouteImport } from './routes/telepharmacy'
 import { Route as TrustRouteImport } from './routes/trust'
 import { Route as LineageStartRouteImport } from './routes/lineage_.start'
 import { Route as ApiPublicInitializePaymentRouteImport } from './routes/api/public/initialize-payment'
+import { Route as ApiPublicLineageRequestRouteImport } from './routes/api/public/lineage-request'
 import { Route as ApiPublicVerifyPaymentRouteImport } from './routes/api/public/verify-payment'
 import { Route as ApiPublicWebhooksPaystackRouteImport } from './routes/api/public/webhooks/paystack'
 
@@ -103,6 +104,11 @@ const ApiPublicInitializePaymentRoute =
     path: '/api/public/initialize-payment',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicLineageRequestRoute = ApiPublicLineageRequestRouteImport.update({
+  id: '/api/public/lineage-request',
+  path: '/api/public/lineage-request',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicVerifyPaymentRoute = ApiPublicVerifyPaymentRouteImport.update({
   id: '/api/public/verify-payment',
   path: '/api/public/verify-payment',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/trust': typeof TrustRoute
   '/lineage/start': typeof LineageStartRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/lineage-request': typeof ApiPublicLineageRequestRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/trust': typeof TrustRoute
   '/lineage/start': typeof LineageStartRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/lineage-request': typeof ApiPublicLineageRequestRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/trust': typeof TrustRoute
   '/lineage_/start': typeof LineageStartRoute
   '/api/public/initialize-payment': typeof ApiPublicInitializePaymentRoute
+  '/api/public/lineage-request': typeof ApiPublicLineageRequestRoute
   '/api/public/verify-payment': typeof ApiPublicVerifyPaymentRoute
   '/api/public/webhooks/paystack': typeof ApiPublicWebhooksPaystackRoute
 }
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/trust'
     | '/lineage/start'
     | '/api/public/initialize-payment'
+    | '/api/public/lineage-request'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
   fileRoutesByTo: FileRoutesByTo
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/trust'
     | '/lineage/start'
     | '/api/public/initialize-payment'
+    | '/api/public/lineage-request'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
   id:
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/trust'
     | '/lineage_/start'
     | '/api/public/initialize-payment'
+    | '/api/public/lineage-request'
     | '/api/public/verify-payment'
     | '/api/public/webhooks/paystack'
   fileRoutesById: FileRoutesById
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   TrustRoute: typeof TrustRoute
   LineageStartRoute: typeof LineageStartRoute
   ApiPublicInitializePaymentRoute: typeof ApiPublicInitializePaymentRoute
+  ApiPublicLineageRequestRoute: typeof ApiPublicLineageRequestRoute
   ApiPublicVerifyPaymentRoute: typeof ApiPublicVerifyPaymentRoute
   ApiPublicWebhooksPaystackRoute: typeof ApiPublicWebhooksPaystackRoute
 }
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicInitializePaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/lineage-request': {
+      id: '/api/public/lineage-request'
+      path: '/api/public/lineage-request'
+      fullPath: '/api/public/lineage-request'
+      preLoaderRoute: typeof ApiPublicLineageRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/verify-payment': {
       id: '/api/public/verify-payment'
       path: '/api/public/verify-payment'
@@ -393,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrustRoute: TrustRoute,
   LineageStartRoute: LineageStartRoute,
   ApiPublicInitializePaymentRoute: ApiPublicInitializePaymentRoute,
+  ApiPublicLineageRequestRoute: ApiPublicLineageRequestRoute,
   ApiPublicVerifyPaymentRoute: ApiPublicVerifyPaymentRoute,
   ApiPublicWebhooksPaystackRoute: ApiPublicWebhooksPaystackRoute,
 }

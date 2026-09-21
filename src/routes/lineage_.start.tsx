@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { RequestHandoff } from "@/components/request-handoff";
+import { useRef, useState } from "react";
 import { requestSummary, isValidPhone } from "@/lib/care-request";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -20,6 +19,10 @@ export const Route = createFileRoute("/lineage_/start")({
 
 function LineageStartPage() {
   const [summary, setSummary] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [website, setWebsite] = useState("");
+  const sendingRef = useRef(false);
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
   const [prescriptionReady, setPrescriptionReady] = useState(false);
@@ -46,7 +49,7 @@ function LineageStartPage() {
       return;
     }
     if (!prescriptionReady) {
-      setError("Please confirm that you will attach the prescription in WhatsApp.");
+      setError("Please confirm that you can provide the prescription to the pharmacist.");
       return;
     }
     if (!consent) {
@@ -65,13 +68,59 @@ function LineageStartPage() {
         "Caregiver phone": caregiverPhone,
         Medicines: knownMedicines,
         "Ready to discuss funding": readyToFund,
-        "Prescription to attach in this chat": prescriptionReady,
+        "Will provide prescription to pharmacist": prescriptionReady,
         "Permission or legal authority to share for pharmacist review": consent,
       }),
     );
   };
 
+  const sendRequest = async () => {
+    if (sendingRef.current) return;
+    sendingRef.current = true;
+    setSending(true);
+    setError("");
+    try {
+      const response = await fetch("/api/public/lineage-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          yourName,
+          yourWhatsApp,
+          yourEmail,
+          parentName,
+          city,
+          caregiverName,
+          caregiverPhone,
+          knownMedicines,
+          readyToFund,
+          prescriptionReady,
+          consent,
+          website,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || result.success !== true) {
+        setError(
+          result.error ||
+            "We could not confirm delivery. Please contact care@pocketpill.co before resubmitting.",
+        );
+        return;
+      }
+      clearRequest();
+      setSent(true);
+    } catch {
+      setError(
+        "We could not confirm delivery. Please contact care@pocketpill.co before resubmitting to avoid a duplicate.",
+      );
+    } finally {
+      sendingRef.current = false;
+      setSending(false);
+    }
+  };
+
   const clearRequest = () => {
+    setSent(false);
+    setWebsite("");
     setSummary("");
     setYourName("");
     setYourWhatsApp("");
@@ -92,12 +141,68 @@ function LineageStartPage() {
       <SiteHeader />
       <main className="flex-1 py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-2xl mx-auto">
-          {summary ? (
-            <RequestHandoff
-              summary={summary}
-              onEdit={() => setSummary("")}
-              onClear={clearRequest}
-            />
+          {sent ? (
+            <section className="space-y-5 rounded-2xl border p-8" role="status">
+              <h1 className="text-2xl font-semibold">Request sent for email delivery</h1>
+              <p>
+                Our email service has accepted your Lineage request for care@pocketpill.co. A
+                pharmacist still needs to review it; this is not confirmation of a care plan or
+                medicine availability.
+              </p>
+              <p>
+                If you need to follow up, contact{" "}
+                <a className="underline" href="mailto:care@pocketpill.co">
+                  care@pocketpill.co
+                </a>
+                .
+              </p>
+              <Button onClick={clearRequest}>Start another request</Button>
+            </section>
+          ) : summary ? (
+            <section className="space-y-5 rounded-2xl border p-6 sm:p-8" aria-busy={sending}>
+              <h1 className="text-2xl font-semibold">Review your Lineage request</h1>
+              <p>
+                Your request has not been sent. Check the details before emailing them to our
+                pharmacists at care@pocketpill.co.
+              </p>
+              <label htmlFor="lineage-review" className="block font-medium">
+                Request details
+              </label>
+              <textarea
+                id="lineage-review"
+                readOnly
+                value={summary}
+                rows={13}
+                className="w-full rounded-lg border p-3 text-sm"
+              />
+              {error && (
+                <p role="alert" className="text-sm text-destructive">
+                  {error}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-3">
+                <Button disabled={sending} onClick={sendRequest}>
+                  {sending ? "Sending…" : "Send to PocketPill"}
+                </Button>
+                <Button
+                  disabled={sending}
+                  variant="outline"
+                  onClick={() => {
+                    setSummary("");
+                    setError("");
+                  }}
+                >
+                  Edit details
+                </Button>
+                <Button disabled={sending} variant="outline" onClick={clearRequest}>
+                  Clear request
+                </Button>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Your details are processed through our website and Namecheap Private Email for
+                pharmacist review. No prescription file is uploaded here.
+              </p>
+            </section>
           ) : (
             <div className="space-y-8">
               <div className="text-center mb-10">
@@ -108,7 +213,8 @@ function LineageStartPage() {
                   Start a parent plan
                 </h1>
                 <p className="text-muted-foreground">
-                  Prepare the details below, then review and send them to PocketPill in WhatsApp.
+                  Prepare the details below, then review and send them directly to our pharmacists
+                  by email.
                 </p>
               </div>
 
@@ -116,6 +222,16 @@ function LineageStartPage() {
                 onSubmit={handleSubmit}
                 className="space-y-8 bg-cream/30 p-6 sm:p-8 rounded-2xl border border-border/40"
               >
+                <div hidden aria-hidden="true">
+                  <label htmlFor="lineage-website">Leave this field empty</label>
+                  <input
+                    id="lineage-website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
                 {/* Your Details */}
                 <div className="space-y-5">
                   <h3 className="font-semibold text-lg border-b border-border/50 pb-2">
@@ -236,8 +352,8 @@ function LineageStartPage() {
                       className="mt-1 accent-[#123d2d]"
                     />
                     <span>
-                      I will attach the current prescription in WhatsApp. Files are attached in the
-                      chat, not uploaded here.
+                      I can provide the current prescription when the pharmacist contacts me. No
+                      files are uploaded by this form.
                     </span>
                   </label>
 
@@ -298,8 +414,8 @@ function LineageStartPage() {
                   </p>
                 )}
                 <p className="text-sm text-muted-foreground">
-                  Nothing is sent by this form. You must paste your request, attach the
-                  prescription, and press Send in WhatsApp.
+                  You can review your details before sending them to care@pocketpill.co. A
+                  pharmacist will arrange any prescription follow-up.
                 </p>
                 <div className="pt-8 border-t border-border/50 text-center">
                   <Button
@@ -307,7 +423,7 @@ function LineageStartPage() {
                     size="lg"
                     className="w-full sm:w-auto bg-[#123d2d] text-white hover:bg-[#123d2d]/90 rounded-full px-12 h-14 text-lg"
                   >
-                    Review WhatsApp request
+                    Review email request
                   </Button>
                 </div>
               </form>

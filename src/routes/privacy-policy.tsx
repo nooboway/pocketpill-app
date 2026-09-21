@@ -57,7 +57,8 @@ function PrivacyPolicyPage() {
               <p>
                 <strong>{"Address:"}</strong>
                 {" 3 Gbemi Oluwa Close, Ikeja, Lagos, Nigeria"}
-                <br />
+              </p>
+              <p>
                 <strong>{"Privacy enquiries:"}</strong>{" "}
                 <a
                   href="mailto:privacy@pocketpill.co"
@@ -65,7 +66,8 @@ function PrivacyPolicyPage() {
                 >
                   {"privacy@pocketpill.co"}
                 </a>
-                <br />
+              </p>
+              <p>
                 <strong>{"Phone / WhatsApp:"}</strong>
                 {" +234 708 372 5382"}
               </p>
@@ -115,7 +117,7 @@ function PrivacyPolicyPage() {
               </ul>
               <p>
                 {
-                  "The website forms prepare a draft in this page’s memory. They do not send a request or upload prescriptions to PocketPill. You review and copy the draft, open WhatsApp, attach any files there, and press Send. Clearing the draft or leaving the page removes it from the form; copies on your clipboard or in WhatsApp are separate."
+                  "The medicine request form prepares a draft in your browser. You review and copy it, open WhatsApp, attach any files there, and press Send. The Lineage form lets you review your details before sending them through our website to care@pocketpill.co using Namecheap Private Email. It does not upload prescription files; a pharmacist will arrange any prescription follow-up. A submission confirmation means the email service accepted the message, not that a pharmacist has reviewed it. Clearing a draft or leaving the page removes it from the form; copies already sent by email, copied to your clipboard, or sent in WhatsApp are separate."
                 }
               </p>
               <p>
@@ -255,7 +257,7 @@ function PrivacyPolicyPage() {
               </p>
               <p>
                 {
-                  "The site currently loads typefaces from Google Fonts, so your browser contacts Google to retrieve them. WhatsApp handles messages you choose to send. Paystack is an optional payment integration; it is not used to send medicine or Lineage requests."
+                  "Vercel is our selected website hosting provider. Namecheap Private Email hosts our business email and processes Lineage submissions addressed to care@pocketpill.co. The site loads typefaces from Google Fonts, so your browser contacts Google to retrieve them. WhatsApp handles messages you choose to send. Paystack is an optional payment integration; it is not used to send medicine or Lineage requests."
                 }
               </p>
               <p>
@@ -278,22 +280,22 @@ function PrivacyPolicyPage() {
             <div className="mt-4 space-y-4 text-base leading-7 text-[#4c6256]">
               <p>
                 {
-                  "Form drafts are not saved in a website care-record database. A draft remains in the page until cleared or the page is left or reloaded. Once sent in WhatsApp, messages and attachments exist separately on the services and devices used by you and PocketPill."
+                  "Form drafts are not saved in a website care-record database. A draft remains in the page until cleared or the page is left or reloaded. Submitted Lineage details are processed by the website server and email service and retained in the care mailbox. Messages and attachments sent in WhatsApp exist separately on the services and devices used by you and PocketPill."
                 }
               </p>
               <p>
                 {
-                  "PocketPill has not yet approved retention periods for care conversations, prescriptions, transaction records, or backups. Those periods and deletion responsibilities must be documented before this draft policy is adopted. Contact privacy@pocketpill.co with questions or deletion requests."
+                  "We keep personal information for as long as necessary to provide care, maintain appropriate pharmacy records, meet applicable legal and regulatory obligations, and handle complaints or legal claims. Where a competent authority lawfully requires records, we retain and disclose only what is necessary for that purpose. We do not keep every record indefinitely merely because it might be useful. Records should be deleted or anonymised when the relevant purpose and any required retention period end, subject to a lawful hold. A record-specific retention and deletion schedule remains to be finalised. Contact privacy@pocketpill.co with questions or deletion requests."
                 }
               </p>
               <p>
                 {
-                  "The request forms do not put your details in WhatsApp URLs or write them to application logs. Copying a draft places its contents on your device’s clipboard, so take care on shared devices."
+                  "The medicine request form does not put your details in WhatsApp URLs. Copying a medicine draft places its contents on your device’s clipboard, so take care on shared devices. The Lineage email handler does not deliberately log request contents or email credentials."
                 }
               </p>
               <p>
                 {
-                  "Production hosting, staff access controls, backup settings, and operational security procedures remain to be confirmed. This draft does not claim independent security audits or end-to-end encryption of all PocketPill records. No system can guarantee absolute security."
+                  "Within PocketPill, access to patient care information is restricted to pharmacists who need it for their work, and to the information necessary for the relevant care task. This internal access rule does not exclude processing by the service providers described in this policy or disclosures required by law. Our privacy contact is privacy@pocketpill.co. Detailed account permissions, provider settings, backups, and incident-response procedures still need to be documented and checked. This draft does not claim independent security audits or end-to-end encryption of all PocketPill records. No system can guarantee absolute security."
                 }
               </p>
             </div>
