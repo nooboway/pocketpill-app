@@ -1867,3 +1867,7 @@ a {
 
 /* Rounded, regular-weight lettering for the brand name only. */
 .pocketpill-wordmark { font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; font-weight: 400; letter-spacing: -0.025em; }
+
+/* Align the icon bottom with the letter baseline, not the text line box. */
+.pocketpill-brand { display: inline-flex; align-items: baseline; gap: 0.3em; font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; line-height: 1; }
+.pocketpill-brand .pocketpill-wordmark { line-height: 1; }

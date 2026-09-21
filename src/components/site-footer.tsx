@@ -40,7 +40,7 @@ export function SiteFooter() {
           <div className="lg:col-span-4">
             <Link
               to="/"
-              className="flex items-center gap-2 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
+              className="pocketpill-brand text-xl text-white transition-opacity hover:opacity-80"
             >
               <img
                 src="/pocketpill-icon-512.png"

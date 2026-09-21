@@ -37,7 +37,7 @@ export function SiteHeader({
         <Link
           to="/"
           className={cn(
-            "flex items-center gap-2.5 text-xl font-semibold transition-opacity hover:opacity-80",
+            "pocketpill-brand text-xl transition-opacity hover:opacity-80",
             overlay ? "text-white" : "text-foreground",
           )}
         >
@@ -108,7 +108,7 @@ export function SiteHeader({
               <Link
                 to="/"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 text-xl font-bold tracking-tight transition-opacity hover:opacity-80"
+                className="pocketpill-brand text-xl transition-opacity hover:opacity-80"
               >
                 <img
                   src="/pocketpill-icon-512.png"
