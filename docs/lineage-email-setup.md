@@ -1,6 +1,6 @@
 # Lineage email on Vercel
 
-The Lineage form submits JSON to `/api/public/lineage-request`. The Vercel Node server validates it and sends plain-text email to **care@pocketpill.co** using Namecheap Private Email. Medicine requests still use the existing WhatsApp handoff. Prescription attachments are not uploaded; pharmacists arrange follow-up.
+The Lineage form submits JSON to `/api/public/lineage-request`. The Vercel Node server validates it and sends plain-text email to **care@pocketpill.co** using email. Medicine requests still use the existing WhatsApp handoff. Prescription attachments are not uploaded; pharmacists arrange follow-up.
 
 ## Activate delivery
 

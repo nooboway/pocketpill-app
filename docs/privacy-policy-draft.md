@@ -24,7 +24,7 @@ Depending on the service you use, we may process:
 - **Transaction details:** orders, payment references, amounts, payment status, delivery records, and service correspondence.
 - **Website information:** saved preferences and technical information needed to operate and protect the site.
 
-The medicine request form prepares a draft in your browser. You review and copy it, open WhatsApp, attach any files there, and press Send. The Lineage form lets you review your details before sending them through our website to care@pocketpill.co using Namecheap Private Email. It does not upload prescription files; a pharmacist will arrange any prescription follow-up. A submission confirmation means the email service accepted the message, not that a pharmacist has reviewed it. Clearing a draft or leaving the page removes it from the form; copies already sent by email, copied to your clipboard, or sent in WhatsApp are separate.
+The medicine request form prepares a draft in your browser. You review and copy it, open WhatsApp, attach any files there, and press Send. The Lineage form lets you review your details before sending them through our website to care@pocketpill.co using email. It does not upload prescription files; a pharmacist will arrange any prescription follow-up. A submission confirmation means the email service accepted the message, not that a pharmacist has reviewed it. Clearing a draft or leaving the page removes it from the form; copies already sent by email, copied to your clipboard, or sent in WhatsApp are separate.
 
 Once you contact us, we obtain information from you, authorised representatives, and providers involved in your request. Share only what is relevant and let us know if important details change. If required information is missing, we may be unable to provide the requested service.
 
@@ -64,7 +64,6 @@ Authorised relatives or service providers may receive information outside Nigeri
 
 The website uses local browser storage to remember acknowledgement of its privacy notice. This has no automatic expiry; clearing the site’s browser data removes it and the notice may appear again. It does not contain your request details.
 
-Vercel is our selected website hosting provider. Namecheap Private Email hosts our business email and processes Lineage submissions addressed to care@pocketpill.co. The site loads typefaces from Google Fonts, so your browser contacts Google to retrieve them. WhatsApp handles messages you choose to send. Paystack is an optional payment integration; it is not used to send medicine or Lineage requests.
 
 Any additional analytics or advertising technology will be described before use, with consent obtained where required. Promotional communications are separate from care updates, and you can opt out of marketing without stopping messages needed to handle an active request.
 
