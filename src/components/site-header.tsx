@@ -45,11 +45,11 @@ export function SiteHeader({
             src="/pocketpill-icon-512.png"
             alt=""
             className={cn(
-              "h-[1cap] w-auto shrink-0 font-heading",
+              "h-[1cap] w-auto shrink-0 pocketpill-wordmark",
               overlay && "brightness-0 invert",
             )}
           />
-          <span className="font-heading leading-none">PocketPill</span>
+          <span className="pocketpill-wordmark leading-none">PocketPill</span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -113,9 +113,9 @@ export function SiteHeader({
                 <img
                   src="/pocketpill-icon-512.png"
                   alt=""
-                  className="h-[1cap] w-auto shrink-0 font-heading"
+                  className="h-[1cap] w-auto shrink-0 pocketpill-wordmark"
                 />
-                <span className="font-heading">PocketPill</span>
+                <span className="pocketpill-wordmark">PocketPill</span>
               </Link>
               <nav className="flex flex-col gap-4">
                 {navLinks.map((link) => (

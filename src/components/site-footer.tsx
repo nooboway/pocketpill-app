@@ -45,9 +45,9 @@ export function SiteFooter() {
               <img
                 src="/pocketpill-icon-512.png"
                 alt=""
-                className="h-[1cap] w-auto shrink-0 font-heading brightness-0 invert"
+                className="h-[1cap] w-auto shrink-0 pocketpill-wordmark brightness-0 invert"
               />
-              <span className="font-heading">PocketPill</span>
+              <span className="pocketpill-wordmark">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
               <strong>Care beyond the prescription.</strong> Find medicines, access pharmacist

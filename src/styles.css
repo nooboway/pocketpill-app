@@ -1864,3 +1864,6 @@ a {
     border-radius: 0;
   }
 }
+
+/* Rounded, regular-weight lettering for the brand name only. */
+.pocketpill-wordmark { font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; font-weight: 400; letter-spacing: -0.025em; }
