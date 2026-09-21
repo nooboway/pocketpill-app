@@ -1871,3 +1871,19 @@ a {
 /* Align the icon bottom with the letter baseline, not the text line box. */
 .pocketpill-brand { display: inline-flex; align-items: baseline; gap: 0.3em; font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif; line-height: 1; }
 .pocketpill-brand .pocketpill-wordmark { line-height: 1; }
+
+/* Keep chat controls reachable on mobile browser chrome and short screens. */
+.enore-panel { visibility: hidden; }
+.enore-panel--open { visibility: visible; }
+.enore-panel__header-info { min-width: 0; }
+.enore-panel__close { flex-shrink: 0; width: auto; min-width: 44px; height: 44px; padding-inline: 10px; gap: 6px; font-size: 13px; }
+.enore-panel__close:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+.enore-panel__messages { min-height: 0; overscroll-behavior: contain; }
+.enore-panel__prompts { max-height: 30%; overflow-y: auto; flex-shrink: 0; }
+.enore-input { min-width: 0; }
+@media (max-width: 480px) {
+  .enore-panel { top: 0; bottom: auto; height: 100dvh; max-height: 100dvh; }
+  .enore-panel__header { padding-top: max(1rem, env(safe-area-inset-top)); }
+  .enore-panel__input { padding-bottom: max(.75rem, env(safe-area-inset-bottom)); }
+  .enore-input { font-size: 16px; }
+}

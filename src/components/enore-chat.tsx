@@ -81,20 +81,28 @@ export function EnoreChat() {
     },
   ]);
   const [input, setInput] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (isOpen && messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isOpen]);
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
+    if (isOpen) {
+      // Keep the mobile keyboard closed until the customer chooses to type.
+      closeRef.current?.focus({ preventScroll: true });
     }
   }, [isOpen]);
+
+  const closeChat = () => {
+    setIsOpen(false);
+    launcherRef.current?.focus({ preventScroll: true });
+  };
 
   const handleSend = (text?: string) => {
     const messageText = text || input.trim();
@@ -124,7 +132,17 @@ export function EnoreChat() {
   return (
     <>
       {/* Chat Panel */}
-      <div className={`enore-panel ${isOpen ? "enore-panel--open" : ""}`}>
+      <div
+        id="enore-chat"
+        role="region"
+        aria-label="Enoré chat"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") closeChat();
+        }}
+        className={`enore-panel ${isOpen ? "enore-panel--open" : ""}`}
+      >
         <div className="enore-panel__header">
           <div className="enore-panel__header-info">
             <div className="enore-panel__avatar">
@@ -136,15 +154,18 @@ export function EnoreChat() {
             </div>
           </div>
           <button
-            onClick={() => setIsOpen(false)}
+            type="button"
+            ref={closeRef}
+            onClick={closeChat}
             className="enore-panel__close"
             aria-label="Close chat"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
+            <span>Close</span>
           </button>
         </div>
 
-        <div className="enore-panel__messages">
+        <div className="enore-panel__messages" ref={messagesRef}>
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -178,7 +199,6 @@ export function EnoreChat() {
               ))}
             </div>
           ))}
-          <div ref={messagesEndRef} />
         </div>
 
         {messages.length <= 1 && (
@@ -221,6 +241,9 @@ export function EnoreChat() {
       <button
         className={`enore-fab ${isOpen ? "enore-fab--hidden" : ""}`}
         onClick={() => setIsOpen(true)}
+        ref={launcherRef}
+        aria-controls="enore-chat"
+        aria-expanded={isOpen}
         aria-label="Chat with Enoré"
       >
         <MessageCircle className="h-6 w-6" />
