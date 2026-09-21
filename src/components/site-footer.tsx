@@ -42,7 +42,11 @@ export function SiteFooter() {
               to="/"
               className="flex items-center gap-2 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
             >
-              <img src="/pocketpill-icon-512.png" alt="" className="h-8 w-8 brightness-0 invert" />
+              <img
+                src="/pocketpill-icon-512.png"
+                alt=""
+                className="h-[1cap] w-auto shrink-0 font-heading brightness-0 invert"
+              />
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
