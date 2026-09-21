@@ -109,10 +109,7 @@ export function SiteFooter() {
             </p>
             <p className="text-xs">PocketPill, Ikeja, Lagos, Nigeria</p>
           </div>
-          <p className="text-xs text-center sm:text-right">
-            PocketPill is not a replacement for emergency care. If you are experiencing a medical
-            emergency, call 112.
-          </p>
+          <p className="text-xs text-center sm:text-right">build by Sylens™</p>
         </div>
       </div>
     </footer>

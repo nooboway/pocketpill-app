@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -85,7 +85,7 @@ export function SiteHeader({
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="md:hidden">
+          <SheetTrigger asChild className="lg:hidden">
             <Button
               variant="ghost"
               size="icon"
@@ -95,7 +95,12 @@ export function SiteHeader({
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-full max-w-sm bg-background">
+          <SheetContent
+            side="right"
+            className="w-full max-w-sm overflow-y-auto bg-background"
+            aria-describedby={undefined}
+          >
+            <SheetTitle className="sr-only">PocketPill navigation</SheetTitle>
             <div className="flex flex-col gap-8 pt-8">
               <Link
                 to="/"
