@@ -37,9 +37,9 @@ export const Route = createFileRoute("/api/public/verify-payment")({
           };
 
           if (!response.ok || !data.status || !data.data) {
-            console.error(`Paystack verification failed [${response.status}]:`, data);
+            console.error(`Paystack verification failed [${response.status}]:`);
             return Response.json(
-              { verified: false, error: data.message || "Verification failed." },
+              { verified: false, error: "Verification failed." },
               { status: 400 },
             );
           }
@@ -57,9 +57,12 @@ export const Route = createFileRoute("/api/public/verify-payment")({
               "",
             paid_at: tx.paid_at ?? null,
           });
-        } catch (error) {
-          console.error("Error verifying payment:", error);
-          return Response.json({ error: "An error occurred during verification." }, { status: 500 });
+        } catch {
+          console.error("Error verifying payment:");
+          return Response.json(
+            { error: "An error occurred during verification." },
+            { status: 500 },
+          );
         }
       },
     },

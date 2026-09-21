@@ -22,36 +22,17 @@ export const Route = createFileRoute("/api/public/webhooks/paystack")({
           return Response.json({ error: "Invalid signature." }, { status: 401 });
         }
 
-        const event = JSON.parse(body) as {
-          event?: string;
-          data?: {
-            reference?: string;
-            amount?: number;
-            paid_at?: string;
-            customer?: { email?: string };
-            metadata?: { custom_fields?: { variable_name?: string; value?: string }[] };
-          };
-        };
-
-        switch (event.event) {
-          case "charge.success": {
-            const tx = event.data ?? {};
-            const plan = tx.metadata?.custom_fields?.find(
-              (f) => f.variable_name === "selected_plan",
-            )?.value;
-            console.log("Paystack charge.success", {
-              reference: tx.reference,
-              email: tx.customer?.email,
-              amount: (tx.amount ?? 0) / 100,
-              plan: plan ?? "Unknown",
-              paid_at: tx.paid_at,
-            });
-            break;
+        // Do not write payment metadata, email addresses, or plan details to logs.
+        try {
+          const event: unknown = JSON.parse(body);
+          if (!event || typeof event !== "object") {
+            return Response.json({ error: "Invalid event." }, { status: 400 });
           }
-          default:
-            console.log(`Unhandled Paystack event: ${event.event}`);
+        } catch {
+          return Response.json({ error: "Invalid event." }, { status: 400 });
         }
 
+        // Receipt only: order reconciliation is not implemented in this source.
         return Response.json({ received: true });
       },
     },

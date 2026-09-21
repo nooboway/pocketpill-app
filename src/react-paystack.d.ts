@@ -1,1 +1,1 @@
-declare module 'react-paystack';
+declare module "react-paystack";

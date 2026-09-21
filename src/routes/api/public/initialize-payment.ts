@@ -51,11 +51,8 @@ export const Route = createFileRoute("/api/public/initialize-payment")({
           };
 
           if (!response.ok || !data.status || !data.data) {
-            console.error(`Paystack initialization failed [${response.status}]:`, data);
-            return Response.json(
-              { error: data.message || "Payment initialization failed." },
-              { status: 400 },
-            );
+            console.error(`Paystack initialization failed [${response.status}]:`);
+            return Response.json({ error: "Payment initialization failed." }, { status: 400 });
           }
 
           return Response.json({
@@ -63,8 +60,8 @@ export const Route = createFileRoute("/api/public/initialize-payment")({
             access_code: data.data.access_code,
             reference: data.data.reference,
           });
-        } catch (error) {
-          console.error("Error initializing payment:", error);
+        } catch {
+          console.error("Error initializing payment:");
           return Response.json(
             { error: "An error occurred while initializing the payment." },
             { status: 500 },

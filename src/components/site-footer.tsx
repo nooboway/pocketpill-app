@@ -1,33 +1,26 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Facebook, Instagram, Linkedin, Twitter, ShieldCheck } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import ndpcBadge from "@/assets/ndpc-badge.png";
 
 const footerLinks = [
   {
     title: "Care",
     links: [
-      { label: "Oncology & specialty care", to: "/services/oncology" },
-      { label: "Mental health", to: "/services/mental-health" },
-      { label: "Clinical pharmacy", to: "/services/clinical-pharmacy" },
-      { label: "Prescriptions", to: "/services" },
-      { label: "Virtual consultations", to: "/book" },
+      { label: "Find a Medicine", to: "/find" },
+      { label: "Talk to a Pharmacist", to: "/telepharmacy" },
+      { label: "Specialty Care", to: "/specialty" },
+      { label: "Mental Health Care", to: "/mental-health" },
+      { label: "Lineage", to: "/lineage" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Pricing", to: "/pricing" },
       { label: "How it works", to: "/how-it-works" },
-      { label: "Contact", to: "/contact" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy policy", to: "/contact" },
-      { label: "Terms of service", to: "/contact" },
-      { label: "NDPR notice", to: "/contact" },
+      { label: "Partners", to: "/partners" },
+      { label: "Trust & Compliance", to: "/trust" },
+      { label: "Privacy Policy", to: "/privacy-policy" },
     ],
   },
 ];
@@ -41,24 +34,20 @@ const socialLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-2 rounded-[2rem] bg-[#123d2d] text-white">
-      <div className="container-tight section-padding">
+    <footer className="ds-footer">
+      <div className="ds-footer__inner">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Link
               to="/"
               className="flex items-center gap-2 text-xl font-bold tracking-tight text-white transition-opacity hover:opacity-80"
             >
-              <img 
-                src="/pocketpill-icon-512.png" 
-                alt="" 
-                className="h-8 w-8 brightness-0 invert" 
-              />
+              <img src="/pocketpill-icon-512.png" alt="" className="h-8 w-8 brightness-0 invert" />
               <span className="font-heading">PocketPill</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65">
-              A calmer way to access trusted pharmacy care. Talk with a licensed pharmacist, shop
-              confidently, and get support that meets you where you are.
+              <strong>Care beyond the prescription.</strong> Find medicines, access pharmacist
+              support, source difficult treatments and stay on track with ongoing medication care.
             </p>
             <div className="mt-6 flex items-center gap-4">
               {socialLinks.map((social) => (
@@ -72,25 +61,25 @@ export function SiteFooter() {
                 </a>
               ))}
             </div>
-            
+
             <div className="mt-8">
-              <a 
-                href="/ndpc-certificate.pdf" 
-                target="_blank" 
+              <a
+                href="/ndpc-certificate.pdf"
+                target="_blank"
                 rel="noreferrer"
                 className="inline-block transition-opacity hover:opacity-80"
               >
-                <img 
-                  src={ndpcBadge} 
-                  alt="NDPC Certified Badge" 
-                  className="h-20 w-auto rounded-md shadow-sm" 
+                <img
+                  src={ndpcBadge}
+                  alt="NDPC registration document"
+                  className="h-20 w-auto rounded-md shadow-sm"
                   loading="lazy"
                 />
               </a>
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3 lg:col-span-8">
+          <div className="grid gap-8 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-2">
             {footerLinks.map((group) => (
               <div key={group.title}>
                 <h3 className="font-heading text-xs font-semibold uppercase tracking-[.18em] text-white/50">
@@ -118,9 +107,7 @@ export function SiteFooter() {
             <p className="text-xs">
               &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
             </p>
-            <p className="text-xs">
-              PocketPill, Ikeja, Lagos, Nigeria
-            </p>
+            <p className="text-xs">PocketPill, Ikeja, Lagos, Nigeria</p>
           </div>
           <p className="text-xs text-center sm:text-right">
             PocketPill is not a replacement for emergency care. If you are experiencing a medical
