@@ -10,6 +10,9 @@ export function CookieConsent() {
     } catch {
       setShowBanner(true);
     }
+    const reopen = () => setShowBanner(true);
+    window.addEventListener("pocketpill:privacy-notice", reopen);
+    return () => window.removeEventListener("pocketpill:privacy-notice", reopen);
   }, []);
 
   function dismiss() {

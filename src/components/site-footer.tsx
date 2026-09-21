@@ -107,9 +107,15 @@ export function SiteFooter() {
             <p className="text-xs">
               &copy; {new Date().getFullYear()} PocketPill. All rights reserved.
             </p>
-            <p className="text-xs">PocketPill, Ikeja, Lagos, Nigeria</p>
+            <button
+              type="button"
+              className="text-xs underline underline-offset-4 hover:text-white"
+              onClick={() => window.dispatchEvent(new Event("pocketpill:privacy-notice"))}
+            >
+              Cookie &amp; privacy notice
+            </button>
           </div>
-          <p className="text-xs text-center sm:text-right">build by Sylens™</p>
+          <p className="text-xs text-center sm:text-right">Built by Sylens™</p>
         </div>
       </div>
     </footer>
